@@ -125,6 +125,33 @@ api.in('users')
 
 Filtering methods are used to create a subset of documents that will be affected by subsequent `find()`, `update()` or `delete()` methods.
 
+#### `.goToPage(page)`
+
+Defines the page of documents to be used.
+
+```js
+// Example
+api.goToPage(3);
+```
+
+#### `.limitTo(limit)`
+
+Defines a maximum number of documents to be retrieved.
+
+```js
+// Example
+api.limitTo(10);
+```
+
+#### `.sortBy(field, order)`
+
+Selects a field to sort on and the sort direction. Order defaults to ascending (`asc`).
+
+```js
+// Example
+api.sortBy('age', 'desc');
+```
+
 #### `.useFields(fields)`
 
 Selects the fields to be returned in the response. Accepts array format.
