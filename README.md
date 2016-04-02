@@ -46,11 +46,13 @@ This library provides a high-level abstraction of the REST architecture style, e
 
 ## Methods
 
-Each query consists of a series of chained methods that form the request. There are 3 terminating methods that return a Promise with the result of one or more requests to the database: `create()`, `delete()` and `find()`.
+Each query consists of a series of chained methods that form the request. There are 3 terminating operations that return a Promise with the result of one or more requests to the database: `create()`, `delete()` and `find()`.
 
 `delete()` and `find()` operations can make use of a series of filtering methods to create the desired subset of documents to operate on.
 
-### `create()`
+### Operations
+
+#### `create()`
 
 Creates a document.
 
@@ -70,7 +72,7 @@ api.in('users')
    });
 ```
 
-### `delete()`
+#### `delete()`
 
 Deletes one or more documents.
 
@@ -80,7 +82,7 @@ api.in('users')
    .delete()
 ```
 
-### `find()`
+#### `find()`
 
 Returns a list of documents.
 
@@ -91,7 +93,7 @@ api.in('users')
    .find()
 ```
 
-### Filtering
+### Filters
 
 Filtering methods are used to create a subset of documents that will be affected by subsequent `find()`, `update()` or `delete()` methods.
 
