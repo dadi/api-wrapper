@@ -1,6 +1,6 @@
 # DADI API wrapper
 
-> A Node.JS library for interacting with DADI API
+> A high-level library for interacting with DADI API
 
 ## Overview
 
