@@ -46,13 +46,13 @@ This library provides a high-level abstraction of the REST architecture style, e
 
 ## Methods
 
-Each query consists of a series of chained methods that form the request. There are 3 terminating operations that return a Promise with the result of one or more requests to the database: `create()`, `delete()` and `find()`.
+Each query consists of a series of chained methods to form the request, always terminated by an operation method. There are 5 terminating operations that return a Promise with the result of one or more requests to the database: `create()`, `delete()`, `find()`, `map()` and `update()`.
 
-`delete()` and `find()` operations can make use of a series of filtering methods to create the desired subset of documents to operate on.
+`delete()`, `map()`, `find()` and `update()` operations can make use of a series of filtering methods to create the desired subset of documents to operate on.
 
 ### Operations
 
-#### `create()`
+#### `.create()`
 
 Creates a document.
 
@@ -72,17 +72,17 @@ api.in('users')
    });
 ```
 
-#### `delete()`
+#### `.delete()`
 
 Deletes one or more documents.
 
 ```js
 api.in('users')
    .whereFieldDoesNotExist('name')
-   .delete()
+   .delete();
 ```
 
-#### `find()`
+#### `.find()`
 
 Returns a list of documents.
 
@@ -90,7 +90,35 @@ Returns a list of documents.
 api.in('users')
    .whereFieldIsGreaterThan('age', 21)
    .useFields(['name', 'age'])
-   .find()
+   .find();
+```
+
+#### `.map(callback)`
+
+Updates a list of documents with the result of individually applying `callback` to them. Similar in principle to JavaScript's [Array.map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map) function.
+
+The return value of the callback function should only include the fields that can be updated and not the whole document. If internal fields are returned (e.g. `history` or `apiVersion`) the operation will fail.
+
+```js
+api.in('users')
+   .whereFieldExists('gender')
+   .map(function (document) {
+      return {
+        name: (document.gender === 'male') ? ('Mr ' + document.name) : ('Mrs ' + document.name)
+      };
+   });
+```
+
+#### `.update(update)`
+
+Updates a list of documents.
+
+```js
+api.in('users')
+   .whereFieldIsLessThan('age', 18)
+   .update({
+      adult: false
+   });
 ```
 
 ### Filters
