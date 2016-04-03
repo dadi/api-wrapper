@@ -16,7 +16,7 @@ This library provides a high-level abstraction of the REST architecture style, e
    npm install dadi-api-wrapper --save
    ```
 
-2. Add the library and configure the API settings
+2. Add the library and configure the API settings:
 
    ```js
    var DadiAPI = require('dadi-api-wrapper');
@@ -32,9 +32,10 @@ This library provides a high-level abstraction of the REST architecture style, e
    });
    ```
 
-3. Make a query
+3. Make a query:
 
    ```js
+   // Example: getting all documents where `name` contains "john" and age is greater than 18
    api.in('users')
        .whereFieldContains('name', 'john')
        .whereFieldIsGreaterThan('age', 18)
