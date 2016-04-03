@@ -48,7 +48,7 @@ This library provides a high-level abstraction of the REST architecture style, e
 
 Each query consists of a series of chained methods to form the request, always terminated by an operation method. There are 5 terminating operations that return a Promise with the result of one or more requests to the database: `create()`, `delete()`, `find()`, `map()` and `update()`.
 
-`delete()`, `map()`, `find()` and `update()` operations can make use of a series of filtering methods to create the desired subset of documents to operate on.
+These operations (with the exception of `create()`) can make use of a series of [filtering methods](#filters) to create the desired subset of documents to operate on.
 
 ### Operations
 
