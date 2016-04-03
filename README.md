@@ -124,7 +124,7 @@ api.in('users')
 
 ### Filters
 
-Filtering methods are used to create a subset of documents that will be affected by subsequent `find()`, `update()` or `delete()` methods.
+Filtering methods are used to create a subset of documents that will be affected by subsequent operation methods.
 
 #### `.goToPage(page)`
 
