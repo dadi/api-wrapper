@@ -253,7 +253,7 @@ api.whereFieldIsNotOneOf('name', ['Mark', 'Nathan', 'David']);
 
 #### `.where(query)`
 
-Filters documents using a MongoDB query object or a Aggregation Pipeline array. The above methods are syntatic sugar for `where()`, which should be used for complex queries that require operations not implemented by any other method.
+Filters documents using a MongoDB query object or a Aggregation Pipeline array. The methods above are ultimately just syntatic sugar for `where()`. This method can be used for complex queries that require operations not implemented by any other method.
 
 ```js
 // Example
@@ -286,7 +286,7 @@ Selects the database to use. Overrides any database defined in the initialisatio
 
 ```js
 // Example
-api.withDatabase('testdb');
+api.useDatabase('testdb');
 ```
 
 #### `useVersion(version)`
@@ -295,6 +295,6 @@ Selects the version to use. Overrides any version defined in the initialisation 
 
 ```js
 // Example
-api.withVersion('1.0');
+api.useVersion('1.0');
 ```
 
