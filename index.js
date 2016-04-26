@@ -363,6 +363,19 @@ DadiAPI.prototype.update = function (update) {
 };
 
 /**
+ * Select the database to be used
+ *
+ * @param {String} database
+ * @return API
+ * @api public
+ */
+DadiAPI.prototype.useDatabase = function (database) {
+  this.customDatabase = database;
+
+  return this;
+};
+
+/**
  * Select the fields to retrieve
  *
  * @param {Array} fields
@@ -379,6 +392,19 @@ DadiAPI.prototype.useFields = function (fields) {
 
     this.fields = JSON.stringify(fieldsObj);  
   }
+
+  return this;
+};
+
+/**
+ * Select the version to be used
+ *
+ * @param {String} version
+ * @return API
+ * @api public
+ */
+DadiAPI.prototype.useVersion = function (version) {
+  this.customVersion = version;
 
   return this;
 };
@@ -530,32 +556,6 @@ DadiAPI.prototype.whereFieldIsNotOneOf = function (field, matches) {
  */
 DadiAPI.prototype.whereFieldIsOneOf = function (field, matches) {
   this._addToQuery(field, '$in', matches);
-
-  return this;
-};
-
-/**
- * Select the database to be used
- *
- * @param {String} database
- * @return API
- * @api public
- */
-DadiAPI.prototype.withDatabase = function (database) {
-  this.customDatabase = database;
-
-  return this;
-};
-
-/**
- * Select the version to be used
- *
- * @param {String} version
- * @return API
- * @api public
- */
-DadiAPI.prototype.withVersion = function (version) {
-  this.customVersion = version;
 
   return this;
 };
