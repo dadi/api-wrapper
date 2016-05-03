@@ -234,7 +234,6 @@ DadiAPI.prototype.in = function (collection) {
  * @api public
  */
 DadiAPI.prototype.get = function () {
-  console.log('** URL:', this._buildURL({useParams: true}));
   return passport(this.passportOptions, request).then((function (request) {
     return request({
       json: true,
