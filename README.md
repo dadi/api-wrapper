@@ -268,7 +268,7 @@ api.where({name: 'John Doe'});
 
 #### `.withComposition(value)`
 
-Defines whether Reference fields should be resolved using composition.
+Defines whether nested documents should be resolved using composition. Defaults to `false`.
 
 ```js
 // Example

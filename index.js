@@ -562,7 +562,7 @@ DadiAPI.prototype.whereFieldIsOneOf = function (field, matches) {
 };
 
 /**
- * Toggles composition for Reference fields
+ * Toggles composition for nested documents
  *
  * @param {Boolean} value
  * @return API
