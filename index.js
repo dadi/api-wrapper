@@ -5,7 +5,6 @@ var querystring = require('query-string');
 var DadiAPI = function (options) {
   this.options = options;
   
-  this.options.extractResults = (options.extractResults === true);
   this.options.port = this.options.port || 80;
   this.options.tokenUrl = this.options.tokenUrl || '/token';
 
@@ -21,25 +20,6 @@ var DadiAPI = function (options) {
       path: __dirname + '/.wallet/token.' + this._slugify(options.uri + options.port) + '.' + this._slugify(options.credentials.clientId) + '.json'
     }
   };
-};
-
-/**
- * Creates a URL/filename friendly version (slug) of any object that implements `toString()`
- *
- * @param {Object} input - object to be slugified
- * @return String
- * @api private
- */
-DadiAPI.prototype._slugify = function (input) {
-  return input.toString()
-    .toLowerCase()
-    .replace(/[\?\#][\s\S]*$/g, '')
-    .replace(/\/+/g, '-')
-    .replace(/\s+/g, '')
-    .replace(/[^\w\-]+/g, '')
-    .replace(/\-\-+/g, '-')
-    .replace(/^-+/, '')
-    .replace(/-+$/, '');
 };
 
 /**
@@ -122,20 +102,6 @@ DadiAPI.prototype._buildURL = function (options) {
 };
 
 /**
- * Return the results array from a response
- *
- * @return Array
- * @api private
- */
-DadiAPI.prototype._extractResults = function (response) {
-  if (this.extractResults) {
-    return response.results;
-  }
-  
-  return response;
-};
-
-/**
  * Clear any saved options and parameters
  *
  * @return undefined
@@ -145,6 +111,25 @@ DadiAPI.prototype._reset = function () {
   this.params = {};
   this.customVersion = undefined;
   this.customDatabase = undefined;
+};
+
+/**
+ * Creates a URL/filename friendly version (slug) of any object that implements `toString()`
+ *
+ * @param {Object} input - object to be slugified
+ * @return String
+ * @api private
+ */
+DadiAPI.prototype._slugify = function (input) {
+  return input.toString()
+    .toLowerCase()
+    .replace(/[\?\#][\s\S]*$/g, '')
+    .replace(/\/+/g, '-')
+    .replace(/\s+/g, '')
+    .replace(/[^\w\-]+/g, '')
+    .replace(/\-\-+/g, '-')
+    .replace(/^-+/, '')
+    .replace(/-+$/, '');
 };
 
 /**
@@ -208,26 +193,25 @@ DadiAPI.prototype.delete = function () {
 };
 
 /**
- * Set whether results array will be return rather than entire response
- *
- * @param {Boolean} value
- * @return Promise
- * @api public
- */
-DadiAPI.prototype.extractResults = function (value) {
-  this.extractResults = (value !== false);
-
-  return this;
-};
-
-/**
  * Get the documents affected by the saved query
  *
  * @return Promise
  * @api public
  */
-DadiAPI.prototype.find = function () {
-  return this.get();
+DadiAPI.prototype.find = function (options) {
+  options = options || {};
+
+  return this.get().then(function (response) {
+    if (options.extractResults) {
+      return response.results;
+    }
+
+    if (options.extractMetadata) {
+      return response.metadata;
+    }
+
+    return response;
+  });
 };
 
 /**
@@ -250,6 +234,7 @@ DadiAPI.prototype.in = function (collection) {
  * @api public
  */
 DadiAPI.prototype.get = function () {
+  console.log('** URL:', this._buildURL({useParams: true}));
   return passport(this.passportOptions, request).then((function (request) {
     return request({
       json: true,
@@ -258,8 +243,6 @@ DadiAPI.prototype.get = function () {
         useParams: true
       })
     });
-  }).bind(this)).then((function (response) {
-    return this._extractResults(response);
   }).bind(this));
 };
 
@@ -575,6 +558,21 @@ DadiAPI.prototype.whereFieldIsNotOneOf = function (field, matches) {
  */
 DadiAPI.prototype.whereFieldIsOneOf = function (field, matches) {
   this._addToQuery(field, '$in', matches);
+
+  return this;
+};
+
+/**
+ * Toggles composition for Reference fields
+ *
+ * @param {Boolean} value
+ * @return API
+ * @api public
+ */
+DadiAPI.prototype.withComposition = function (value) {
+  value = (value !== false);
+
+  this._addToQuery('compose', value);
 
   return this;
 };
