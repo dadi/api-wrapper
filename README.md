@@ -266,6 +266,15 @@ Filters documents using a MongoDB query object or a Aggregation Pipeline array. 
 api.where({name: 'John Doe'});
 ```
 
+#### `.withComposition(value)`
+
+Defines whether Reference fields should be resolved using composition.
+
+```js
+// Example
+api.withComposition();
+```
+
 ### Other methods
 
 #### `.in(collection)`
