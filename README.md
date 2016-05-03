@@ -272,7 +272,9 @@ Defines whether Reference fields should be resolved using composition.
 
 ```js
 // Example
-api.withComposition();
+api.withComposition(); 
+api.withComposition(true); // same as above
+api.withComposition(false);
 ```
 
 ### Other methods
