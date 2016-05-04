@@ -83,7 +83,7 @@ api.in('users')
    .delete();
 ```
 
-#### `.find()`
+#### `.find(options)`
 
 Returns a list of documents.
 
@@ -93,6 +93,11 @@ api.in('users')
    .useFields(['name', 'age'])
    .find();
 ```
+
+`options` is one of the following:
+
+- `extractResults` (Boolean): Selects whether just the results array should be returned, rather than the entire API response.
+- `extractMetadata` (Boolean): Selects whether just the metadata object should be returned, rather than the entire API response.
 
 #### `.map(callback)`
 
@@ -261,16 +266,18 @@ Filters documents using a MongoDB query object or a Aggregation Pipeline array. 
 api.where({name: 'John Doe'});
 ```
 
-### Other methods
+#### `.withComposition(value)`
 
-#### `.extractResults()`
-
-Selects whether the entire API response should be returned (`false`) or just the results array (`true`). Defaults to `false`.
+Defines whether nested documents should be resolved using composition. Defaults to `false`.
 
 ```js
 // Example
-api.extractResults();
+api.withComposition(); 
+api.withComposition(true); // same as above
+api.withComposition(false);
 ```
+
+### Other methods
 
 #### `.in(collection)`
 
