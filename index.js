@@ -432,7 +432,7 @@ DadiAPI.prototype.where = function (query) {
  * @api public
  */
 DadiAPI.prototype.whereFieldBeginsWith = function (field, text) {
-  this._addToQuery(field, '$regex', '^' . text);
+  this._addToQuery(field, '$regex', '^' + text);
 
   return this;
 };
@@ -473,7 +473,7 @@ DadiAPI.prototype.whereFieldDoesNotExist = function (field) {
  * @api public
  */
 DadiAPI.prototype.whereFieldEndsWith = function (field, text) {
-  this._addToQuery(field, '$regex', text . '$');
+  this._addToQuery(field, '$regex', text + '$');
 
   return this;
 };
