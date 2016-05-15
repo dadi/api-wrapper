@@ -176,6 +176,15 @@ Filters documents that contain `text`. Uses the regular expression `/text/i`.
 api.whereFieldContains('name', 'john');
 ```
 
+#### `.whereFieldEndsWith(field, text)`
+
+Filters documents where field starts with `text`. Uses the regular expression `/text$/i`.
+
+```js
+// Example
+api.whereFieldContains('name', 'john');
+```
+
 #### `.whereFieldExists(field)`
 
 Filters documents that contain a field.
@@ -255,6 +264,15 @@ Filters documents where the value of `field` is not one of the elements of `matc
 ```js
 // Example
 api.whereFieldIsNotOneOf('name', ['Mark', 'Nathan', 'David']);
+```
+
+#### `.whereFieldStartsWith(field, text)`
+
+Filters documents where field starts with `text`. Uses the regular expression `/^text/i`.
+
+```js
+// Example
+api.whereFieldContains('name', 'john');
 ```
 
 #### `.where(query)`
