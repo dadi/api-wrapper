@@ -178,7 +178,7 @@ api.whereFieldContains('name', 'john');
 
 #### `.whereFieldEndsWith(field, text)`
 
-Filters documents where field starts with `text`. Uses the regular expression `/text^/i`.
+Filters documents where field starts with `text`. Uses the regular expression `/text$/i`.
 
 ```js
 // Example
