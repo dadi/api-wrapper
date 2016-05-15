@@ -182,7 +182,7 @@ Filters documents where field starts with `text`. Uses the regular expression `/
 
 ```js
 // Example
-api.whereFieldContains('name', 'john');
+api.whereFieldEndsWith('name', 'john');
 ```
 
 #### `.whereFieldExists(field)`
@@ -272,7 +272,7 @@ Filters documents where field starts with `text`. Uses the regular expression `/
 
 ```js
 // Example
-api.whereFieldContains('name', 'john');
+api.whereFieldStartsWith('name', 'john');
 ```
 
 #### `.where(query)`
