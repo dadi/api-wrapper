@@ -167,6 +167,15 @@ Selects the fields to be returned in the response. Accepts array format.
 api.useFields(['name', 'age']);
 ```
 
+#### `.whereFieldBeginsWith(field, text)`
+
+Filters documents where field begins with `text`. Uses the regular expression `/^text/i`.
+
+```js
+// Example
+api.whereFieldBeginsWith('name', 'john');
+```
+
 #### `.whereFieldContains(field, text)`
 
 Filters documents that contain `text`. Uses the regular expression `/text/i`.
@@ -264,15 +273,6 @@ Filters documents where the value of `field` is not one of the elements of `matc
 ```js
 // Example
 api.whereFieldIsNotOneOf('name', ['Mark', 'Nathan', 'David']);
-```
-
-#### `.whereFieldStartsWith(field, text)`
-
-Filters documents where field starts with `text`. Uses the regular expression `/^text/i`.
-
-```js
-// Example
-api.whereFieldStartsWith('name', 'john');
 ```
 
 #### `.where(query)`
