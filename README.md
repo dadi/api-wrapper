@@ -99,6 +99,19 @@ api.in('users')
 - `extractResults` (Boolean): Selects whether just the results array should be returned, rather than the entire API response.
 - `extractMetadata` (Boolean): Selects whether just the metadata object should be returned, rather than the entire API response.
 
+#### `.getConfig()`
+
+Gets the config for a collection or for the API.
+
+```js
+// Gets the collection config
+api.in('users')
+   .getConfig();
+
+// Gets the API config
+api.getConfig();
+```
+
 #### `.map(callback)`
 
 Updates a list of documents with the result of individually applying `callback` to them. Similar in principle to JavaScript's [Array.map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map) function.
@@ -113,6 +126,23 @@ api.in('users')
         name: (document.gender === 'male') ? ('Mr ' + document.name) : ('Mrs ' + document.name)
       };
    });
+```
+
+#### `.getConfig()`
+
+Sets the config for a collection or for the API.
+
+```js
+// Sets the collection config
+var collectionConfig = {};
+
+api.in('users')
+   .setConfig(collectionConfig);
+
+// Sets the API config
+var apiConfig = {};
+
+api.setConfig(apiConfig);
 ```
 
 #### `.update(update)`
@@ -165,6 +195,15 @@ Selects the fields to be returned in the response. Accepts array format.
 ```js
 // Example
 api.useFields(['name', 'age']);
+```
+
+#### `.where(query)`
+
+Filters documents using a MongoDB query object or a Aggregation Pipeline array. The methods above are ultimately just syntatic sugar for `where()`. This method can be used for complex queries that require operations not implemented by any other method.
+
+```js
+// Example
+api.where({name: 'John Doe'});
 ```
 
 #### `.whereFieldBeginsWith(field, text)`
@@ -273,15 +312,6 @@ Filters documents where the value of `field` is not one of the elements of `matc
 ```js
 // Example
 api.whereFieldIsNotOneOf('name', ['Mark', 'Nathan', 'David']);
-```
-
-#### `.where(query)`
-
-Filters documents using a MongoDB query object or a Aggregation Pipeline array. The methods above are ultimately just syntatic sugar for `where()`. This method can be used for complex queries that require operations not implemented by any other method.
-
-```js
-// Example
-api.where({name: 'John Doe'});
 ```
 
 #### `.withComposition(value)`
