@@ -78,6 +78,10 @@ DadiAPI.prototype._buildURL = function (options) {
     url += '/config';
   }
 
+  if (options.stats) {
+    url += '/stats';
+  }
+
   if (options.useParams) {
     var params = {};
 
@@ -560,6 +564,22 @@ DadiAPI.prototype.getConfig = function () {
       json: true,
       method: 'GET',
       uri: this._buildURL({config: true})
+    });
+  }).bind(this));
+};
+
+/**
+ * Get collection stats
+ *
+ * @return Promise
+ * @api public
+ */
+DadiAPI.prototype.getStats = function () {
+  return passport(this.passportOptions, request).then((function (request) {
+    return request({
+      json: true,
+      method: 'GET',
+      uri: this._buildURL({stats: true})
     });
   }).bind(this));
 };

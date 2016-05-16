@@ -112,6 +112,15 @@ api.in('users')
 api.getConfig();
 ```
 
+#### `.getStats()`
+
+Gets collection stats.
+
+```js
+api.in('users')
+   .getStats();
+```
+
 #### `.map(callback)`
 
 Updates a list of documents with the result of individually applying `callback` to them. Similar in principle to JavaScript's [Array.map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map) function.
@@ -128,7 +137,7 @@ api.in('users')
    });
 ```
 
-#### `.getConfig()`
+#### `.setConfig()`
 
 Sets the config for a collection or for the API.
 
