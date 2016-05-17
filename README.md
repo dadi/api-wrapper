@@ -217,7 +217,7 @@ api.where({name: 'John Doe'});
 
 #### `.whereFieldBeginsWith(field, text)`
 
-Filters documents where field begins with `text`. Uses the regular expression `/^text/i`.
+Filters documents where `field` begins with `text`.
 
 ```js
 // Example
@@ -226,16 +226,25 @@ api.whereFieldBeginsWith('name', 'john');
 
 #### `.whereFieldContains(field, text)`
 
-Filters documents that contain `text`. Uses the regular expression `/text/i`.
+Filters documents where `field` contains `text`.
 
 ```js
 // Example
 api.whereFieldContains('name', 'john');
 ```
 
+#### `.whereFieldDoesNotContain(field, text)`
+
+Filters documents `field` does not contain `text`.
+
+```js
+// Example
+api.whereFieldDoesNotContain('name', 'john');
+```
+
 #### `.whereFieldEndsWith(field, text)`
 
-Filters documents where field starts with `text`. Uses the regular expression `/text$/i`.
+Filters documents where field starts with `text`.
 
 ```js
 // Example
@@ -313,6 +322,14 @@ Filters documents where the value of `field` is one of the elements of `matches`
 // Example
 api.whereFieldIsOneOf('name', ['John', 'Jack', 'Peter']);
 ```
+
+#### `.whereFieldIsNotEqualTo(field, value)`
+
+Filters documents where `field` is not equal to `value`.
+
+```js
+// Example
+api.whereFieldIsEqualTo('age', 53);
 
 #### `.whereFieldIsNotOneOf(field, matches)`
 
