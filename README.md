@@ -330,6 +330,7 @@ Filters documents where `field` is not equal to `value`.
 ```js
 // Example
 api.whereFieldIsEqualTo('age', 53);
+```
 
 #### `.whereFieldIsNotOneOf(field, matches)`
 
