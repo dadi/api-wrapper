@@ -386,7 +386,7 @@ api.useVersion('1.0');
 With debug mode, you'll be able to see exactly how the requests made to API look like. This functionality is enabled by setting a `debug` property in the config:
 
 ```js
-var DadiAPI = require('dadi-api-wrapper');
+var DadiAPI = require('@dadi/api-wrapper');
 var api = new DadiAPI({
   uri: 'http://api.eb.dev.dadi.technology',
   port: 80,
