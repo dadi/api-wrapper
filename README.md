@@ -10,16 +10,16 @@ This library provides a high-level abstraction of the REST architecture style, e
 
 ## Getting started
 
-1. Install the `dadi-api-wrapper` module:
+1. Install the `@dadi/api-wrapper` module:
 
    ```shell
-   npm install dadi-api-wrapper --save
+   npm install @dadi/api-wrapper --save
    ```
 
 2. Add the library and configure the API settings:
 
    ```js
-   var DadiAPI = require('dadi-api-wrapper');
+   var DadiAPI = require('@dadi/api-wrapper');
    var api = new DadiAPI({
      uri: 'http://api.eb.dev.dadi.technology',
      port: 80,
@@ -385,17 +385,17 @@ api.useVersion('1.0');
 
 With debug mode, you'll be able to see exactly how the requests made to API look like. This functionality is enabled by setting a `debug` property in the config:
 
-   ```js
-   var DadiAPI = require('dadi-api-wrapper');
-   var api = new DadiAPI({
-     uri: 'http://api.eb.dev.dadi.technology',
-     port: 80,
-     credentials: {
-       clientId: 'johndoe',
-       secret: 'f00b4r'
-     },
-     version: 'vjoin',
-     database: 'testdb',
-     debug: true
-   });
-   ```
+```js
+var DadiAPI = require('dadi-api-wrapper');
+var api = new DadiAPI({
+  uri: 'http://api.eb.dev.dadi.technology',
+  port: 80,
+  credentials: {
+    clientId: 'johndoe',
+    secret: 'f00b4r'
+  },
+  version: 'vjoin',
+  database: 'testdb',
+  debug: true
+});
+```
