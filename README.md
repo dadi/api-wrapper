@@ -399,3 +399,7 @@ var api = new DadiAPI({
   debug: true
 });
 ```
+
+```
+[@dadi/api-wrapper] Querying URI: http://api.eb.dev.dadi.technology:80/vjoin/testdb/articles?count=0
+```
