@@ -1,16 +1,24 @@
 {
-  "name": "api-wrapper",
+  "name": "@dadi/api-wrapper",
   "version": "1.0.0",
-  "description": "",
+  "description": "A high-level library for interacting with DADI API",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Eduardo Boucas <mail@eduardoboucas.com>",
+  "license": "GPL",
   "dependencies": {
     "@dadi/passport": "^1.0.1",
     "query-string": "^4.1.0",
     "request-promise": "^2.0.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dadi/api-wrapper.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dadi/api-wrapper/issues"
+  },
+  "homepage": "https://github.com/dadi/api-wrapper",
 }
