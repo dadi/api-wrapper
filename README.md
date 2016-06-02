@@ -4,7 +4,7 @@
 
 ## Overview
 
-[DADI API](https://github.com/dadi/api) is a high performance RESTful API layer designed in support of API-first development and the principle of COPE. 
+[DADI API](https://github.com/dadi/api) is a high performance RESTful API layer designed in support of API-first development and the principle of COPE.
 
 This library provides a high-level abstraction of the REST architecture style, exposing a set of chainable methods that allow developers to compose complex read and write operations using a simplistic and natural syntax.
 
@@ -21,7 +21,7 @@ This library provides a high-level abstraction of the REST architecture style, e
    ```js
    var DadiAPI = require('@dadi/api-wrapper');
    var api = new DadiAPI({
-     uri: 'http://api.eb.dev.dadi.technology',
+     uri: 'http://api.example.com',
      port: 80,
      credentials: {
        clientId: 'johndoe',
@@ -347,7 +347,7 @@ Defines whether nested documents should be resolved using composition. Defaults 
 
 ```js
 // Example
-api.withComposition(); 
+api.withComposition();
 api.withComposition(true); // same as above
 api.withComposition(false);
 ```
@@ -388,7 +388,7 @@ With debug mode, you'll be able to see exactly how the requests made to API look
 ```js
 var DadiAPI = require('@dadi/api-wrapper');
 var api = new DadiAPI({
-  uri: 'http://api.eb.dev.dadi.technology',
+  uri: 'http://api.example.com',
   port: 80,
   credentials: {
     clientId: 'johndoe',
@@ -401,5 +401,5 @@ var api = new DadiAPI({
 ```
 
 ```
-[@dadi/api-wrapper] Querying URI: http://api.eb.dev.dadi.technology:80/vjoin/testdb/articles?count=0
+[@dadi/api-wrapper] Querying URI: http://api.example.com:80/vjoin/testdb/articles?count=0
 ```
