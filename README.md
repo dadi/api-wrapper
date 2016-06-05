@@ -354,6 +354,15 @@ api.withComposition(false);
 
 ### Other methods
 
+#### `.fromEndpoint(endpoint)`
+
+Selects a custom endpoint to use. Please note that unlike collections, custom endpoints do not have a standardised syntax, so it is up to the authors to make sure the endpoint complies with standard DADI API formats, or they will not function as expected.
+
+```js
+// Example
+api.in('users');
+```
+
 #### `.in(collection)`
 
 Selects the collection to use.
