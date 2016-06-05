@@ -47,11 +47,27 @@ This library provides a high-level abstraction of the REST architecture style, e
 
 ## Methods
 
-Each query consists of a series of chained methods to form the request, always terminated by an operation method. There are 5 terminating operations that return a Promise with the result of one or more requests to the database: [`create()`](#create), [`delete()`](#delete), [`find()`](#find), [`map()`](#map) and [`update()`](#update).
+Each query consists of a series of chained methods to form the request, always terminated by an operation method. There are 5 terminating operations that return a Promise with the result of one or more requests to the database: [`create()`](#create), [`delete()`](#delete), [`find()`](#find), [`apply()`](#apply) and [`update()`](#update).
 
 These operations (with the exception of `create()`) can make use of a series of [filtering methods](#filters) to create the desired subset of documents to operate on.
 
 ### Operations
+
+#### `.apply(callback)`
+
+Updates a list of documents with the result of individually applying `callback` to them.
+
+The return value of the callback function should only include the fields that can be updated and not the whole document. If internal fields are returned (e.g. `history` or `apiVersion`) the operation will fail.
+
+```js
+api.in('users')
+   .whereFieldExists('gender')
+   .apply(function (document) {
+      return {
+        name: (document.gender === 'male') ? ('Mr ' + document.name) : ('Mrs ' + document.name)
+      };
+   });
+```
 
 #### `.create()`
 
@@ -119,22 +135,6 @@ Gets collection stats.
 ```js
 api.in('users')
    .getStats();
-```
-
-#### `.map(callback)`
-
-Updates a list of documents with the result of individually applying `callback` to them. Similar in principle to JavaScript's [Array.map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map) function.
-
-The return value of the callback function should only include the fields that can be updated and not the whole document. If internal fields are returned (e.g. `history` or `apiVersion`) the operation will fail.
-
-```js
-api.in('users')
-   .whereFieldExists('gender')
-   .map(function (document) {
-      return {
-        name: (document.gender === 'male') ? ('Mr ' + document.name) : ('Mrs ' + document.name)
-      };
-   });
 ```
 
 #### `.setConfig()`
