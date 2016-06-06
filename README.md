@@ -360,7 +360,7 @@ Selects a custom endpoint to use. Please note that unlike collections, custom en
 
 ```js
 // Example
-api.in('users');
+api.fromEndpoint('custom-endpoint');
 ```
 
 #### `.in(collection)`
