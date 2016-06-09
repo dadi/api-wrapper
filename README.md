@@ -372,7 +372,7 @@ Selects the collection to use.
 api.in('users');
 ```
 
-#### `useDatabase(database)`
+#### `.useDatabase(database)`
 
 Selects the database to use. Overrides any database defined in the initialisation options, and is reset when called without arguments.
 
@@ -381,7 +381,7 @@ Selects the database to use. Overrides any database defined in the initialisatio
 api.useDatabase('testdb');
 ```
 
-#### `useVersion(version)`
+#### `.useVersion(version)`
 
 Selects the version to use. Overrides any version defined in the initialisation options, and is reset when called without arguments.
 
