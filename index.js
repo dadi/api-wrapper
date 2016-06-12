@@ -1,8 +1,8 @@
 var DadiAPI = function (options) {
-  this.options = options;
+  this.options = options
   
-  this.options.port = this.options.port || 80;
-  this.options.tokenUrl = this.options.tokenUrl || '/token';
+  this.options.port = this.options.port || 80
+  this.options.tokenUrl = this.options.tokenUrl || '/token'
 
   this.passportOptions = {
     issuer: {
@@ -15,25 +15,25 @@ var DadiAPI = function (options) {
     walletOptions: {
       path: __dirname + '/.wallet/token.' + this._slugify(options.uri + options.port) + '.' + this._slugify(options.credentials.clientId) + '.json'
     }
-  };
-};
+  }
+}
 
 // -----------------------------------------
 // Attach helpers
 // -----------------------------------------
 
-require('./lib/helpers')(DadiAPI);
+require('./lib/helpers')(DadiAPI)
 
 // -----------------------------------------
 // Attach filters
 // -----------------------------------------
 
-require('./lib/filters')(DadiAPI);
+require('./lib/filters')(DadiAPI)
 
 // -----------------------------------------
 // Attach terminators
 // -----------------------------------------
 
-require('./lib/terminators')(DadiAPI);
+require('./lib/terminators')(DadiAPI)
 
-module.exports = DadiAPI;
+module.exports = DadiAPI
