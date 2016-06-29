@@ -36,6 +36,18 @@ describe('Initialisation', function (done) {
     done()
   })
 
+  it('should use defaults if options aren\'t provided', function (done) {
+
+    delete options.port
+    delete options.tokenUrl
+
+    var wrapper = new apiWrapper(options)
+    wrapper.options.should.eql(options)
+    wrapper.passportOptions.issuer.port.should.eql(80)
+    wrapper.passportOptions.issuer.endpoint.should.eql('/token')
+    done()
+  })
+
   describe('Helpers', function () {
     before(function() {
       wrapper = new apiWrapper(options)

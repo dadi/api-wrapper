@@ -56,10 +56,47 @@ describe('Helpers', function (done) {
       done()
     })
 
+    it('should build /api url if no collection or endpoint specified', function (done) {
+      wrapper.useVersion('2.0').useDatabase('test')
+      var wrapperUrl = wrapper._buildURL()
+      wrapperUrl.should.eql('http://0.0.0.0:8000/api')
+      done()
+    })
+
+    it('should accept database and version options when initialising', function (done) {
+      options.version = '2.4'
+      options.database = 'test2'
+
+      wrapper = new apiWrapper(options)
+      wrapper.in('collectionOne')._buildURL().should.eql('http://0.0.0.0:8000/2.4/test2/collectionOne')
+      done()
+    })
+
     it('should use version and endpoint if specified', function (done) {
       wrapper.useVersion('2.0').useDatabase('test').fromEndpoint('endpointOne')
       var wrapperUrl = wrapper._buildURL()
       wrapperUrl.should.eql('http://0.0.0.0:8000/2.0/endpointOne')
+      done()
+    })
+
+    it('should build /config url if option specified', function (done) {
+      wrapper.useVersion('2.0').useDatabase('test').in('collectionOne')
+      var wrapperUrl = wrapper._buildURL({config:true})
+      wrapperUrl.should.eql('http://0.0.0.0:8000/2.0/test/collectionOne/config')
+      done()
+    })
+
+    it('should build /stats url if option specified', function (done) {
+      wrapper.useVersion('2.0').useDatabase('test').in('collectionOne')
+      var wrapperUrl = wrapper._buildURL({stats:true})
+      wrapperUrl.should.eql('http://0.0.0.0:8000/2.0/test/collectionOne/stats')
+      done()
+    })
+
+    it('should build id url if option specified', function (done) {
+      wrapper.useVersion('2.0').useDatabase('test').in('collectionOne')
+      var wrapperUrl = wrapper._buildURL({id:123456})
+      wrapperUrl.should.eql('http://0.0.0.0:8000/2.0/test/collectionOne/123456')
       done()
     })
 
