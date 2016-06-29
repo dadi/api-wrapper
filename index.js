@@ -16,6 +16,18 @@ var DadiAPI = function (options) {
       path: __dirname + '/.wallet/token.' + this._slugify(options.uri + options.port) + '.' + this._slugify(options.credentials.clientId) + '.json'
     }
   }
+
+  this.reservedProperties = [
+    '_id',
+    'apiVersion',
+    'createdBy',
+    'createdAt',
+    'lastModifiedAt',
+    'lastModifiedBy',
+    'v',
+    'history',
+    'composed'
+  ]
 }
 
 // -----------------------------------------
