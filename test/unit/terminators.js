@@ -5,6 +5,7 @@ var querystring = require('query-string')
 var should = require('should')
 var sinon = require('sinon')
 var url = require('url')
+var _ = require('underscore')
 
 var apiWrapper = require(__dirname + '/../../index')
 
@@ -28,8 +29,8 @@ var findScope
 
 var fakeResponse = {
   results: [
-    { name: 'John' },
-    { name: 'Jane' }
+    { _id: 1, name: 'John' },
+    { _id: 2, name: 'Jane' }
   ],
   metadata: {
     totalCount: 2
@@ -60,9 +61,7 @@ describe('Terminators', function (done) {
 
   beforeEach(function () {
     wrapper = new apiWrapper(options)
-  })
 
-  describe('find', function () {
     beforeEach(function() {
       tokenScope = nock(options.uri + ':' + options.port)
         .post(options.tokenUrl)
@@ -71,6 +70,77 @@ describe('Terminators', function (done) {
           tokenType: "Bearer",
           expiresIn: 1800
         })
+    })
+  })
+
+  describe('apply', function () {
+    it('should throw an error if no collection is specified', function () {
+      should.throws(function () {
+        return wrapper
+        .useVersion('1.0')
+        .useDatabase('test')
+        .whereFieldIsEqualTo(field, value)
+        .apply(function(){})
+      })
+    })
+
+    it('should throw an error if no query is specified', function () {
+      should.throws(function () {
+        return wrapper
+        .useVersion('1.0')
+        .useDatabase('test')
+        .in('collectionOne')
+        .apply(function(){})
+      })
+    })
+
+    it('should throw an error if no callback is passed', function () {
+      should.throws(function () {
+        return wrapper
+        .useVersion('1.0')
+        .useDatabase('test')
+        .in('collectionOne')
+        .whereFieldIsEqualTo(field, value)
+        .apply()
+      })
+    })
+
+    it('should process each returned document using the callback', function () {
+
+      var query = { filter: JSON.stringify({ name: 'John Doe' }) }
+      var expectedQuerystring  = '?' + querystring.stringify(query, {strict: false})
+      var host = options.uri + ':' + options.port
+      var get = '/1.0/test/collectionOne' + expectedQuerystring
+      var put = '/1.0/test/collectionOne'
+
+      var fakeGet = _.clone(fakeResponse)
+      fakeGet.results[0].age = 10
+      fakeGet.results[1].age = 20
+
+      var findScope = nock(host).get(get).reply(200, fakeGet)
+      var fakePut = _.clone(fakeResponse)
+      var fakePutResponse = _.clone(fakeResponse)
+      fakePut.results[0].age = 15
+      fakePut.results[1].age = 25
+      var putScope1 = nock(host).put(put + '/1', fakePut.results[0]).reply(200, fakePutResponse.results[0])
+      var putScope2 = nock(host).put(put + '/2', fakePut.results[1]).reply(200, fakePutResponse.results[1])
+
+      return wrapper
+      .useVersion('1.0')
+      .useDatabase('test')
+      .in('collectionOne')
+      .whereFieldIsEqualTo(field, value)
+      .apply(function(document) {
+        document.age += 5
+        return document
+      }).then(function (data) {
+        data.should.eql(fakePutResponse.results)
+      })
+    })
+  })
+
+  describe('find', function () {
+    beforeEach(function() {
     })
 
     it('should return the results array when extractResults is specified', function () {
