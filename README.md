@@ -59,15 +59,13 @@ These operations (with the exception of `create()`) can make use of a series of 
 
 Updates a list of documents with the result of individually applying `callback` to them.
 
-The return value of the callback function should only include the fields that can be updated and not the whole document. If internal fields are returned (e.g. `history` or `apiVersion`) the operation will fail.
-
 ```js
 api.in('users')
    .whereFieldExists('gender')
    .apply(function (document) {
-      return {
-        name: (document.gender === 'male') ? ('Mr ' + document.name) : ('Mrs ' + document.name)
-      };
+      document.name = (document.gender === 'male') ? ('Mr ' + document.name) : ('Mrs ' + document.name);
+
+      return document;
    });
 ```
 
