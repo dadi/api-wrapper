@@ -13,7 +13,7 @@ var DadiAPI = function (options) {
     credentials: options.credentials,
     wallet: 'file',
     walletOptions: {
-      path: __dirname + '/.wallet/token.' + DadiAPI.prototype._slugify(options.uri + options.port) + '.' + DadiAPI.prototype._slugify(options.credentials.clientId) + '.json'
+      path: __dirname + '/.wallet/token.' + this._slugify(options.uri + options.port) + '.' + this._slugify(options.credentials.clientId) + '.json'
     }
   }
 
