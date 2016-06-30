@@ -1,10 +1,11 @@
 {
   "name": "@dadi/api-wrapper",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "A high-level library for interacting with DADI API",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "NODE_ENV=test ./node_modules/.bin/istanbul cover --report cobertura --report text --report html --report lcov ./node_modules/.bin/_mocha test",
+    "posttest": "./scripts/coverage.js"
   },
   "author": "Eduardo Boucas <mail@eduardoboucas.com>",
   "license": "GPL",
@@ -20,5 +21,16 @@
   "bugs": {
     "url": "https://github.com/dadi/api-wrapper/issues"
   },
-  "homepage": "https://github.com/dadi/api-wrapper"
+  "homepage": "https://github.com/dadi/api-wrapper",
+  "devDependencies": {
+    "istanbul": "^0.4.4",
+    "istanbul-cobertura-badger": "^1.2.1",
+    "mocha": "^2.5.3",
+    "mockery": "^1.7.0",
+    "nock": "^8.0.0",
+    "should": "^9.0.2",
+    "sinon": "^1.17.4",
+    "supertest": "^1.2.0",
+    "underscore": "^1.8.3"
+  }
 }

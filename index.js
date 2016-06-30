@@ -1,6 +1,6 @@
 var DadiAPI = function (options) {
   this.options = options
-  
+
   this.options.port = this.options.port || 80
   this.options.tokenUrl = this.options.tokenUrl || '/token'
 

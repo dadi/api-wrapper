@@ -2,6 +2,9 @@
 
 > A high-level library for interacting with DADI API
 
+[![npm (scoped)](https://img.shields.io/npm/v/@dadi/api-wrapper.svg?maxAge=2592000&style=flat-square)](https://www.npmjs.com/package/@dadi/api-wrapper)
+&nbsp;![Coverage](https://img.shields.io/badge/Coverage-91%-brightgreen.svg?style=flat-square)&nbsp;[![Build](http://ci.dadi.technology/dadi/api-wrapper/badge?branch=feature/test-suite&style=shield)](http://ci.dadi.technology/dadi/api-wrapper)
+
 ## Overview
 
 [DADI API](https://github.com/dadi/api) is a high performance RESTful API layer designed in support of API-first development and the principle of COPE.
