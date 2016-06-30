@@ -2,7 +2,8 @@
 
 > A high-level library for interacting with DADI API
 
-[![npm version](https://badge.fury.io/js/%40dadi%2Fapi-wrapper.png)](https://badge.fury.io/js/%40dadi%2Fapi-wrapper)&nbsp;![Coverage](https://img.shields.io/badge/Coverage-91%-brightgreen.svg?style=flat-square)
+[![npm (scoped)](https://img.shields.io/npm/v/@dadi/api-wrapper.svg?maxAge=2592000&style=flat-square)](https://www.npmjs.com/package/@dadi/api-wrapper)
+&nbsp;![Coverage](https://img.shields.io/badge/Coverage-91%-brightgreen.svg?style=flat-square)&nbsp;[![Build](http://ci.dadi.technology/dadi/api-wrapper/badge?branch=feature/test-suite&style=shield)](http://ci.dadi.technology/dadi/api-wrapper)
 
 ## Overview
 
