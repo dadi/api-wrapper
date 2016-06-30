@@ -2,7 +2,7 @@
 
 > A high-level library for interacting with DADI API
 
-[![npm version](https://badge.fury.io/js/%40dadi%2Fapi-wrapper.png)](https://badge.fury.io/js/%40dadi%2Fapi-wrapper)&nbsp;![Coverage](https://img.shields.io/badge/Coverage-80%-yellow.svg?style=flat-square)
+[![npm version](https://badge.fury.io/js/%40dadi%2Fapi-wrapper.png)](https://badge.fury.io/js/%40dadi%2Fapi-wrapper)&nbsp;![Coverage](https://img.shields.io/badge/Coverage-88%-brightgreen.svg?style=flat-square)
 
 ## Overview
 
