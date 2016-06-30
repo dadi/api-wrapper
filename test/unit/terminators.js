@@ -314,4 +314,56 @@ describe('Terminators', function (done) {
         })
     })
   })
+
+  describe('getConfig', function (done) {
+    afterEach(function () {
+      apiWrapper.prototype._buildURL.restore()
+    })
+
+    it('should call buildUrl with {config:true}', function() {
+      var host = options.uri + ':' + options.port
+      var urlPath = '/1.0/test/collectionOne/config'
+      var scope = nock(host).get(urlPath).reply(200)
+
+      sinon.stub(apiWrapper.prototype, '_buildURL', function() {
+        var args = arguments[0]
+        args.should.eql({config:true})
+        return this.options.uri + ':' + this.options.port + '/' + this.customVersion + '/' + this.customDatabase + '/' + this.collection + '/config'
+      })
+
+      return wrapper
+        .useVersion('1.0')
+        .useDatabase('test')
+        .in('collectionOne')
+        .getConfig().then().catch((err) => {
+          throw err
+        })
+    })
+  })
+
+  describe('getStats', function () {
+    afterEach(function () {
+      apiWrapper.prototype._buildURL.restore()
+    })
+
+    it('should call buildUrl with {stats:true}', function() {
+      var host = options.uri + ':' + options.port
+      var urlPath = '/1.0/test/collectionOne/stats'
+      var scope = nock(host).get(urlPath).reply(200)
+
+      sinon.stub(apiWrapper.prototype, '_buildURL', function() {
+        var args = arguments[0]
+        args.should.eql({stats:true})
+        return this.options.uri + ':' + this.options.port + '/' + this.customVersion + '/' + this.customDatabase + '/' + this.collection + '/stats'
+      })
+
+      return wrapper
+        .useVersion('1.0')
+        .useDatabase('test')
+        .in('collectionOne')
+        .getStats().then().catch((err) => {
+          throw err
+        })
+    })
+  })
 })
