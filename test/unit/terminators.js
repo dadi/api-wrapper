@@ -299,9 +299,9 @@ describe('Terminators', function (done) {
       var query = { filter: JSON.stringify({ name: 'John' }) }
       var expectedQuerystring  = '?' + querystring.stringify(query, {strict: false})
       var host = options.uri + ':' + options.port
-      var urlPath = '/1.0/test/collectionOne' + expectedQuerystring
+      var urlPath = '/1.0/test/collectionOne/count' + expectedQuerystring
 
-      var findScope = nock(host).get(urlPath).reply(200, fakeResponse)
+      var findScope = nock(host).get(urlPath).reply(200, fakeResponse.metadata)
 
       return wrapper
         .useVersion('1.0')

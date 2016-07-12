@@ -54,8 +54,8 @@ describe('Filters', function (done) {
 
   it('should pass arguments given in `sortBy` to the wrapper', function (done) {
     wrapper.sortBy('name', 'desc')
-    wrapper.sortField.should.eql('name')
-    wrapper.sortOrder.should.eql('desc')
+    console.log(wrapper)
+    wrapper.sort.should.eql({'name':-1})
     done()
   })
 

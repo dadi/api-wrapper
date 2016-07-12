@@ -145,7 +145,7 @@ describe('Helpers', function (done) {
     })
 
     it('should append sort to the querystring if specified', function (done) {
-      var query = { filter: JSON.stringify({ name: 'John' }), sort: 'name', sortOrder: 'asc' }
+      var query = { filter: JSON.stringify({ name: 'John' }), sort: JSON.stringify({ name: 1 }) }
       var expectedQuerystring  = '?' + querystring.stringify(query, {strict: false})
 
       wrapper.useVersion('1.0').useDatabase('test').in('collectionOne').whereFieldIsEqualTo('name', 'John').sortBy('name', 'asc')
