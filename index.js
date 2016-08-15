@@ -1,6 +1,7 @@
 var DadiAPI = function (options) {
   this.options = options
 
+  this.options.appId = this.options.appId || 'DADI API wrapper'
   this.options.port = this.options.port || 80
   this.options.tokenUrl = this.options.tokenUrl || '/token'
 
