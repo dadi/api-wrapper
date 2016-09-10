@@ -31,5 +31,4 @@ node_modules
 
 # Optional REPL history
 .node_repl_history
-
-token.json
+.wallet/token.http-00008000.test.json
