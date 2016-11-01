@@ -24,7 +24,7 @@ This library provides a high-level abstraction of the REST architecture style, e
 2. Add the library and configure the API settings:
 
    ```js
-   var DadiAPI = require('@dadi/api-wrapper');
+   var DadiAPI = require('@dadi/api-wrapper')
    var api = new DadiAPI({
      uri: 'http://api.example.com',
      port: 80,
@@ -34,7 +34,7 @@ This library provides a high-level abstraction of the REST architecture style, e
      },
      version: 'vjoin',
      database: 'testdb'
-   });
+   })
    ```
 
 3. Make a query:
@@ -47,7 +47,7 @@ This library provides a high-level abstraction of the REST architecture style, e
        .find()
        .then(function (response) {
       	 // Use documents here
-       });
+       })
    ```
 
 ## Methods
@@ -66,10 +66,10 @@ Updates a list of documents with the result of individually applying `callback` 
 api.in('users')
    .whereFieldExists('gender')
    .apply(function (document) {
-      document.name = (document.gender === 'male') ? ('Mr ' + document.name) : ('Mrs ' + document.name);
+      document.name = (document.gender === 'male') ? ('Mr ' + document.name) : ('Mrs ' + document.name)
 
-      return document;
-   });
+      return document
+   })
 ```
 
 #### `.create()`
@@ -85,11 +85,11 @@ api.in('users')
       address: '123 Fake St'
    })
    .then(function (doc) {
-      console.log('New document:', doc);
+      console.log('New document:', doc)
    })
    .catch(function (err) {
-      console.log('! Error:', err);
-   });
+      console.log('! Error:', err)
+   })
 ```
 
 #### `.delete()`
@@ -99,7 +99,7 @@ Deletes one or more documents.
 ```js
 api.in('users')
    .whereFieldDoesNotExist('name')
-   .delete();
+   .delete()
 ```
 
 #### `.find(options)`
@@ -110,7 +110,7 @@ Returns a list of documents.
 api.in('users')
    .whereFieldIsGreaterThan('age', 21)
    .useFields(['name', 'age'])
-   .find();
+   .find()
 ```
 
 `options` is one of the following:
@@ -125,10 +125,10 @@ Gets the config for a collection or for the API.
 ```js
 // Gets the collection config
 api.in('users')
-   .getConfig();
+   .getConfig()
 
 // Gets the API config
-api.getConfig();
+api.getConfig()
 ```
 
 #### `.getStats()`
@@ -137,7 +137,7 @@ Gets collection stats.
 
 ```js
 api.in('users')
-   .getStats();
+   .getStats()
 ```
 
 #### `.setConfig()`
@@ -146,15 +146,15 @@ Sets the config for a collection or for the API.
 
 ```js
 // Sets the collection config
-var collectionConfig = {};
+var collectionConfig = {}
 
 api.in('users')
-   .setConfig(collectionConfig);
+   .setConfig(collectionConfig)
 
 // Sets the API config
-var apiConfig = {};
+var apiConfig = {}
 
-api.setConfig(apiConfig);
+api.setConfig(apiConfig)
 ```
 
 #### `.update(update)`
@@ -166,7 +166,7 @@ api.in('users')
    .whereFieldIsLessThan('age', 18)
    .update({
       adult: false
-   });
+   })
 ```
 
 ### Filters
@@ -179,7 +179,7 @@ Defines the page of documents to be used.
 
 ```js
 // Example
-api.goToPage(3);
+api.goToPage(3)
 ```
 
 #### `.limitTo(limit)`
@@ -188,7 +188,7 @@ Defines a maximum number of documents to be retrieved.
 
 ```js
 // Example
-api.limitTo(10);
+api.limitTo(10)
 ```
 
 #### `.sortBy(field, order)`
@@ -197,7 +197,7 @@ Selects a field to sort on and the sort direction. Order defaults to ascending (
 
 ```js
 // Example
-api.sortBy('age', 'desc');
+api.sortBy('age', 'desc')
 ```
 
 #### `.useFields(fields)`
@@ -206,7 +206,7 @@ Selects the fields to be returned in the response. Accepts array format.
 
 ```js
 // Example
-api.useFields(['name', 'age']);
+api.useFields(['name', 'age'])
 ```
 
 #### `.where(query)`
@@ -215,7 +215,7 @@ Filters documents using a MongoDB query object or a Aggregation Pipeline array. 
 
 ```js
 // Example
-api.where({name: 'John Doe'});
+api.where({name: 'John Doe'})
 ```
 
 #### `.whereFieldBeginsWith(field, text)`
@@ -224,7 +224,7 @@ Filters documents where `field` begins with `text`.
 
 ```js
 // Example
-api.whereFieldBeginsWith('name', 'john');
+api.whereFieldBeginsWith('name', 'john')
 ```
 
 #### `.whereFieldContains(field, text)`
@@ -233,7 +233,7 @@ Filters documents where `field` contains `text`.
 
 ```js
 // Example
-api.whereFieldContains('name', 'john');
+api.whereFieldContains('name', 'john')
 ```
 
 #### `.whereFieldDoesNotContain(field, text)`
@@ -242,7 +242,7 @@ Filters documents `field` does not contain `text`.
 
 ```js
 // Example
-api.whereFieldDoesNotContain('name', 'john');
+api.whereFieldDoesNotContain('name', 'john')
 ```
 
 #### `.whereFieldEndsWith(field, text)`
@@ -251,7 +251,7 @@ Filters documents where field starts with `text`.
 
 ```js
 // Example
-api.whereFieldEndsWith('name', 'john');
+api.whereFieldEndsWith('name', 'john')
 ```
 
 #### `.whereFieldExists(field)`
@@ -260,7 +260,7 @@ Filters documents that contain a field.
 
 ```js
 // Example
-api.whereFieldExists('name');
+api.whereFieldExists('name')
 ```
 
 #### `.whereFieldDoesNotExist(field)`
@@ -269,7 +269,7 @@ Filters documents that do not contain a field.
 
 ```js
 // Example
-api.whereFieldDoesNotExist('address');
+api.whereFieldDoesNotExist('address')
 ```
 
 #### `.whereFieldIsEqualTo(field, value)`
@@ -278,7 +278,7 @@ Filters documents where `field` is equal to `value`.
 
 ```js
 // Example
-api.whereFieldIsEqualTo('age', 53);
+api.whereFieldIsEqualTo('age', 53)
 ```
 
 #### `.whereFieldIsGreaterThan(field, value)`
@@ -287,7 +287,7 @@ Filters documents where `field` is greater than `value`.
 
 ```js
 // Example
-api.whereFieldIsGreaterThan('age', 18);
+api.whereFieldIsGreaterThan('age', 18)
 ```
 
 #### `.whereFieldIsGreaterThanOrEqualTo(field, value)`
@@ -296,7 +296,7 @@ Filters documents where `field` is greater than or equal to `value`.
 
 ```js
 // Example
-api.whereFieldIsGreaterThanOrEqualTo('age', 19);
+api.whereFieldIsGreaterThanOrEqualTo('age', 19)
 ```
 
 #### `.whereFieldIsLessThan(field, value)`
@@ -305,7 +305,7 @@ Filters documents where `field` is less than `value`.
 
 ```js
 // Example
-api.whereFieldIsLessThan('age', 65);
+api.whereFieldIsLessThan('age', 65)
 ```
 
 #### `.whereFieldIsLessThanOrEqualTo(field, value)`
@@ -314,7 +314,7 @@ Filters documents where `field` is less than or equal to `value`.
 
 ```js
 // Example
-api.whereFieldIsLessThanOrEqualTo('age', 64);
+api.whereFieldIsLessThanOrEqualTo('age', 64)
 ```
 
 #### `.whereFieldIsOneOf(field, matches)`
@@ -323,7 +323,7 @@ Filters documents where the value of `field` is one of the elements of `matches`
 
 ```js
 // Example
-api.whereFieldIsOneOf('name', ['John', 'Jack', 'Peter']);
+api.whereFieldIsOneOf('name', ['John', 'Jack', 'Peter'])
 ```
 
 #### `.whereFieldIsNotEqualTo(field, value)`
@@ -332,7 +332,7 @@ Filters documents where `field` is not equal to `value`.
 
 ```js
 // Example
-api.whereFieldIsEqualTo('age', 53);
+api.whereFieldIsEqualTo('age', 53)
 ```
 
 #### `.whereFieldIsNotOneOf(field, matches)`
@@ -341,18 +341,18 @@ Filters documents where the value of `field` is not one of the elements of `matc
 
 ```js
 // Example
-api.whereFieldIsNotOneOf('name', ['Mark', 'Nathan', 'David']);
+api.whereFieldIsNotOneOf('name', ['Mark', 'Nathan', 'David'])
 ```
 
 #### `.withComposition(value)`
 
-Defines whether nested documents should be resolved using composition. Defaults to `false`.
+Defines whether nested documents should be resolved using composition. The default is to let API decide based on the queried collection's settings.
 
 ```js
 // Example
-api.withComposition();
-api.withComposition(true); // same as above
-api.withComposition(false);
+api.withComposition()
+api.withComposition(true) // same as above
+api.withComposition(false)
 ```
 
 ### Other methods
@@ -363,7 +363,7 @@ Selects a custom endpoint to use. Please note that unlike collections, custom en
 
 ```js
 // Example
-api.fromEndpoint('custom-endpoint');
+api.fromEndpoint('custom-endpoint')
 ```
 
 #### `.in(collection)`
@@ -372,7 +372,7 @@ Selects the collection to use.
 
 ```js
 // Example
-api.in('users');
+api.in('users')
 ```
 
 #### `.useDatabase(database)`
@@ -381,7 +381,7 @@ Selects the database to use. Overrides any database defined in the initialisatio
 
 ```js
 // Example
-api.useDatabase('testdb');
+api.useDatabase('testdb')
 ```
 
 #### `.useVersion(version)`
@@ -390,7 +390,7 @@ Selects the version to use. Overrides any version defined in the initialisation 
 
 ```js
 // Example
-api.useVersion('1.0');
+api.useVersion('1.0')
 ```
 
 ### Debug mode
@@ -398,7 +398,7 @@ api.useVersion('1.0');
 With debug mode, you'll be able to see exactly how the requests made to API look like. This functionality is enabled by setting a `debug` property in the config:
 
 ```js
-var DadiAPI = require('@dadi/api-wrapper');
+var DadiAPI = require('@dadi/api-wrapper')
 var api = new DadiAPI({
   uri: 'http://api.example.com',
   port: 80,
@@ -409,7 +409,7 @@ var api = new DadiAPI({
   version: 'vjoin',
   database: 'testdb',
   debug: true
-});
+})
 ```
 
 ```
