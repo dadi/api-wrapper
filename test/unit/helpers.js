@@ -166,11 +166,22 @@ describe('Helpers', function (done) {
       done()
     })
 
-    it('should append compose value to the querystring if specified', function (done) {
+    it('should append compose value to the querystring if specified and `true`', function (done) {
       var query = { compose: true, filter: JSON.stringify({ name: 'John' }) }
       var expectedQuerystring  = '?' + querystring.stringify(query, {strict: false})
 
       wrapper.useVersion('1.0').useDatabase('test').in('collectionOne').whereFieldIsEqualTo('name', 'John').withComposition(true)
+
+      var wrapperUrl = wrapper._buildURL({useParams: true})
+      wrapperUrl.should.eql('http://0.0.0.0:8000/1.0/test/collectionOne' + expectedQuerystring)
+      done()
+    })
+
+    it('should append compose value to the querystring if specified and `false`', function (done) {
+      var query = { compose: false, filter: JSON.stringify({ name: 'John' }) }
+      var expectedQuerystring  = '?' + querystring.stringify(query, {strict: false})
+
+      wrapper.useVersion('1.0').useDatabase('test').in('collectionOne').whereFieldIsEqualTo('name', 'John').withComposition(false)
 
       var wrapperUrl = wrapper._buildURL({useParams: true})
       wrapperUrl.should.eql('http://0.0.0.0:8000/1.0/test/collectionOne' + expectedQuerystring)
@@ -187,41 +198,5 @@ describe('Helpers', function (done) {
       wrapperUrl.should.eql('http://0.0.0.0:8000/1.0/test/collectionOne' + expectedQuerystring)
       done()
     })
-
-  //
-  // // it('should throw if no model is passed to constructor', function (done) {
-  // //   controller.should.throw()
-  // //   done()
-  // // })
-  // //
-  // // it("should call the Model's find method", function (done) {
-  // //   var mod = model('testModel', help.getModelSchema())
-  // //   var stub = sinon.stub(mod, 'find')
-  // //
-  // //   var req = {
-  // //     url: '/foo/bar'
-  // //   }
-  // //
-  // //   controller(mod).get(req)
-  // //   stub.callCount.should.equal(1)
-  // //   stub.restore()
-  // //   done()
-  // // })
-  // //
-  // // it('should strip unknown params from the query', function (done) {
-  // //   var mod = model('testModel', help.getModelSchema())
-  // //   var stub = sinon.stub(mod, 'find')
-  // //
-  // //   var req = {
-  // //     url: '/foo/bar?filter={"fieldName":"test", "busted":56488}'
-  // //   }
-  // //
-  // //   controller(mod).get(req)
-  // //   stub.callCount.should.equal(1)
-  // //   var findArgs = stub.returnsArg(0).args[0][0]
-  // //   findArgs.hasOwnProperty('busted').should.be.false
-  // //   stub.restore()
-  // //   done()
-  // })
   })
 })
