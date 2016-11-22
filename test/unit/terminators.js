@@ -187,25 +187,16 @@ describe('Terminators', function (done) {
 
     it('should delete each document returned from the query', function () {
 
-      var query = { filter: JSON.stringify({ name: 'John Doe' }) }
-      var expectedQuerystring  = '?' + querystring.stringify(query, {strict: false})
+      var query = { query: { name: 'John Doe' } }
       var host = options.uri + ':' + options.port
-      var get = '/1.0/test/collectionOne' + expectedQuerystring
       var del = '/1.0/test/collectionOne'
-
-      // Prepare a fake response body for the GET request inside
-      // API Wrapper
-      var fakeGet = _.clone(fakeResponse)
-
-      var findScope = nock(host).get(get).reply(200, fakeGet)
 
       // Prepare fake response bodies for the DELETE request inside API Wrapper
       var fakeDelete = _.clone(fakeResponse)
 
       // Set up the http intercepts - we ask it to return the same document we passed in
       // because that's what'll happen anyway
-      var deleteScope1 = nock(host).delete(del + '/' + fakeDelete.results[0]._id).reply(200)
-      var deleteScope2 = nock(host).delete(del + '/' + fakeDelete.results[1]._id).reply(200)
+      var deleteScope1 = nock(host).delete(del, query).reply(204)
 
       return wrapper
       .useVersion('1.0')
@@ -213,7 +204,7 @@ describe('Terminators', function (done) {
       .in('collectionOne')
       .whereFieldIsEqualTo(field, value)
       .delete().then(function (data) {
-        data.should.eql(true)
+        should.not.exist(data)
       })
     })
   })
