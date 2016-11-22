@@ -1,4 +1,6 @@
-var DadiAPI = function (options) {
+'use strict'
+
+const DadiAPI = function (options) {
   this.options = options
 
   this.options.appId = this.options.appId || 'DADI API wrapper'
@@ -29,6 +31,14 @@ var DadiAPI = function (options) {
     'history',
     'composed'
   ]
+
+  // Initialise logger
+  this.logger = require('@dadi/logger')
+  this.logger.init({
+    enabled: true,
+    filename: 'api-wrapper',
+    level: this.options.debug ? 'info' : 'warn'
+  })
 }
 
 // -----------------------------------------
