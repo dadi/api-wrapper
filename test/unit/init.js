@@ -63,13 +63,13 @@ describe('Initialisation', function (done) {
       done()
     })
 
-    it('should attach `_get` to the wrapper', function (done) {
-      wrapper._get.should.be.Function
+    it('should attach `_reset` to the wrapper', function (done) {
+      wrapper._reset.should.be.Function
       done()
     })
 
-    it('should attach `_reset` to the wrapper', function (done) {
-      wrapper._reset.should.be.Function
+    it('should attach `_request` to the wrapper', function (done) {
+      wrapper._request.should.be.Function
       done()
     })
 
