@@ -11,7 +11,7 @@
   "license": "GPL",
   "dependencies": {
     "@dadi/logger": "^1.1.3",
-    "@dadi/passport": "^1.0.1",
+    "@dadi/passport": "latest",
     "query-string": "^4.1.0",
     "request-promise": "^2.0.1",
     "standard": "*"
