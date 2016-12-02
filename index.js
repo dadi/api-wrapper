@@ -1,6 +1,8 @@
 'use strict'
 
-const DadiAPI = function (options) {
+const APIWrapperCore = require(__dirname + '/../api-wrapper-core')
+
+const APIWrapper = function (options) {
   this.options = options
 
   this.options.appId = this.options.appId || 'DADI API wrapper'
@@ -20,18 +22,6 @@ const DadiAPI = function (options) {
     }
   }
 
-  this.reservedProperties = [
-    '_id',
-    'apiVersion',
-    'createdBy',
-    'createdAt',
-    'lastModifiedAt',
-    'lastModifiedBy',
-    'v',
-    'history',
-    'composed'
-  ]
-
   // Initialise logger
   this.logger = require('@dadi/logger')
   this.logger.init({
@@ -41,22 +31,18 @@ const DadiAPI = function (options) {
   })
 }
 
+APIWrapper.prototype = new APIWrapperCore()
+
 // -----------------------------------------
 // Attach helpers
 // -----------------------------------------
 
-require('./lib/helpers')(DadiAPI)
-
-// -----------------------------------------
-// Attach filters
-// -----------------------------------------
-
-require('./lib/filters')(DadiAPI)
+require('./lib/helpers')(APIWrapper)
 
 // -----------------------------------------
 // Attach terminators
 // -----------------------------------------
 
-require('./lib/terminators')(DadiAPI)
+require('./lib/terminators')(APIWrapper)
 
-module.exports = DadiAPI
+module.exports = APIWrapper
