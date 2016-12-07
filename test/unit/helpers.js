@@ -1,7 +1,7 @@
 var path = require('path')
 var should = require('should')
 var sinon = require('sinon')
-var querystring = require('query-string')
+var querystring = require('querystring')
 var url = require('url')
 
 var apiWrapper = require(__dirname + '/../../index')
@@ -102,7 +102,7 @@ describe('Helpers', function (done) {
 
     it('should append query to the querystring if specified', function (done) {
       var query = { filter: JSON.stringify({ name: 'John' }) }
-      var expectedQuerystring  = '?' + querystring.stringify(query, {strict: false})
+      var expectedQuerystring  = '?' + decodeURIComponent(querystring.stringify(query))
 
       wrapper.useVersion('1.0').useDatabase('test').in('collectionOne').whereFieldIsEqualTo('name', 'John')
 
@@ -113,7 +113,7 @@ describe('Helpers', function (done) {
 
     it('should append limit to the querystring if specified', function (done) {
       var query = { filter: JSON.stringify({ name: 'John' }), page: 33 }
-      var expectedQuerystring  = '?' + querystring.stringify(query, {strict: false})
+      var expectedQuerystring  = '?' + decodeURIComponent(querystring.stringify(query))
 
       wrapper.useVersion('1.0').useDatabase('test').in('collectionOne').whereFieldIsEqualTo('name', 'John').goToPage(33)
 
@@ -123,8 +123,8 @@ describe('Helpers', function (done) {
     })
 
     it('should append limit to the querystring if specified', function (done) {
-      var query = { count: 10, filter: JSON.stringify({ name: 'John' }) }
-      var expectedQuerystring  = '?' + querystring.stringify(query, {strict: false})
+      var query = { filter: JSON.stringify({ name: 'John' }), count: 10 }
+      var expectedQuerystring  = '?' + decodeURIComponent(querystring.stringify(query))
 
       wrapper.useVersion('1.0').useDatabase('test').in('collectionOne').whereFieldIsEqualTo('name', 'John').limitTo(10)
 
@@ -135,7 +135,7 @@ describe('Helpers', function (done) {
 
     it('should not append limit to the querystring if a non-digit is specified', function (done) {
       var query = { filter: JSON.stringify({ name: 'John' }) }
-      var expectedQuerystring  = '?' + querystring.stringify(query, {strict: false})
+      var expectedQuerystring  = '?' + decodeURIComponent(querystring.stringify(query))
 
       wrapper.useVersion('1.0').useDatabase('test').in('collectionOne').whereFieldIsEqualTo('name', 'John').limitTo('name')
 
@@ -146,7 +146,7 @@ describe('Helpers', function (done) {
 
     it('should append sort to the querystring if specified', function (done) {
       var query = { filter: JSON.stringify({ name: 'John' }), sort: JSON.stringify({ name: 1 }) }
-      var expectedQuerystring  = '?' + querystring.stringify(query, {strict: false})
+      var expectedQuerystring  = '?' + decodeURIComponent(querystring.stringify(query))
 
       wrapper.useVersion('1.0').useDatabase('test').in('collectionOne').whereFieldIsEqualTo('name', 'John').sortBy('name', 'asc')
 
@@ -156,8 +156,8 @@ describe('Helpers', function (done) {
     })
 
     it('should append fields to the querystring if specified', function (done) {
-      var query = { fields: JSON.stringify({ name: 1 }), filter: JSON.stringify({ name: 'John' }) }
-      var expectedQuerystring  = '?' + querystring.stringify(query, {strict: false})
+      var query = { filter: JSON.stringify({ name: 'John' }), fields: JSON.stringify({ name: 1 }) }
+      var expectedQuerystring  = '?' + decodeURIComponent(querystring.stringify(query))
 
       wrapper.useVersion('1.0').useDatabase('test').in('collectionOne').whereFieldIsEqualTo('name', 'John').useFields(['name'])
 
@@ -167,8 +167,8 @@ describe('Helpers', function (done) {
     })
 
     it('should append compose value to the querystring if specified and `true`', function (done) {
-      var query = { compose: true, filter: JSON.stringify({ name: 'John' }) }
-      var expectedQuerystring  = '?' + querystring.stringify(query, {strict: false})
+      var query = { filter: JSON.stringify({ name: 'John' }), compose: true }
+      var expectedQuerystring  = '?' + decodeURIComponent(querystring.stringify(query))
 
       wrapper.useVersion('1.0').useDatabase('test').in('collectionOne').whereFieldIsEqualTo('name', 'John').withComposition(true)
 
@@ -178,8 +178,8 @@ describe('Helpers', function (done) {
     })
 
     it('should append compose value to the querystring if specified and `false`', function (done) {
-      var query = { compose: false, filter: JSON.stringify({ name: 'John' }) }
-      var expectedQuerystring  = '?' + querystring.stringify(query, {strict: false})
+      var query = { filter: JSON.stringify({ name: 'John' }), compose: false }
+      var expectedQuerystring  = '?' + decodeURIComponent(querystring.stringify(query))
 
       wrapper.useVersion('1.0').useDatabase('test').in('collectionOne').whereFieldIsEqualTo('name', 'John').withComposition(false)
 
@@ -190,7 +190,7 @@ describe('Helpers', function (done) {
 
     it('should append includeHistory value to the querystring if specified', function (done) {
       var query = { filter: JSON.stringify({ name: 'John' }), includeHistory: true }
-      var expectedQuerystring  = '?' + querystring.stringify(query, {strict: false})
+      var expectedQuerystring  = '?' + decodeURIComponent(querystring.stringify(query))
 
       wrapper.useVersion('1.0').useDatabase('test').in('collectionOne').whereFieldIsEqualTo('name', 'John').includeHistory(true)
 

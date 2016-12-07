@@ -110,9 +110,8 @@ describe('Terminators', function (done) {
     })
 
     it('should process each returned document using the callback', function () {
-
       var query = { filter: JSON.stringify({ name: 'John Doe' }) }
-      var expectedQuerystring  = '?' + querystring.stringify(query, {strict: false})
+      var expectedQuerystring  = '?' + decodeURIComponent(querystring.stringify(query))
       var host = options.uri + ':' + options.port
       var get = '/1.0/test/collectionOne' + expectedQuerystring
       var put = '/1.0/test/collectionOne'
@@ -228,7 +227,7 @@ describe('Terminators', function (done) {
     it('should return the results array when extractResults is specified', function () {
 
       var query = { filter: JSON.stringify({ name: 'John' }) }
-      var expectedQuerystring  = '?' + querystring.stringify(query, {strict: false})
+      var expectedQuerystring  = '?' + decodeURIComponent(querystring.stringify(query))
       var host = options.uri + ':' + options.port
       var urlPath = '/1.0/test/collectionOne' + expectedQuerystring
 
@@ -248,7 +247,7 @@ describe('Terminators', function (done) {
     it('should return the full results object when extractResults is not specified', function () {
 
       var query = { filter: JSON.stringify({ name: 'John' }) }
-      var expectedQuerystring  = '?' + querystring.stringify(query, {strict: false})
+      var expectedQuerystring  = '?' + decodeURIComponent(querystring.stringify(query))
       var host = options.uri + ':' + options.port
       var urlPath = '/1.0/test/collectionOne' + expectedQuerystring
 
@@ -268,7 +267,7 @@ describe('Terminators', function (done) {
     it('should return the full results object when extractResults = false', function () {
 
       var query = { filter: JSON.stringify({ name: 'John' }) }
-      var expectedQuerystring  = '?' + querystring.stringify(query, {strict: false})
+      var expectedQuerystring  = '?' + decodeURIComponent(querystring.stringify(query))
       var host = options.uri + ':' + options.port
       var urlPath = '/1.0/test/collectionOne' + expectedQuerystring
 
@@ -288,7 +287,7 @@ describe('Terminators', function (done) {
     it('should return the metadata object when extractMetadata = true', function () {
 
       var query = { filter: JSON.stringify({ name: 'John' }) }
-      var expectedQuerystring  = '?' + querystring.stringify(query, {strict: false})
+      var expectedQuerystring  = '?' + decodeURIComponent(querystring.stringify(query))
       var host = options.uri + ':' + options.port
       var urlPath = '/1.0/test/collectionOne/count' + expectedQuerystring
 
