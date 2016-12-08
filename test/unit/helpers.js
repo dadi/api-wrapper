@@ -1,7 +1,8 @@
+var nock = require('nock')
 var path = require('path')
+var querystring = require('querystring')
 var should = require('should')
 var sinon = require('sinon')
-var querystring = require('querystring')
 var url = require('url')
 
 var apiWrapper = require(__dirname + '/../../index')
@@ -31,19 +32,16 @@ describe('Helpers', function (done) {
   })
 
   describe('Build URL', function () {
-
-    it.skip('should use values from the options object', function (done) {
+    it('should use values from the options object', function (done) {
       var wrapperUrl = wrapper._buildURL()
-      //console.log(wrapperUrl)
       var parsedUrl = url.parse(wrapperUrl)
-      console.log(parsedUrl)
-      parsedUrl.hostname.should.eql(options.uri)
-      parsedUrl.port.should.eql(options.port)
+      parsedUrl.hostname.should.eql('0.0.0.0')
+      parsedUrl.port.should.eql(options.port.toString())
       done()
     })
 
-    it.skip('should use customDatabase if specified', function (done) {
-      wrapper.useDatabase('test').in('collectionOne')
+    it('should use customDatabase if specified', function (done) {
+      wrapper.useVersion('1.0').useDatabase('test').in('collectionOne')
       var wrapperUrl = wrapper._buildURL()
       wrapperUrl.should.eql('http://0.0.0.0:8000/1.0/test/collectionOne')
       done()
@@ -197,6 +195,40 @@ describe('Helpers', function (done) {
       var wrapperUrl = wrapper._buildURL({useParams: true})
       wrapperUrl.should.eql('http://0.0.0.0:8000/1.0/test/collectionOne' + expectedQuerystring)
       done()
+    })
+  })
+
+  describe('processRequest', function () {
+    it('should refresh token if invalid_token response is received', function () {
+      var host = options.uri + ':' + options.port
+
+      var findScope401 = nock(host)
+      .get('/1.0/test/collectionOne')
+      .reply(401, '', {
+        'www-authenticate': 'error=invalid_token'
+      })
+
+      var tokenScope = nock(host)
+      .post('/token')
+      .reply(200, {
+        accessToken: "d08c2efb-c0d6-446a-ba84-4a4199c9e0c5",
+        tokenType: "Bearer",
+        expiresIn: 1800
+      })
+
+      var findScope200 = nock(host)
+      .get('/1.0/test/collectionOne')
+      .reply(200, {'hello':'world'})
+
+      return wrapper
+      .useVersion('1.0')
+      .useDatabase('test')
+      .in('collectionOne')
+      .find()
+      .then(function (data) {
+        nock.pendingMocks().should.eql([])
+        data.should.eql({'hello':'world'})
+      })
     })
   })
 })

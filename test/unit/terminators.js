@@ -228,7 +228,6 @@ describe('Terminators', function (done) {
     })
 
     it('should return the results array when extractResults is specified', function () {
-
       var query = { filter: JSON.stringify({ name: 'John' }) }
       var expectedQuerystring  = '?' + querystring.stringify(query).replace('%3A', ':')
       var host = options.uri + ':' + options.port
@@ -248,7 +247,6 @@ describe('Terminators', function (done) {
     })
 
     it('should return the full results object when extractResults is not specified', function () {
-
       var query = { filter: JSON.stringify({ name: 'John' }) }
       var expectedQuerystring  = '?' + querystring.stringify(query).replace('%3A', ':')
       var host = options.uri + ':' + options.port
@@ -268,7 +266,6 @@ describe('Terminators', function (done) {
     })
 
     it('should return the full results object when extractResults = false', function () {
-
       var query = { filter: JSON.stringify({ name: 'John' }) }
       var expectedQuerystring  = '?' + querystring.stringify(query).replace('%3A', ':')
       var host = options.uri + ':' + options.port
@@ -288,7 +285,6 @@ describe('Terminators', function (done) {
     })
 
     it('should return the metadata object when extractMetadata = true', function () {
-
       var query = { filter: JSON.stringify({ name: 'John' }) }
       var expectedQuerystring  = '?' + querystring.stringify(query).replace('%3A', ':')
       var host = options.uri + ':' + options.port
