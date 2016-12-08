@@ -1,6 +1,6 @@
 'use strict'
 
-const APIWrapperCore = require(__dirname + '/../api-wrapper-core')
+const APIWrapperCore = require('@dadi/api-wrapper-core')
 
 const APIWrapper = function (options) {
   this.options = options
