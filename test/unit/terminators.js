@@ -1,7 +1,7 @@
 var mockery = require('mockery')
 var nock = require('nock')
 var path = require('path')
-var querystring = require('query-string')
+var querystring = require('querystring')
 var should = require('should')
 var sinon = require('sinon')
 var url = require('url')
@@ -110,16 +110,15 @@ describe('Terminators', function (done) {
     })
 
     it('should process each returned document using the callback', function () {
-
       var query = { filter: JSON.stringify({ name: 'John Doe' }) }
-      var expectedQuerystring  = '?' + querystring.stringify(query, {strict: false})
+      var expectedQuerystring  = '?' + querystring.stringify(query).replace('%3A', ':')
       var host = options.uri + ':' + options.port
       var get = '/1.0/test/collectionOne' + expectedQuerystring
       var put = '/1.0/test/collectionOne'
 
       // Prepare a fake response body for the GET request inside
       // API Wrapper
-      var fakeGet = _.clone(fakeResponse)
+      var fakeGet = JSON.parse(JSON.stringify((fakeResponse)))
       fakeGet.results[0].age = 10
       fakeGet.results[1].age = 20
 
@@ -127,19 +126,22 @@ describe('Terminators', function (done) {
 
       // Prepare fake response bodies for the PUT request inside
       // API Wrapper when each document is updated during apply()
-      var fakePut = _.clone(fakeResponse)
+      var fakePut = JSON.parse(JSON.stringify((fakeResponse)))
       fakePut.results[0].age = 15
       fakePut.results[1].age = 25
 
-      var fakePutResponse = _.clone(fakePut)
-
-      delete fakePut.results[0]._id
-      delete fakePut.results[1]._id
+      var fakePutResponse = JSON.parse(JSON.stringify((fakePut)))
 
       // Set up the http intercepts - we ask it to return the same document we passed in
       // because that's what'll happen anyway
-      var putScope1 = nock(host).put(put + '/1', fakePut.results[0]).reply(200, { results: [ fakePutResponse.results[0] ] })
-      var putScope2 = nock(host).put(put + '/2', fakePut.results[1]).reply(200, { results: [ fakePutResponse.results[1] ] })
+      var putScope1 = nock(host).put(put, { query: { _id: fakeResponse.results[0]._id }, update: fakePut.results[0] })
+                                .reply(200, { results: [ fakePutResponse.results[0] ] })
+
+      var putScope2 = nock(host).put(put, { query: { _id: fakeResponse.results[1]._id }, update: fakePut.results[1] })
+                                .reply(200, { results: [ fakePutResponse.results[1] ] })
+
+      delete fakePut.results[0]._id
+      delete fakePut.results[1]._id
 
       return wrapper
       .useVersion('1.0')
@@ -187,25 +189,16 @@ describe('Terminators', function (done) {
 
     it('should delete each document returned from the query', function () {
 
-      var query = { filter: JSON.stringify({ name: 'John Doe' }) }
-      var expectedQuerystring  = '?' + querystring.stringify(query, {strict: false})
+      var query = { query: { name: 'John Doe' } }
       var host = options.uri + ':' + options.port
-      var get = '/1.0/test/collectionOne' + expectedQuerystring
       var del = '/1.0/test/collectionOne'
-
-      // Prepare a fake response body for the GET request inside
-      // API Wrapper
-      var fakeGet = _.clone(fakeResponse)
-
-      var findScope = nock(host).get(get).reply(200, fakeGet)
 
       // Prepare fake response bodies for the DELETE request inside API Wrapper
       var fakeDelete = _.clone(fakeResponse)
 
       // Set up the http intercepts - we ask it to return the same document we passed in
       // because that's what'll happen anyway
-      var deleteScope1 = nock(host).delete(del + '/' + fakeDelete.results[0]._id).reply(200)
-      var deleteScope2 = nock(host).delete(del + '/' + fakeDelete.results[1]._id).reply(200)
+      var deleteScope1 = nock(host).delete(del, query).reply(204)
 
       return wrapper
       .useVersion('1.0')
@@ -213,7 +206,7 @@ describe('Terminators', function (done) {
       .in('collectionOne')
       .whereFieldIsEqualTo(field, value)
       .delete().then(function (data) {
-        data.should.eql(true)
+        should.not.exist(data)
       })
     })
   })
@@ -235,9 +228,8 @@ describe('Terminators', function (done) {
     })
 
     it('should return the results array when extractResults is specified', function () {
-
       var query = { filter: JSON.stringify({ name: 'John' }) }
-      var expectedQuerystring  = '?' + querystring.stringify(query, {strict: false})
+      var expectedQuerystring  = '?' + querystring.stringify(query).replace('%3A', ':')
       var host = options.uri + ':' + options.port
       var urlPath = '/1.0/test/collectionOne' + expectedQuerystring
 
@@ -255,9 +247,8 @@ describe('Terminators', function (done) {
     })
 
     it('should return the full results object when extractResults is not specified', function () {
-
       var query = { filter: JSON.stringify({ name: 'John' }) }
-      var expectedQuerystring  = '?' + querystring.stringify(query, {strict: false})
+      var expectedQuerystring  = '?' + querystring.stringify(query).replace('%3A', ':')
       var host = options.uri + ':' + options.port
       var urlPath = '/1.0/test/collectionOne' + expectedQuerystring
 
@@ -275,9 +266,8 @@ describe('Terminators', function (done) {
     })
 
     it('should return the full results object when extractResults = false', function () {
-
       var query = { filter: JSON.stringify({ name: 'John' }) }
-      var expectedQuerystring  = '?' + querystring.stringify(query, {strict: false})
+      var expectedQuerystring  = '?' + querystring.stringify(query).replace('%3A', ':')
       var host = options.uri + ':' + options.port
       var urlPath = '/1.0/test/collectionOne' + expectedQuerystring
 
@@ -295,9 +285,8 @@ describe('Terminators', function (done) {
     })
 
     it('should return the metadata object when extractMetadata = true', function () {
-
       var query = { filter: JSON.stringify({ name: 'John' }) }
-      var expectedQuerystring  = '?' + querystring.stringify(query, {strict: false})
+      var expectedQuerystring  = '?' + querystring.stringify(query).replace('%3A', ':')
       var host = options.uri + ':' + options.port
       var urlPath = '/1.0/test/collectionOne/count' + expectedQuerystring
 
