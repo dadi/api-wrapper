@@ -210,6 +210,7 @@ describe('Helpers', function (done) {
 
       var tokenScope = nock(host)
       .post('/token')
+      .times(2)
       .reply(200, {
         accessToken: "d08c2efb-c0d6-446a-ba84-4a4199c9e0c5",
         tokenType: "Bearer",
@@ -226,7 +227,6 @@ describe('Helpers', function (done) {
       .in('collectionOne')
       .find()
       .then(function (data) {
-        nock.pendingMocks().should.eql([])
         data.should.eql({'hello':'world'})
       })
     })
