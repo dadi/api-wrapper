@@ -21,14 +21,6 @@ const APIWrapper = function (options) {
       path: __dirname + '/.wallet/token.' + this._slugify(options.uri + options.port) + '.' + this._slugify(options.credentials.clientId) + '.json'
     }
   }
-
-  // Initialise logger
-  this.logger = require('@dadi/logger')
-  this.logger.init({
-    enabled: true,
-    filename: 'api-wrapper',
-    level: this.options.debug ? 'info' : 'warn'
-  })
 }
 
 APIWrapper.prototype = new APIWrapperCore()
