@@ -130,16 +130,20 @@ api.getCollections()
 *Output:*
 
 ```json
-{
-  "method": "GET",
-  "uri": {
-    "href": "http://api.example.com:80/api/collections",
-    "hostname": "api.example.com",
-    "path": "/api/collections",
-    "port": "80",
-    "protocol": "http:"
+[
+  { version: '1.0',
+    database: 'radio',
+    name: 'Articles',
+    slug: 'articles',
+    path: '/1.0/radio/articles'
+  },
+  { version: '1.0',
+    database: 'radio',
+    name: 'Authors',
+    slug: 'authors',
+    path: '/1.0/radio/authors'
   }
-}
+]
 ```
 
 #### `.getConfig()`
