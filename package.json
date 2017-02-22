@@ -11,7 +11,7 @@
   "author": "Eduardo Boucas <mail@eduardoboucas.com>",
   "license": "GPL",
   "dependencies": {
-    "@dadi/api-wrapper-core": "^1.0.0",
+    "@dadi/api-wrapper-core": "1.x.0",
     "@dadi/logger": "^1.1.3",
     "@dadi/passport": "^1.2.0",
     "query-string": "^4.1.0",
