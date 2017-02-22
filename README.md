@@ -131,17 +131,19 @@ api.getCollections()
 
 ```json
 [
-  { version: '1.0',
-    database: 'radio',
-    name: 'Articles',
-    slug: 'articles',
-    path: '/1.0/radio/articles'
+  {
+    "version": "1.0",
+    "database": "radio",
+    "name": "Articles",
+    "slug": "articles",
+    "path": "/1.0/radio/articles"
   },
-  { version: '1.0',
-    database: 'radio',
-    name: 'Authors',
-    slug: 'authors',
-    path: '/1.0/radio/authors'
+  {
+    "version": "1.0",
+    "database": "radio",
+    "name": "Authors",
+    "slug": "authors",
+    "path": "/1.0/radio/authors"
   }
 ]
 ```
