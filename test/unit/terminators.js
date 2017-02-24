@@ -355,4 +355,26 @@ describe('Terminators', function (done) {
         })
     })
   })
+
+  describe('getCollections', function () {
+    afterEach(function () {
+      apiWrapper.prototype._buildURL.restore()
+    })
+
+    it('should call buildUrl with {collections:true}', function() {
+      var host = options.uri + ':' + options.port
+      var urlPath = '/api/collections'
+      var scope = nock(host).get(urlPath).reply(200)
+
+      sinon.stub(apiWrapper.prototype, '_buildURL', function() {
+        var args = arguments[0]
+        args.should.eql({collections:true})
+        return this.options.uri + ':' + this.options.port + '/api/collections'
+      })
+
+      return wrapper.getCollections().then().catch((err) => {
+        throw err
+      })
+    })
+  })
 })

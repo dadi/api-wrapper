@@ -3,7 +3,7 @@
 > A high-level library for interacting with DADI API
 
 [![npm (scoped)](https://img.shields.io/npm/v/@dadi/api-wrapper.svg?maxAge=10800&style=flat-square)](https://www.npmjs.com/package/@dadi/api-wrapper)
-![coverage](https://img.shields.io/badge/coverage-93%25-brightgreen.svg?style=flat-square)
+![coverage](https://img.shields.io/badge/coverage-91%25-brightgreen.svg?style=flat-square)
 [![Build Status](https://travis-ci.org/dadi/api-wrapper.svg?branch=master)](https://travis-ci.org/dadi/api-wrapper)
 [![JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](http://standardjs.com/)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg?style=flat-square)](https://github.com/semantic-release/semantic-release)
