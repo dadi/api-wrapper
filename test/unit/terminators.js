@@ -164,8 +164,9 @@ describe('Terminators', function (done) {
 
       // Set up the http intercepts - we ask it to return the same document we passed in
       // because that's what'll happen anyway
+      delete documents[0]._id
+      delete documents[1]._id
       var postScope = nock(host).post(post, documents).reply(200, { results: [ fakeResponse.results ] })
-
       return wrapper
       .useVersion('1.0')
       .useDatabase('test')
