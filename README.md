@@ -67,7 +67,7 @@ Updates a list of documents with the result of individually applying `callback` 
 api.in('users')
    .whereFieldExists('gender')
    .apply(document => {
-      document.name = (document.gender === 'male') ? ('Mr ' + document.name) : ('Mrs ' + document.name)
+      document.name = (document.gender === 'male') ? (`Mr ${document.name}`) : (`Mrs ${document.name}`)
 
       return document
    })
