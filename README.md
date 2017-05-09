@@ -25,8 +25,8 @@ This library provides a high-level abstraction of the REST architecture style, e
 2. Add the library and configure the API settings:
 
    ```js
-   var DadiAPI = require('@dadi/api-wrapper')
-   var api = new DadiAPI({
+   const DadiAPI = require('@dadi/api-wrapper')
+   const api = new DadiAPI({
      uri: 'http://api.example.com',
      port: 80,
      credentials: {
@@ -46,7 +46,7 @@ This library provides a high-level abstraction of the REST architecture style, e
        .whereFieldContains('name', 'john')
        .whereFieldIsGreaterThan('age', 18)
        .find()
-       .then(function (response) {
+       .then(response => {
       	 // Use documents here
        })
    ```
@@ -66,8 +66,8 @@ Updates a list of documents with the result of individually applying `callback` 
 ```js
 api.in('users')
    .whereFieldExists('gender')
-   .apply(function (document) {
-      document.name = (document.gender === 'male') ? ('Mr ' + document.name) : ('Mrs ' + document.name)
+   .apply(document => {
+      document.name = (document.gender === 'male') ? (`Mr ${document.name}`) : (`Mrs ${document.name}`)
 
       return document
    })
@@ -85,10 +85,10 @@ api.in('users')
       age: 45,
       address: '123 Fake St'
    })
-   .then(function (doc) {
+   .then(doc => {
       console.log('New document:', doc)
    })
-   .catch(function (err) {
+   .catch(err => {
       console.log('! Error:', err)
    })
 ```
@@ -199,13 +199,13 @@ Sets the config for a collection or for the API.
 
 ```js
 // Sets the collection config
-var collectionConfig = {}
+const collectionConfig = {}
 
 api.in('users')
    .setConfig(collectionConfig)
 
 // Sets the API config
-var apiConfig = {}
+const apiConfig = {}
 
 api.setConfig(apiConfig)
 ```
@@ -451,8 +451,8 @@ api.useVersion('1.0')
 With debug mode, you'll be able to see exactly how the requests made to API look like. This functionality is enabled by setting a `debug` property in the config:
 
 ```js
-var DadiAPI = require('@dadi/api-wrapper')
-var api = new DadiAPI({
+const DadiAPI = require('@dadi/api-wrapper')
+const api = new DadiAPI({
   uri: 'http://api.example.com',
   port: 80,
   credentials: {
