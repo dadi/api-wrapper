@@ -1,6 +1,6 @@
 {
   "name": "@dadi/api-wrapper",
-  "version": "1.6.0",
+  "version": "0.0.0-development",
   "description": "A high-level library for interacting with DADI API",
   "main": "index.js",
   "scripts": {
@@ -36,6 +36,6 @@
     "sinon": "^1.17.4",
     "supertest": "^1.2.0",
     "underscore": "^1.8.3",
-    "semantic-release": "^6.3.2"
+    "semantic-release": "^6.3.6"
   }
 }
