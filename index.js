@@ -2,6 +2,7 @@
 
 const APIWrapperCore = require('@dadi/api-wrapper-core')
 
+const APIWrapperCore = require('./core')
 const APIWrapper = function (options) {
   this.options = options
 

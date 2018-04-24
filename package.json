@@ -4,7 +4,8 @@
   "description": "A high-level library for interacting with DADI API",
   "main": "index.js",
   "scripts": {
-    "test": "standard 'lib/**/*.js' && NODE_ENV=test ./node_modules/.bin/istanbul cover --report cobertura --report text --report html --report lcov ./node_modules/.bin/_mocha test",
+    "test": "standard 'lib/**/*.js' && NODE_ENV=test ./node_modules/.bin/istanbul cover --report cobertura --report text --report html --report lcov ./node_modules/.bin/_mocha {test,core/test}/**/*.js",
+    "preinstall": "cd core && npm install",
     "posttest": "./scripts/coverage.js",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
@@ -33,7 +34,7 @@
     "mockery": "^1.7.0",
     "nock": "^8.0.0",
     "should": "^9.0.2",
-    "sinon": "^1.17.4",
+    "sinon": "^4.5.0",
     "supertest": "^1.2.0",
     "underscore": "^1.8.3",
     "semantic-release": "^6.3.6"

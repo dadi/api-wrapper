@@ -1,10 +1,10 @@
-# DADI API wrapper
+# DADI API wrapper (core)
 
-> A high-level library for interacting with DADI API
+> Core high-level methods for interacting with DADI API
 
-[![npm (scoped)](https://img.shields.io/npm/v/@dadi/api-wrapper.svg?maxAge=10800&style=flat-square)](https://www.npmjs.com/package/@dadi/api-wrapper)
-![coverage](https://img.shields.io/badge/coverage-95%25-brightgreen.svg?style=flat)
-[![Build Status](https://travis-ci.org/dadi/api-wrapper.svg?branch=master)](https://travis-ci.org/dadi/api-wrapper)
+[![npm (scoped)](https://img.shields.io/npm/v/@dadi/api-wrapper-core.svg?maxAge=10800&style=flat-square)](https://www.npmjs.com/package/@dadi/api-wrapper-core)
+![coverage](https://img.shields.io/badge/coverage-95%25-brightgreen.svg?style=flat?style=flat-square)
+[![Build Status](https://travis-ci.org/dadi/api-wrapper-core.svg?branch=master)](https://travis-ci.org/dadi/api-wrapper-core)
 [![JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](http://standardjs.com/)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg?style=flat-square)](https://github.com/semantic-release/semantic-release)
 
@@ -12,27 +12,26 @@
 
 [DADI API](https://github.com/dadi/api) is a high performance RESTful API layer designed in support of API-first development and the principle of COPE.
 
-This library provides a high-level abstraction of the REST architecture style, exposing a set of chainable methods that allow developers to compose complex read and write operations using a simplistic and natural syntax.
+This package exposes a set of chainable methods that allow developers to compose complex read and write operations using a simplistic and natural syntax, providing a high-level abstraction of the REST architectural style.
+
+It can be used as a standalone module to generate request objects containing information about the HTTP verb, URL and payload, or used in conjunction with [DADI API Wrapper](https://github.com/dadi/api-wrapper) to provide a full-featured API consumer, capable of handling authentication and the HTTP communication.
 
 ## Getting started
 
-1. Install the `@dadi/api-wrapper` module:
+1. Install the `@dadi/api-wrapper-core` module:
 
    ```shell
-   npm install @dadi/api-wrapper --save
+   npm install @dadi/api-wrapper-core --save
    ```
 
 2. Add the library and configure the API settings:
 
    ```js
-   const DadiAPI = require('@dadi/api-wrapper')
-   const api = new DadiAPI({
+   const APIWrapper = require('@dadi/api-wrapper-core')
+
+   const api = new APIWrapper({
      uri: 'http://api.example.com',
      port: 80,
-     credentials: {
-       clientId: 'johndoe',
-       secret: 'f00b4r'
-     },
      version: 'vjoin',
      database: 'testdb'
    })
@@ -42,13 +41,11 @@ This library provides a high-level abstraction of the REST architecture style, e
 
    ```js
    // Example: getting all documents where `name` contains "john" and age is greater than 18
-   api.in('users')
+   const requestObject = api
+    .in('users')
     .whereFieldContains('name', 'john')
     .whereFieldIsGreaterThan('age', 18)
     .find()
-    .then(response => {
-      // Use documents here
-    })
    ```
 
 ## Methods
@@ -56,20 +53,6 @@ This library provides a high-level abstraction of the REST architecture style, e
 Each query consists of a series of chained methods to form the request, always containing a terminator method. Terminators return a Promise with the result of one or more requests to the database and can make use of a series of [filtering methods](#filters) to create the desired subset of documents to operate on.
 
 ### Terminators
-
-#### `.apply(callback)`
-
-Updates a list of documents with the result of individually applying `callback` to them.
-
-```js
-api.in('users')
-  .whereFieldExists('gender')
-  .apply(document => {
-    document.name = (document.gender === 'male') ? (`Mr ${document.name}`) : (`Mrs ${document.name}`)
-
-    return document
-  })
-```
 
 #### `.create()`
 
@@ -91,6 +74,27 @@ api.in('users')
    })
 ```
 
+*Output:*
+
+```json
+{
+  "body": {
+    "name": "John Doe",
+    "age": 45,
+    "address": "123 Fake St"
+  },
+  "method": "POST",
+  "uri": {
+    "href": "http://api.example.com:80/vjoin/testdb/users",
+    "hostname": "api.example.com",
+    "path": "/vjoin/testdb/users",
+    "port": "80",
+    "protocol": "http:"
+  }
+}
+```
+
+
 #### `.delete()`
 
 Deletes one or more documents.
@@ -101,7 +105,29 @@ api.in('users')
    .delete()
 ```
 
-#### `.find(options)`
+*Output:*
+
+```json
+{
+  "body": {
+    "query": {
+      "name": {
+        "$eq": null
+      }
+    }
+  },
+  "method": "DELETE",
+  "uri": {
+    "href": "http://api.example.com:80/vjoin/testdb/users",
+    "hostname": "api.example.com",
+    "path": "/vjoin/testdb/users",
+    "port": "80",
+    "protocol": "http:"
+  }
+}
+```
+
+#### `.find()`
 
 Returns a list of documents.
 
@@ -109,13 +135,23 @@ Returns a list of documents.
 api.in('users')
    .whereFieldIsGreaterThan('age', 21)
    .useFields(['name', 'age'])
-   .find(options)
+   .find()
 ```
 
-`options` is one of the following:
+*Output:*
 
-- `extractResults` (Boolean): Selects whether just the results array should be returned, rather than the entire API response.
-- `extractMetadata` (Boolean): Selects whether just the metadata object should be returned, rather than the entire API response.
+```json
+{
+  "method": "GET",
+  "uri": {
+    "href": "http://api.example.com:80/vjoin/testdb/users?filter={\"age\":{\"$gt\":21}}&fields={\"name\":1,\"age\":1}",
+    "hostname": "api.example.com",
+    "path": "/vjoin/testdb/users?filter={\"age\":{\"$gt\":21}}&fields={\"name\":1,\"age\":1}",
+    "port": "80",
+    "protocol": "http:"
+  }
+}
+```
 
 #### `.getCollections()`
 
@@ -123,6 +159,21 @@ Gets the list of collections for the API.
 
 ```js
 api.getCollections()
+```
+
+*Output:*
+
+```json
+{
+  "method": "GET",
+  "uri": {
+    "href": "http://api.example.com:80/api/collections",
+    "hostname": "api.example.com",
+    "path": "/api/collections",
+    "port": "80",
+    "protocol": "http:"
+  }
+}
 ```
 
 #### `.getConfig()`
@@ -135,9 +186,39 @@ api.in('users')
    .getConfig()
 ```
 
+*Output:*
+
+```json
+{
+  "method": "GET",
+  "uri": {
+    "href": "http://api.example.com:80/vjoin/testdb/users/config",
+    "hostname": "api.example.com",
+    "path": "/vjoin/testdb/users/config",
+    "port": "80",
+    "protocol": "http:"
+  }
+}
+```
+
 ```js
 // Gets the API config
 api.getConfig()
+```
+
+*Output:*
+
+```json
+{
+  "method": "GET",
+  "uri": {
+    "href": "http://api.example.com:80/api/config",
+    "hostname": "api.example.com",
+    "path": "/api/config",
+    "port": "80",
+    "protocol": "http:"
+  }
+}
 ```
 
 #### `.getSignedUrl()`
@@ -151,6 +232,24 @@ api.in('images')
    })
 ```
 
+*Output:*
+
+```json
+{
+  "body": {
+    "fileName": "foobar.jpg"
+  },
+  "method": "POST",
+  "uri": {
+    "href": "http://api.example.com:80/media/images/sign",
+    "hostname": "api.example.com",
+    "path": "/media/images/sign",
+    "port": "80",
+    "protocol": "http:"
+  }
+}
+```
+
 #### `.getStats()`
 
 Gets collection stats.
@@ -160,12 +259,42 @@ api.in('users')
    .getStats()
 ```
 
+*Output:*
+
+```json
+{
+  "method": "GET",
+  "uri": {
+    "href": "http://api.example.com:80/api/stats",
+    "hostname": "api.example.com",
+    "path": "/api/stats",
+    "port": "80",
+    "protocol": "http:"
+  }
+}
+```
+
 #### `.getStatus()`
 
 Gets the the API status.
 
 ```js
 api.getStatus()
+```
+
+*Output:*
+
+```json
+{
+  "method": "POST",
+  "uri": {
+    "href": "http://api.example.com:80/api/status",
+    "hostname": "api.example.com",
+    "path": "/api/status",
+    "port": "80",
+    "protocol": "http:"
+  }
+}
 ```
 
 #### `.setConfig()`
@@ -180,11 +309,47 @@ api.in('users')
    .setConfig(collectionConfig)
 ```
 
+*Output:*
+
+```json
+{
+  "body": {
+    "cache": false
+  },
+  "method": "POST",
+  "uri": {
+    "href": "http://api.example.com:80/vjoin/testdb/users/config",
+    "hostname": "api.example.com",
+    "path": "/vjoin/testdb/users/config",
+    "port": "80",
+    "protocol": "http:"
+  }
+}
+```
+
 ```js
 // Sets the API config
 var apiConfig = {cors: true}
 
 api.setConfig(apiConfig)
+```
+
+*Output:*
+
+```json
+{
+  "body": {
+    "cors": true
+  },
+  "method": "POST",
+  "uri": {
+    "href": "http://api.example.com:80/api/config",
+    "hostname": "api.example.com",
+    "path": "/api/config",
+    "port": "80",
+    "protocol": "http:"
+  }
+}
 ```
 
 #### `.update(update)`
@@ -197,6 +362,31 @@ api.in('users')
    .update({
       adult: false
    })
+```
+
+*Output:*
+
+```json
+{
+  "body": {
+    "query": {
+      "age": {
+        "$lt": 18
+      }
+    },
+    "update": {
+      "adult": false
+    }
+  },
+  "method": "PUT",
+  "uri": {
+    "href": "http://api.example.com:80/vjoin/testdb/users",
+    "hostname": "api.example.com",
+    "path": "/vjoin/testdb/users",
+    "port": "80",
+    "protocol": "http:"
+  }
+}
 ```
 
 ### Filters
@@ -448,4 +638,41 @@ Selects the version to use. Overrides any version defined in the initialisation 
 ```js
 // Example
 api.useVersion('1.0')
+```
+
+### Defining a callback
+
+By default, calling a terminator will return a request object, which is a plain JavaScript object formed of `method`, `uri` and, optionally, `body`. Alternatively, you can choose to specify what exactly terminators will return, by defining a callback that will be executed before they return. This callback will receive the request object as an argument, giving you the option to modify it or wrap it with something else.
+
+A callback is defined by setting a `callback` property on the options object used to initialise API wrapper.
+
+```js
+const APIWrapper = require('@dadi/api-wrapper-core')
+
+const api = new APIWrapper({
+  uri: 'http://api.example.com',
+  port: 80,
+  version: 'vjoin',
+  database: 'testdb',
+  callback: function (requestObject) {
+    // This callback will return a JSON-stringified version
+    // of the request object.
+    return JSON.stringify(requestObject)
+  }
+})
+```
+
+### Debug mode
+
+With debug mode, you'll be able to see exactly how the requests made to API look like. This functionality is enabled by setting a `debug` property in the config:
+
+```js
+const APIWrapper = require('@dadi/api-wrapper-core')
+const api = new APIWrapper({
+  uri: 'http://api.example.com',
+  port: 80,
+  version: 'vjoin',
+  database: 'testdb',
+  debug: true
+})
 ```
