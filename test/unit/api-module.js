@@ -10,9 +10,9 @@ MockModel.prototype._mockData = [
   {_id: 2, name: 'John', age: 23}
 ]
 
-MockModel.prototype.create = function ({documents}) {
+MockModel.prototype.create = function (parameters) {
   return Promise.resolve({
-    results: documents
+    results: parameters.documents
   })
 }
 
@@ -32,9 +32,9 @@ MockModel.prototype.get = function () {
   })
 }
 
-MockModel.prototype.update = function ({update}) {
+MockModel.prototype.update = function (parameters) {
   let results = this._mockData.map(document => {
-    return Object.assign({}, document, update)
+    return Object.assign({}, document, parameters.update)
   })
 
   return Promise.resolve({
@@ -43,7 +43,7 @@ MockModel.prototype.update = function ({update}) {
 }
 
 const namespace = {
-  MockModel
+  MockModel: MockModel
 }
 
 let factory = modelName => new namespace.MockModel(modelName)
