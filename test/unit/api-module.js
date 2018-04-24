@@ -1,3 +1,5 @@
+'use strict'
+
 const apiWrapper = require(__dirname + '/../../index')
 const should = require('should')
 const sinon = require('sinon')
