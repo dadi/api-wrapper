@@ -315,7 +315,7 @@ describe('Terminators', function (done) {
       var urlPath = '/1.0/test/collectionOne/config'
       var scope = nock(host).get(urlPath).reply(200)
 
-      sinon.stub(apiWrapper.prototype, '_buildURL', function() {
+      sinon.stub(apiWrapper.prototype, '_buildURL').callsFake(function() {
         var args = arguments[0]
         args.should.eql({config:true})
         return this.options.uri + ':' + this.options.port + '/' + this.customVersion + '/' + this.customDatabase + '/' + this.collection + '/config'
@@ -341,7 +341,7 @@ describe('Terminators', function (done) {
       var urlPath = '/1.0/test/collectionOne/stats'
       var scope = nock(host).get(urlPath).reply(200)
 
-      sinon.stub(apiWrapper.prototype, '_buildURL', function() {
+      sinon.stub(apiWrapper.prototype, '_buildURL').callsFake(function() {
         var args = arguments[0]
         args.should.eql({stats:true})
         return this.options.uri + ':' + this.options.port + '/' + this.customVersion + '/' + this.customDatabase + '/' + this.collection + '/stats'
@@ -367,7 +367,7 @@ describe('Terminators', function (done) {
       var urlPath = '/api/collections'
       var scope = nock(host).get(urlPath).reply(200)
 
-      sinon.stub(apiWrapper.prototype, '_buildURL', function() {
+      sinon.stub(apiWrapper.prototype, '_buildURL').callsFake(function() {
         var args = arguments[0]
         args.should.eql({collections:true})
         return this.options.uri + ':' + this.options.port + '/api/collections'
