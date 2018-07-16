@@ -6,7 +6,9 @@
   "scripts": {
     "test": "standard 'lib/**/*.js' && NODE_ENV=test ./node_modules/.bin/istanbul cover --report cobertura --report text --report html --report lcov ./node_modules/.bin/_mocha test",
     "posttest": "./scripts/coverage.js",
-    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "author": "Eduardo Boucas <mail@eduardoboucas.com>",
   "license": "GPL",
@@ -16,7 +18,8 @@
     "debug": "^2.6.1",
     "query-string": "^4.1.0",
     "request-promise": "^2.0.1",
-    "standard": "*"
+    "standard": "*",
+    "snyk": "^1.40.2"
   },
   "repository": {
     "type": "git",
@@ -37,5 +40,6 @@
     "supertest": "^1.2.0",
     "underscore": "^1.8.3",
     "semantic-release": "^6.3.6"
-  }
+  },
+  "snyk": true
 }
