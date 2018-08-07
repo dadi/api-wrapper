@@ -13,7 +13,13 @@ const APIWrapper = function (options) {
     this.options.port = this.options.port || 80
     this.options.tokenUrl = this.options.tokenUrl || '/token'
 
+    let walletPath = __dirname + '/.wallet/token.' +
+      this._slugify(options.uri + options.port) + '.' +
+      (options.credentials ? this._slugify(options.credentials.clientId) : '-' ) +
+      '.json'
+
     this.passportOptions = {
+      accessToken: options.accessToken,
       issuer: {
         uri: options.uri,
         port: options.port,
@@ -22,9 +28,7 @@ const APIWrapper = function (options) {
       credentials: options.credentials,
       wallet: 'file',
       walletOptions: {
-        path: __dirname + '/.wallet/token.' +
-          this._slugify(options.uri + options.port) + '.' +
-          this._slugify(options.credentials.clientId) + '.json'
+        path: walletPath
       }
     }
   }
