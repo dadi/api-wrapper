@@ -154,24 +154,6 @@ module.exports = function (APIWrapper) {
   }
 
   /**
-   * Set the config for a collection if one is specified, or for API if not
-   *
-   * @param {String} sortField
-   * @param {String} sortOrder
-   * @return API
-   * @api public
-   */
-  APIWrapper.prototype.setConfig = function (newConfig) {
-    this.terminator = 'setConfig'
-
-    return this._createRequestObject({
-      body: newConfig,
-      method: 'POST',
-      uri: this._buildURL({config: true})
-    })
-  }
-
-  /**
    * Update the documents affect by the saved query
    *
    * @param {Object} update

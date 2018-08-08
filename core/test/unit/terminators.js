@@ -192,6 +192,52 @@ describe('Terminators', function (done) {
 
       done()
     })
+
+    it('should create the request object for finding all clients', function (done) {
+      var requestObject = wrapper
+        .inClients()
+        .find()
+
+      requestObject.method.should.eql('GET')
+      requestObject.uri.href.should.eql(
+        `${options.uri}:${options.port}/api/clients`
+      )
+      should.not.exist(requestObject.body)
+
+      done()
+    })
+
+    it('should create the request object for finding a client by ID', function (done) {
+      var testClient = 'testClient'
+      var requestObject = wrapper
+        .inClients()
+        .whereClientIs(testClient)
+        .find()
+
+      requestObject.method.should.eql('GET')
+      requestObject.uri.href.should.eql(
+        `${options.uri}:${options.port}/api/clients/${testClient}`
+      )
+      should.not.exist(requestObject.body)
+
+      done()
+    })
+
+    it('should create the request object for finding the client associated with the bearer token', function (done) {
+      var testClient = 'testClient'
+      var requestObject = wrapper
+        .inClients()
+        .whereClientIsSelf()
+        .find()
+
+      requestObject.method.should.eql('GET')
+      requestObject.uri.href.should.eql(
+        `${options.uri}:${options.port}/api/client`
+      )
+      should.not.exist(requestObject.body)
+
+      done()
+    })
   })
 
   describe('getConfig', function (done) {
@@ -206,47 +252,6 @@ describe('Terminators', function (done) {
 
       requestObject.method.should.eql('GET')
       should.not.exist(requestObject.body)
-      requestObject.uri.href.should.eql(expectedUrl)
-
-      done()
-    })
-  })
-
-  describe('setConfig', function (done) {
-    it('should create the request object for updating the API config', function (done) {
-      var requestObject = wrapper
-        .setConfig({
-          server: {
-            host: '0.0.0.0'
-          }
-        })
-
-      var expectedUrl = wrapper._buildURL({config: true})
-
-      requestObject.method.should.eql('POST')
-      should.exist(requestObject.body)
-      requestObject.uri.href.should.eql(expectedUrl)
-
-      done()
-    })
-
-    it('should create the request object for updating a collection\'s config', function (done) {
-      var requestObject = wrapper
-        .useVersion('1.0')
-        .useDatabase('test')
-        .in('collectionOne')
-        .setConfig({
-          fields: {
-            field1: {
-              type: 'String'
-            }
-          }
-        })
-
-      var expectedUrl = wrapper._buildURL({config: true})
-
-      requestObject.method.should.eql('POST')
-      should.exist(requestObject.body)
       requestObject.uri.href.should.eql(expectedUrl)
 
       done()

@@ -168,25 +168,6 @@ Gets the the API status.
 api.getStatus()
 ```
 
-#### `.setConfig()`
-
-Sets the config for a collection or for the API.
-
-```js
-// Sets the collection config
-var collectionConfig = {cache: false}
-
-api.in('users')
-   .setConfig(collectionConfig)
-```
-
-```js
-// Sets the API config
-var apiConfig = {cors: true}
-
-api.setConfig(apiConfig)
-```
-
 #### `.update(update)`
 
 Updates a list of documents.
