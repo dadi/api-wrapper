@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "standard 'lib/**/*.js' && NODE_ENV=test ./node_modules/.bin/istanbul cover --report cobertura --report text --report html --report lcov ./node_modules/.bin/_mocha test",
-    "posttest": "./scripts/coverage.js && make",
+    "posttest": "./scripts/coverage.js",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "author": "Eduardo Boucas <mail@eduardoboucas.com>",

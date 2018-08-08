@@ -237,11 +237,6 @@ describe('Initialisation', function (done) {
       done()
     })
 
-    it('should attach `setConfig` to the wrapper', function (done) {
-      wrapper.setConfig.should.be.Function
-      done()
-    })
-
     it('should attach `getStats` to the wrapper', function (done) {
       wrapper.getStats.should.be.Function
       done()
