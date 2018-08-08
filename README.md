@@ -229,6 +229,24 @@ Filters documents using a MongoDB query object or a Aggregation Pipeline array. 
 api.where({name: 'John Doe'})
 ```
 
+#### `.whereClientIs(value)`
+
+Applicable when in "client mode". Selects the client with ID equal to `value`.
+
+```js
+// Example
+api.inClients().whereClientIs('testClient')
+```
+
+#### `.whereClientIsSelf()`
+
+Applicable when in "client mode". Selects the client associated with the bearer token being used.
+
+```js
+// Example
+api.inClients().whereClientIsSelf()
+```
+
 #### `.whereFieldBeginsWith(field, text)`
 
 Filters documents where `field` begins with `text`.
@@ -393,6 +411,15 @@ Selects the collection to use.
 ```js
 // Example
 api.in('users')
+```
+
+#### `.inClients()`
+
+Selects "client mode", meaning filters and terminators will operate on clients and not on documents.
+
+```js
+// Example
+api.inClients()
 ```
 
 #### `.inHooks()`

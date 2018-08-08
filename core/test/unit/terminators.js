@@ -108,6 +108,25 @@ describe('Terminators', function (done) {
 
       done()
     })
+
+    it('should create the request object for creating a client', function (done) {
+      var client = {
+        clientId: 'testClient',
+        secret: 'superSecret'
+      }
+
+      var requestObject = wrapper
+        .inClients()
+        .create(client)
+
+      requestObject.method.should.eql('POST')
+      requestObject.uri.href.should.eql(
+        `${options.uri}:${options.port}/api/clients`
+      )
+      requestObject.body.should.eql(client)
+
+      done()
+    })
   })
 
   describe('delete', function () {
@@ -138,6 +157,30 @@ describe('Terminators', function (done) {
       requestObject.uri.href.should.eql(expectedUrl)
 
       done()
+    })
+
+    it('should create the request object for deleting a client by ID', function (done) {
+      var testClient = 'testClient'
+      var requestObject = wrapper
+        .inClients()
+        .whereClientIs(testClient)
+        .delete()
+
+      requestObject.method.should.eql('DELETE')
+      requestObject.uri.href.should.eql(
+        `${options.uri}:${options.port}/api/clients/${testClient}`
+      )
+      should.not.exist(requestObject.body)
+
+      done()
+    })
+
+    it('should throw an error when trying to delete a client and no filter is used', function () {
+      should.throws(function () {
+        return wrapper
+        .inClients()
+        .delete()
+      })
     })
   })
 
@@ -170,6 +213,59 @@ describe('Terminators', function (done) {
       requestObject.uri.href.should.eql(expectedUrl)
 
       done()
+    })
+
+    it('should create the request object for updating a client by ID', function (done) {
+      var testClient = 'testClient'
+      var update = {
+        secret: 'newSecret',
+        data: {
+          foo: 'bar'
+        }
+      }
+      var requestObject = wrapper
+        .inClients()
+        .whereClientIs(testClient)
+        .update(update)
+
+      requestObject.method.should.eql('PUT')
+      requestObject.uri.href.should.eql(
+        `${options.uri}:${options.port}/api/clients/${testClient}`
+      )
+      requestObject.body.should.eql(update)
+
+      done()
+    })
+
+    it('should create the request object for updating the client associated with the bearer token', function (done) {
+      var update = {
+        secret: 'newSecret',
+        data: {
+          foo: 'bar'
+        }
+      }
+      var requestObject = wrapper
+        .inClients()
+        .whereClientIsSelf()
+        .update(update)
+
+      requestObject.method.should.eql('PUT')
+      requestObject.uri.href.should.eql(
+        `${options.uri}:${options.port}/api/client`
+      )
+      requestObject.body.should.eql(update)
+
+      done()
+    })
+
+    it('should throw an error when trying to update a client and no filter is used', function () {
+      should.throws(function () {
+        return wrapper
+        .inClients()
+        .update({
+          foo: 'bar'
+        })
+      })
     })
   })
 

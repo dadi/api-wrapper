@@ -44,12 +44,20 @@ module.exports = function (APIWrapper) {
     }
 
     if (!this._isValidHook()) {
-      if (this.query === undefined) {
-        throw new Error('Unable to find query for delete')
-      }
+      if (this.isClient) {
+        if (!this.isClient.id && !this.isClient.self) {
+          throw new Error(
+            'Unable run delete on all clients. Please use the whereClientIs() filter.'
+          )
+        }
+      } else {
+        if (this.query === undefined) {
+          throw new Error('Unable to find query for delete')
+        }
 
-      requestPayload.body = {
-        query: this.query
+        requestPayload.body = {
+          query: this.query
+        }
       }
     }
 
@@ -173,13 +181,23 @@ module.exports = function (APIWrapper) {
 
       this._setHeader('content-type', 'text/plain')
     } else {
-      if (this.query === undefined) {
-        throw new Error('Unable to find query for update')
-      }
+      if (this.isClient) {
+        if (!this.isClient.id && !this.isClient.self) {
+          throw new Error(
+            'Unable to run update on all clients. Please use whereClientIs() or whereClientIsSelf() filters.'
+          )
+        }
 
-      requestPayload.body = {
-        query: this.query,
-        update: this._stripReservedProperties(update)
+        requestPayload.body = update
+      } else {
+        if (this.query === undefined) {
+          throw new Error('Unable to find query for update')
+        }
+
+        requestPayload.body = {
+          query: this.query,
+          update: this._stripReservedProperties(update)
+        }
       }
     }
 

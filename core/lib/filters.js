@@ -41,6 +41,20 @@ module.exports = function (APIWrapper) {
   }
 
   /**
+   * Sets "clients mode" (i.e. executes commands on clients)
+   *
+   * @return API
+   * @api public
+   */
+  APIWrapper.prototype.inClients = function () {
+    this.isClient = {
+      enabled: true
+    }
+
+    return this
+  }
+
+  /**
    * Sets "hooks mode" (i.e. executes commands on hooks)
    *
    * @return API
@@ -151,6 +165,40 @@ module.exports = function (APIWrapper) {
    */
   APIWrapper.prototype.where = function (query) {
     this.query = query
+
+    return this
+  }
+
+  /**
+   * Adds a filter to the query that selects a client by ID
+   *
+   * @param {String} value
+   * @return API
+   * @api public
+   */
+  APIWrapper.prototype.whereClientIs = function (value) {
+    if (!this.isClient || !this.isClient.enabled) {
+      throw new Error('Not in clients mode. Have you used `.inClients()`?')
+    }
+
+    this.isClient.id = value
+
+    return this
+  }
+
+  /**
+   * Adds a filter to the query that selects the client who generated the
+   * bearer token.
+   *
+   * @return API
+   * @api public
+   */
+  APIWrapper.prototype.whereClientIsSelf = function () {
+    if (!this.isClient || !this.isClient.enabled) {
+      throw new Error('Not in clients mode. Have you used `.inClients()`?')
+    }
+
+    this.isClient.self = true
 
     return this
   }

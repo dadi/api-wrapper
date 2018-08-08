@@ -46,6 +46,16 @@ module.exports = function (APIWrapper) {
 
     if (this.mediaBucket) {
       url += '/media' + (typeof this.mediaBucket === 'string' ? '/' + this.mediaBucket : '')
+    } else if (this.isClient) {
+      if (this.isClient.self) {
+        url += '/api/client'
+      } else {
+        url += '/api/clients'
+
+        if (this.isClient.id) {
+          url += '/' + this.isClient.id
+        }
+      }
     } else if (!this.collection && !this.endpoint) {
       url += '/api'
     } else {
