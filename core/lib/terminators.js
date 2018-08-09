@@ -188,6 +188,11 @@ module.exports = function (APIWrapper) {
           )
         }
 
+        // Remove `clientId` from the payload.
+        if (update.clientId) {
+          delete update.clientId
+        }
+
         requestPayload.body = update
       } else {
         if (this.query === undefined) {
