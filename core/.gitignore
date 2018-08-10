@@ -1,3 +1,5 @@
+.DS_Store
+
 # Logs
 logs
 *.log
@@ -25,7 +27,6 @@ build/Release
 
 # Dependency directory
 node_modules
-core/node_modules
 
 # Optional npm cache directory
 .npm
