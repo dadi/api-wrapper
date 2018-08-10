@@ -5,14 +5,14 @@ const APIWrapper = function (options) {
 
   this.reservedProperties = [
     '_id',
-    '_apiVersion',
-    '_createdBy',
-    '_createdAt',
-    '_lastModifiedAt',
-    '_lastModifiedBy',
-    '_version',
-    '_history',
-    '_composed'
+    'apiVersion',
+    'createdBy',
+    'createdAt',
+    'lastModifiedAt',
+    'lastModifiedBy',
+    'v',
+    'history',
+    'composed'
   ]  
 }
 
