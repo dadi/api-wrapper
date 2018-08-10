@@ -5,18 +5,17 @@
   "main": "index.js",
   "scripts": {
     "test": "standard 'lib/**/*.js' && NODE_ENV=test ./node_modules/.bin/istanbul cover --report cobertura --report text --report html --report lcov ./node_modules/.bin/_mocha {test,core/test}/**/*.js",
-    "preinstall": "cd core && npm install",
     "posttest": "./scripts/coverage.js"
   },
   "author": "Eduardo Boucas <mail@eduardoboucas.com>",
   "license": "GPL",
   "dependencies": {
-    "@dadi/api-wrapper-core": "~2.0.0",
     "@dadi/passport": "~1.5.0",
     "debug": "^2.6.1",
-    "query-string": "^4.1.0",
+    "query-string": "5.0.1",
     "request-promise": "^2.0.1",
-    "standard": "*"
+    "standard": "*",
+    "url-parse": "1.2.0"
   },
   "repository": {
     "type": "git",
@@ -27,8 +26,8 @@
   },
   "homepage": "https://github.com/dadi/api-wrapper",
   "devDependencies": {
+    "coveralls": "^3.0.2",
     "istanbul": "^0.4.4",
-    "istanbul-cobertura-badger": "^1.2.1",
     "mocha": "^2.5.3",
     "mockery": "^1.7.0",
     "nock": "^8.0.0",
