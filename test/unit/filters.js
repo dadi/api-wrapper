@@ -58,9 +58,9 @@ describe('Filters', function (done) {
 
   describe('Feature querying', function () {
     it('should throw an error if a feature has been flagged as required but the response does not have a feature support header', function () {
-      let host = options.uri + ':' + options.port
-      let urlPath = '/1.0/test/collectionOne'
-      let mockServer = nock(host, {
+      var host = options.uri + ':' + options.port
+      var urlPath = '/1.0/test/collectionOne'
+      var mockServer = nock(host, {
         reqheaders: {
           'x-dadi-requires': 'feature1;feature2'
         }
@@ -85,9 +85,9 @@ describe('Filters', function (done) {
     })
 
     it('should throw an error if a feature has been flagged as required but the feature support header does not include it', function () {
-      let host = options.uri + ':' + options.port
-      let urlPath = '/1.0/test/collectionOne'
-      let mockServer = nock(host, {
+      var host = options.uri + ':' + options.port
+      var urlPath = '/1.0/test/collectionOne'
+      var mockServer = nock(host, {
         reqheaders: {
           'x-dadi-requires': 'feature1;feature2'
         }
@@ -114,9 +114,9 @@ describe('Filters', function (done) {
     })
 
     it('should return the response if a feature has been flagged as required and the feature support header includes it', function () {
-      let host = options.uri + ':' + options.port
-      let urlPath = '/1.0/test/collectionOne'
-      let mockServer = nock(host, {
+      var host = options.uri + ':' + options.port
+      var urlPath = '/1.0/test/collectionOne'
+      var mockServer = nock(host, {
         reqheaders: {
           'x-dadi-requires': 'feature1;feature2'
         }
