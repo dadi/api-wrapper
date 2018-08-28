@@ -145,7 +145,36 @@ api.getConfig()
 Gets the list of languages supported by the API.
 
 ```js
-api..getLanguages()
+api.getLanguages().then(({metadata, results}) => {
+  /*
+    {
+      "defaultLanguage": {
+        "code": "en",
+        "name": "English",
+        "local": "English"
+      },
+      "totalCount": 2
+    }  
+  */
+  console.log(metadata)
+
+  /*
+    [
+      {
+        "code": "en",
+        "name": "English",
+        "local": "English",
+        "default": true
+      },
+      {
+        "code": "pt",
+        "name": "Portuguese",
+        "local": "Português"
+      }
+    ]
+  */
+  console.log(results)
+})
 ```
 
 #### `.getSignedUrl()`
