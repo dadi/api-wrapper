@@ -202,6 +202,15 @@ Defines a maximum number of documents to be retrieved.
 api.limitTo(10)
 ```
 
+#### `.requireFeature(featureCode)`
+
+Queries the API for support of a given feature and throws a `MISSING_FEATURES` error if it's not supported.
+
+```js
+// Example
+api.requestFeature('aclv1')
+```
+
 #### `.sortBy(field, order)`
 
 Selects a field to sort on and the sort direction. Order defaults to ascending (`asc`).

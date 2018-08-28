@@ -45,6 +45,12 @@ APIWrapper.prototype = new APIWrapperCore()
 require('./lib/helpers')(APIWrapper)
 
 // -----------------------------------------
+// Attach filters
+// -----------------------------------------
+
+require('./lib/filters')(APIWrapper)
+
+// -----------------------------------------
 // Attach terminators
 // -----------------------------------------
 
