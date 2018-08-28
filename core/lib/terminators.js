@@ -116,6 +116,21 @@ module.exports = function (APIWrapper) {
   }
 
   /**
+   * Get the languages supported by the API
+   *
+   * @return Promise
+   * @api public
+   */
+  APIWrapper.prototype.getLanguages = function () {
+    this.terminator = 'getLanguages'
+
+    return this._createRequestObject({
+      method: 'GET',
+      uri: this._buildURL({languages: true})
+    })
+  }
+
+  /**
    * Get a signed URL for media upload
    *
    * @return Promise

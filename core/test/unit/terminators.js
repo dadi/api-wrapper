@@ -354,6 +354,21 @@ describe('Terminators', function (done) {
     })
   })
 
+  describe('getLanguages', function (done) {
+    it('should create the request object for getting the list of supported languages', function (done) {
+      var requestObject = wrapper
+        .getLanguages()
+
+      var expectedUrl = wrapper._buildURL({languages: true})
+
+      requestObject.method.should.eql('GET')
+      should.not.exist(requestObject.body)
+      requestObject.uri.href.should.eql(expectedUrl)
+
+      done()
+    })
+  })
+
   describe('getStats', function (done) {
     it('should create the request object for getting collection stats', function (done) {
       var query = { filter: JSON.stringify({ name: 'John' }) }

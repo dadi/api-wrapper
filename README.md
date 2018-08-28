@@ -140,6 +140,43 @@ api.in('users')
 api.getConfig()
 ```
 
+#### `.getLanguages()`
+
+Gets the list of languages supported by the API.
+
+```js
+api.getLanguages().then(({metadata, results}) => {
+  /*
+    {
+      "defaultLanguage": {
+        "code": "en",
+        "name": "English",
+        "local": "English"
+      },
+      "totalCount": 2
+    }  
+  */
+  console.log(metadata)
+
+  /*
+    [
+      {
+        "code": "en",
+        "name": "English",
+        "local": "English",
+        "default": true
+      },
+      {
+        "code": "pt",
+        "name": "Portuguese",
+        "local": "Português"
+      }
+    ]
+  */
+  console.log(results)
+})
+```
+
 #### `.getSignedUrl()`
 
 Gets a signed URL from a media collection.
