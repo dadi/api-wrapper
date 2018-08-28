@@ -89,6 +89,10 @@ module.exports = function (APIWrapper) {
       url += '/stats'
     }
 
+    if (options.languages) {
+      url += '/languages'
+    }
+
     if (this.count) {
       url += '/count'
     }

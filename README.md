@@ -140,6 +140,14 @@ api.in('users')
 api.getConfig()
 ```
 
+#### `.getLanguages()`
+
+Gets the list of languages supported by the API.
+
+```js
+api..getLanguages()
+```
+
 #### `.getSignedUrl()`
 
 Gets a signed URL from a media collection.
