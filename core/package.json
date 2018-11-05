@@ -1,6 +1,6 @@
 {
   "name": "@dadi/api-wrapper-core",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "Core high-level methods for interacting with DADI API",
   "main": "index.js",
   "scripts": {
