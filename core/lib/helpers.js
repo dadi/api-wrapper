@@ -198,7 +198,7 @@ module.exports = function (APIWrapper) {
       ) {
         result[key] = this._encodeObjectKeys(object[key])
       } else {
-        result[key] = encodeURIComponent(object[key])
+        result[key] = typeof object[key] === 'string' ? encodeURIComponent(object[key]) : object[key]
       }
 
       return result
