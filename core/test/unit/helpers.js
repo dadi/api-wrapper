@@ -279,5 +279,22 @@ describe('Helpers', function (done) {
 
       done()
     })
+
+    it('should not URL encode non-string values', function (done) {
+      wrapper
+        .useVersion('1.0')
+        .useDatabase('test')
+        .in('collectionOne')
+        .whereFieldIsGreaterThan('email', 1000)
+        .useFields(['email'])
+
+      var wrapperUrl = wrapper._buildURL({useParams: true})
+
+      wrapperUrl.should.eql(
+        `http://0.0.0.0:8000/1.0/test/collectionOne?fields={"email":1}&filter={"email":{"$gt":1000}}`
+      )
+
+      done()
+    })
   })
 })
