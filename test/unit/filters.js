@@ -53,7 +53,7 @@ describe('Filters', function(done) {
   describe('Feature querying', function() {
     it('should throw an error if a feature has been flagged as required but the response does not have a feature support header', function() {
       const host = options.uri + ':' + options.port
-      const urlPath = '/1.0/test/collectionOne'
+      const urlPath = '/test/collectionOne'
       const mockServer = nock(host, {
         reqheaders: {
           'x-dadi-requires': 'feature1;feature2'
@@ -63,7 +63,6 @@ describe('Filters', function(done) {
         .reply(200, fakeResponse)
 
       return wrapper
-        .useVersion('1.0')
         .useDatabase('test')
         .in('collectionOne')
         .requireFeature('feature1')
@@ -82,7 +81,7 @@ describe('Filters', function(done) {
 
     it('should throw an error if a feature has been flagged as required but the feature support header does not include it', function() {
       const host = options.uri + ':' + options.port
-      const urlPath = '/1.0/test/collectionOne'
+      const urlPath = '/test/collectionOne'
       const mockServer = nock(host, {
         reqheaders: {
           'x-dadi-requires': 'feature1;feature2'
@@ -94,7 +93,6 @@ describe('Filters', function(done) {
         })
 
       return wrapper
-        .useVersion('1.0')
         .useDatabase('test')
         .in('collectionOne')
         .requireFeature('feature1')
@@ -111,7 +109,7 @@ describe('Filters', function(done) {
 
     it('should return the response if a feature has been flagged as required and the feature support header includes it', function() {
       const host = options.uri + ':' + options.port
-      const urlPath = '/1.0/test/collectionOne'
+      const urlPath = '/test/collectionOne'
       const mockServer = nock(host, {
         reqheaders: {
           'x-dadi-requires': 'feature1;feature2'
@@ -123,7 +121,6 @@ describe('Filters', function(done) {
         })
 
       return wrapper
-        .useVersion('1.0')
         .useDatabase('test')
         .in('collectionOne')
         .requireFeature('feature1')

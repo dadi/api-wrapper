@@ -60,23 +60,21 @@ module.exports = function(APIWrapper) {
       }
     } else if (!this.collection && !this.endpoint) {
       url += '/api'
+    } else if (this.collection) {
+      url +=
+        '/' +
+        (this.customDatabase !== undefined
+          ? this.customDatabase
+          : this.options.database)
+      url += '/' + this.collection
     } else {
       url +=
         '/' +
         (this.customVersion !== undefined
           ? this.customVersion
-          : this.options.version)
-
-      if (this.collection) {
-        url +=
-          '/' +
-          (this.customDatabase !== undefined
-            ? this.customDatabase
-            : this.options.database)
-        url += '/' + this.collection
-      } else {
-        url += '/' + this.endpoint
-      }
+          : this.options.version) +
+        '/' +
+        this.endpoint
     }
 
     if (options.signUrl) {

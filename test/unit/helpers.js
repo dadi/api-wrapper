@@ -42,44 +42,37 @@ describe('Helpers', function(done) {
     })
 
     it('should use customDatabase if specified', function(done) {
-      wrapper
-        .useVersion('1.0')
-        .useDatabase('test')
-        .in('collectionOne')
+      wrapper.useDatabase('test').in('collectionOne')
       const wrapperUrl = wrapper._buildURL()
 
-      wrapperUrl.should.eql('http://0.0.0.0:8000/1.0/test/collectionOne')
+      wrapperUrl.should.eql('http://0.0.0.0:8000/test/collectionOne')
       done()
     })
 
-    it('should use version and database if specified', function(done) {
-      wrapper
-        .useVersion('2.0')
-        .useDatabase('test')
-        .in('collectionOne')
+    it('should use database if specified', function(done) {
+      wrapper.useDatabase('test').in('collectionOne')
       const wrapperUrl = wrapper._buildURL()
 
-      wrapperUrl.should.eql('http://0.0.0.0:8000/2.0/test/collectionOne')
+      wrapperUrl.should.eql('http://0.0.0.0:8000/test/collectionOne')
       done()
     })
 
     it('should build /api url if no collection or endpoint specified', function(done) {
-      wrapper.useVersion('2.0').useDatabase('test')
+      wrapper.useDatabase('test')
       const wrapperUrl = wrapper._buildURL()
 
       wrapperUrl.should.eql('http://0.0.0.0:8000/api')
       done()
     })
 
-    it('should accept database and version options when initialising', function(done) {
-      options.version = '2.4'
+    it('should accept database option when initialising', function(done) {
       options.database = 'test2'
 
       wrapper = new apiWrapper(options)
       wrapper
         .in('collectionOne')
         ._buildURL()
-        .should.eql('http://0.0.0.0:8000/2.4/test2/collectionOne')
+        .should.eql('http://0.0.0.0:8000/test2/collectionOne')
       done()
     })
 
@@ -95,35 +88,26 @@ describe('Helpers', function(done) {
     })
 
     it('should build /config url if option specified', function(done) {
-      wrapper
-        .useVersion('2.0')
-        .useDatabase('test')
-        .in('collectionOne')
+      wrapper.useDatabase('test').in('collectionOne')
       const wrapperUrl = wrapper._buildURL({config: true})
 
-      wrapperUrl.should.eql('http://0.0.0.0:8000/2.0/test/collectionOne/config')
+      wrapperUrl.should.eql('http://0.0.0.0:8000/test/collectionOne/config')
       done()
     })
 
     it('should build /stats url if option specified', function(done) {
-      wrapper
-        .useVersion('2.0')
-        .useDatabase('test')
-        .in('collectionOne')
+      wrapper.useDatabase('test').in('collectionOne')
       const wrapperUrl = wrapper._buildURL({stats: true})
 
-      wrapperUrl.should.eql('http://0.0.0.0:8000/2.0/test/collectionOne/stats')
+      wrapperUrl.should.eql('http://0.0.0.0:8000/test/collectionOne/stats')
       done()
     })
 
     it('should build id url if option specified', function(done) {
-      wrapper
-        .useVersion('2.0')
-        .useDatabase('test')
-        .in('collectionOne')
+      wrapper.useDatabase('test').in('collectionOne')
       const wrapperUrl = wrapper._buildURL({id: 123456})
 
-      wrapperUrl.should.eql('http://0.0.0.0:8000/2.0/test/collectionOne/123456')
+      wrapperUrl.should.eql('http://0.0.0.0:8000/test/collectionOne/123456')
       done()
     })
 
@@ -133,7 +117,6 @@ describe('Helpers', function(done) {
         '?' + decodeURIComponent(querystring.stringify(query))
 
       wrapper
-        .useVersion('1.0')
         .useDatabase('test')
         .in('collectionOne')
         .whereFieldIsEqualTo('name', 'John')
@@ -141,7 +124,7 @@ describe('Helpers', function(done) {
       const wrapperUrl = wrapper._buildURL({useParams: true})
 
       wrapperUrl.should.eql(
-        'http://0.0.0.0:8000/1.0/test/collectionOne' + expectedQuerystring
+        'http://0.0.0.0:8000/test/collectionOne' + expectedQuerystring
       )
       done()
     })
@@ -152,7 +135,6 @@ describe('Helpers', function(done) {
         '?' + decodeURIComponent(querystring.stringify(query))
 
       wrapper
-        .useVersion('1.0')
         .useDatabase('test')
         .in('collectionOne')
         .whereFieldIsEqualTo('name', 'John')
@@ -161,7 +143,7 @@ describe('Helpers', function(done) {
       const wrapperUrl = wrapper._buildURL({useParams: true})
 
       wrapperUrl.should.eql(
-        'http://0.0.0.0:8000/1.0/test/collectionOne' + expectedQuerystring
+        'http://0.0.0.0:8000/test/collectionOne' + expectedQuerystring
       )
       done()
     })
@@ -172,7 +154,6 @@ describe('Helpers', function(done) {
         '?' + decodeURIComponent(querystring.stringify(query))
 
       wrapper
-        .useVersion('1.0')
         .useDatabase('test')
         .in('collectionOne')
         .whereFieldIsEqualTo('name', 'John')
@@ -181,7 +162,7 @@ describe('Helpers', function(done) {
       const wrapperUrl = wrapper._buildURL({useParams: true})
 
       wrapperUrl.should.eql(
-        'http://0.0.0.0:8000/1.0/test/collectionOne' + expectedQuerystring
+        'http://0.0.0.0:8000/test/collectionOne' + expectedQuerystring
       )
       done()
     })
@@ -192,7 +173,6 @@ describe('Helpers', function(done) {
         '?' + decodeURIComponent(querystring.stringify(query))
 
       wrapper
-        .useVersion('1.0')
         .useDatabase('test')
         .in('collectionOne')
         .whereFieldIsEqualTo('name', 'John')
@@ -201,7 +181,7 @@ describe('Helpers', function(done) {
       const wrapperUrl = wrapper._buildURL({useParams: true})
 
       wrapperUrl.should.eql(
-        'http://0.0.0.0:8000/1.0/test/collectionOne' + expectedQuerystring
+        'http://0.0.0.0:8000/test/collectionOne' + expectedQuerystring
       )
       done()
     })
@@ -215,7 +195,6 @@ describe('Helpers', function(done) {
         '?' + decodeURIComponent(querystring.stringify(query))
 
       wrapper
-        .useVersion('1.0')
         .useDatabase('test')
         .in('collectionOne')
         .whereFieldIsEqualTo('name', 'John')
@@ -224,7 +203,7 @@ describe('Helpers', function(done) {
       const wrapperUrl = wrapper._buildURL({useParams: true})
 
       wrapperUrl.should.eql(
-        'http://0.0.0.0:8000/1.0/test/collectionOne' + expectedQuerystring
+        'http://0.0.0.0:8000/test/collectionOne' + expectedQuerystring
       )
       done()
     })
@@ -238,7 +217,6 @@ describe('Helpers', function(done) {
         '?' + decodeURIComponent(querystring.stringify(query))
 
       wrapper
-        .useVersion('1.0')
         .useDatabase('test')
         .in('collectionOne')
         .whereFieldIsEqualTo('name', 'John')
@@ -247,7 +225,7 @@ describe('Helpers', function(done) {
       const wrapperUrl = wrapper._buildURL({useParams: true})
 
       wrapperUrl.should.eql(
-        'http://0.0.0.0:8000/1.0/test/collectionOne' + expectedQuerystring
+        'http://0.0.0.0:8000/test/collectionOne' + expectedQuerystring
       )
       done()
     })
@@ -258,7 +236,6 @@ describe('Helpers', function(done) {
         '?' + decodeURIComponent(querystring.stringify(query))
 
       wrapper
-        .useVersion('1.0')
         .useDatabase('test')
         .in('collectionOne')
         .whereFieldIsEqualTo('name', 'John')
@@ -267,7 +244,7 @@ describe('Helpers', function(done) {
       const wrapperUrl = wrapper._buildURL({useParams: true})
 
       wrapperUrl.should.eql(
-        'http://0.0.0.0:8000/1.0/test/collectionOne' + expectedQuerystring
+        'http://0.0.0.0:8000/test/collectionOne' + expectedQuerystring
       )
       done()
     })
@@ -278,7 +255,6 @@ describe('Helpers', function(done) {
         '?' + decodeURIComponent(querystring.stringify(query))
 
       wrapper
-        .useVersion('1.0')
         .useDatabase('test')
         .in('collectionOne')
         .whereFieldIsEqualTo('name', 'John')
@@ -287,7 +263,7 @@ describe('Helpers', function(done) {
       const wrapperUrl = wrapper._buildURL({useParams: true})
 
       wrapperUrl.should.eql(
-        'http://0.0.0.0:8000/1.0/test/collectionOne' + expectedQuerystring
+        'http://0.0.0.0:8000/test/collectionOne' + expectedQuerystring
       )
       done()
     })
@@ -301,7 +277,6 @@ describe('Helpers', function(done) {
         '?' + decodeURIComponent(querystring.stringify(query))
 
       wrapper
-        .useVersion('1.0')
         .useDatabase('test')
         .in('collectionOne')
         .whereFieldIsEqualTo('name', 'John')
@@ -310,7 +285,7 @@ describe('Helpers', function(done) {
       const wrapperUrl = wrapper._buildURL({useParams: true})
 
       wrapperUrl.should.eql(
-        'http://0.0.0.0:8000/1.0/test/collectionOne' + expectedQuerystring
+        'http://0.0.0.0:8000/test/collectionOne' + expectedQuerystring
       )
       done()
     })
@@ -320,13 +295,13 @@ describe('Helpers', function(done) {
     it('should refresh token if invalid_token response is received', function() {
       const host = options.uri + ':' + options.port
 
-      const findScope401 = nock(host)
-        .get('/1.0/test/collectionOne')
+      nock(host)
+        .get('/test/collectionOne')
         .reply(401, '', {
           'www-authenticate': 'error=invalid_token'
         })
 
-      const tokenScope = nock(host)
+      nock(host)
         .post('/token')
         .times(2)
         .reply(200, {
@@ -335,12 +310,11 @@ describe('Helpers', function(done) {
           expiresIn: 1800
         })
 
-      const findScope200 = nock(host)
-        .get('/1.0/test/collectionOne')
+      nock(host)
+        .get('/test/collectionOne')
         .reply(200, {hello: 'world'})
 
       return wrapper
-        .useVersion('1.0')
         .useDatabase('test')
         .in('collectionOne')
         .find()

@@ -70,12 +70,6 @@ describe('Filters', function(done) {
     done()
   })
 
-  it('should pass argument given in `useVersion` to the wrapper', function(done) {
-    wrapper.useVersion('2.0')
-    wrapper.customVersion.should.eql('2.0')
-    done()
-  })
-
   it('should set the saved query to a Mongo query expression', function(done) {
     wrapper.where({})
     wrapper.query.should.eql({})

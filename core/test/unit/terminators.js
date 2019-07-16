@@ -74,10 +74,8 @@ describe('Terminators', function(done) {
   describe('create', function() {
     it('should create the request object for creating the documents', function(done) {
       const query = {filter: JSON.stringify({name: 'John'}), page: 33}
-      const expectedQuerystring = '?' + querystring.stringify(query)
 
       wrapper
-        .useVersion('1.0')
         .useDatabase('test')
         .in('collectionOne')
         .whereFieldIsEqualTo('name', 'John')
@@ -92,7 +90,6 @@ describe('Terminators', function(done) {
       ]
 
       const requestObject = wrapper
-        .useVersion('1.0')
         .useDatabase('test')
         .in('collectionOne')
         .create(documents)
@@ -128,7 +125,6 @@ describe('Terminators', function(done) {
     it('should throw an error if no query is specified', function() {
       should.throws(function() {
         return wrapper
-          .useVersion('1.0')
           .useDatabase('test')
           .in('collectionOne')
           .delete()
@@ -140,7 +136,6 @@ describe('Terminators', function(done) {
       const expectedQuerystring = '?' + querystring.stringify(query)
 
       const requestObject = wrapper
-        .useVersion('1.0')
         .useDatabase('test')
         .in('collectionOne')
         .whereFieldIsEqualTo(field, value)
@@ -182,7 +177,6 @@ describe('Terminators', function(done) {
     it('should throw an error if no query is specified', function() {
       should.throws(function() {
         return wrapper
-          .useVersion('1.0')
           .useDatabase('test')
           .in('collectionOne')
           .update()
@@ -191,10 +185,8 @@ describe('Terminators', function(done) {
 
     it('should create the request object for updating each document from the query', function(done) {
       const query = {query: {name: 'John Doe'}}
-      const expectedQuerystring = '?' + querystring.stringify(query)
 
       const requestObject = wrapper
-        .useVersion('1.0')
         .useDatabase('test')
         .in('collectionOne')
         .whereFieldIsEqualTo(field, value)
@@ -264,10 +256,7 @@ describe('Terminators', function(done) {
 
   describe('find', function() {
     it('should create the request object for finding documents affected by the query', function(done) {
-      const query = {filter: JSON.stringify({name: 'John'})}
-
       const requestObject = wrapper
-        .useVersion('1.0')
         .useDatabase('test')
         .in('collectionOne')
         .whereFieldIsEqualTo('name', 'John')
@@ -330,7 +319,6 @@ describe('Terminators', function(done) {
   describe('getConfig', function(done) {
     it('should create the request object for getting a collection config', function(done) {
       const requestObject = wrapper
-        .useVersion('1.0')
         .useDatabase('test')
         .in('collectionOne')
         .getConfig()
@@ -348,7 +336,6 @@ describe('Terminators', function(done) {
   describe('getLanguages', function(done) {
     it('should create the request object for getting the list of supported languages', function(done) {
       const requestObject = wrapper.getLanguages()
-
       const expectedUrl = wrapper._buildURL({languages: true})
 
       requestObject.method.should.eql('GET')
@@ -364,7 +351,6 @@ describe('Terminators', function(done) {
       const query = {filter: JSON.stringify({name: 'John'})}
 
       const requestObject = wrapper
-        .useVersion('1.0')
         .useDatabase('test')
         .in('collectionOne')
         .getStats()
@@ -443,14 +429,12 @@ describe('Terminators', function(done) {
       const query = {filter: JSON.stringify({name: 'John'})}
 
       const requestObject = wrapper
-        .useVersion('1.0')
         .useDatabase('test')
         .in('collectionOne')
         .whereFieldIsEqualTo('name', 'John')
         .find({extractResults: true})
 
       const requestObjectWithCallback = wrapperWithCallback
-        .useVersion('1.0')
         .useDatabase('test')
         .in('collectionOne')
         .whereFieldIsEqualTo('name', 'John')

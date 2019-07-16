@@ -499,12 +499,3 @@ Selects the database to use. Overrides any database defined in the initialisatio
 // Example
 api.useDatabase('testdb')
 ```
-
-#### `.useVersion(version)`
-
-Selects the version to use. Overrides any version defined in the initialisation options, and is reset when called without arguments.
-
-```js
-// Example
-api.useVersion('1.0')
-```

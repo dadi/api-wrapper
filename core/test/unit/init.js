@@ -117,11 +117,6 @@ describe('Initialisation', function(done) {
       done()
     })
 
-    it('should attach `useVersion` to the wrapper', function(done) {
-      wrapper.useVersion.should.be.Function
-      done()
-    })
-
     it('should attach `where` to the wrapper', function(done) {
       wrapper.where.should.be.Function
       done()

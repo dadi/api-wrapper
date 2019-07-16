@@ -75,7 +75,6 @@ describe('Terminators', function(done) {
     it('should throw an error if no collection is specified', function() {
       should.throws(function() {
         return wrapper
-          .useVersion('1.0')
           .useDatabase('test')
           .whereFieldIsEqualTo(field, value)
           .apply(function() {})
@@ -85,7 +84,6 @@ describe('Terminators', function(done) {
     it('should throw an error if no query is specified', function() {
       should.throws(function() {
         return wrapper
-          .useVersion('1.0')
           .useDatabase('test')
           .in('collectionOne')
           .apply(function() {})
@@ -95,7 +93,6 @@ describe('Terminators', function(done) {
     it('should throw an error if no callback is passed', function() {
       should.throws(function() {
         return wrapper
-          .useVersion('1.0')
           .useDatabase('test')
           .in('collectionOne')
           .whereFieldIsEqualTo(field, value)
@@ -108,8 +105,8 @@ describe('Terminators', function(done) {
       const expectedQuerystring =
         '?' + querystring.stringify(query).replace('%3A', ':')
       const host = options.uri + ':' + options.port
-      const get = '/1.0/test/collectionOne' + expectedQuerystring
-      const put = '/1.0/test/collectionOne'
+      const get = '/test/collectionOne' + expectedQuerystring
+      const put = '/test/collectionOne'
 
       // Prepare a fake response body for the GET request inside
       // API Wrapper
@@ -151,7 +148,6 @@ describe('Terminators', function(done) {
       delete fakePut.results[1]._id
 
       return wrapper
-        .useVersion('1.0')
         .useDatabase('test')
         .in('collectionOne')
         .whereFieldIsEqualTo(field, value)
@@ -169,7 +165,7 @@ describe('Terminators', function(done) {
   describe('create', function() {
     it('should insert each document', function() {
       const host = options.uri + ':' + options.port
-      const post = '/1.0/test/collectionOne'
+      const post = '/test/collectionOne'
 
       // Set up the http intercepts - we ask it to return the same document we passed in
       // because that's what'll happen anyway
@@ -180,7 +176,6 @@ describe('Terminators', function(done) {
         .reply(200, {results: [fakeResponse.results]})
 
       return wrapper
-        .useVersion('1.0')
         .useDatabase('test')
         .in('collectionOne')
         .create(documents)
@@ -194,7 +189,6 @@ describe('Terminators', function(done) {
     it('should throw an error if no query is specified', function() {
       should.throws(function() {
         return wrapper
-          .useVersion('1.0')
           .useDatabase('test')
           .in('collectionOne')
           .delete()
@@ -204,7 +198,7 @@ describe('Terminators', function(done) {
     it('should delete each document returned from the query', function() {
       const query = {query: {name: 'John Doe'}}
       const host = options.uri + ':' + options.port
-      const del = '/1.0/test/collectionOne'
+      const del = '/test/collectionOne'
 
       // Prepare fake response bodies for the DELETE request inside API Wrapper
       const fakeDelete = _.clone(fakeResponse)
@@ -216,7 +210,6 @@ describe('Terminators', function(done) {
         .reply(204)
 
       return wrapper
-        .useVersion('1.0')
         .useDatabase('test')
         .in('collectionOne')
         .whereFieldIsEqualTo(field, value)
@@ -231,7 +224,6 @@ describe('Terminators', function(done) {
     it('should throw an error if no query is specified', function() {
       should.throws(function() {
         return wrapper
-          .useVersion('1.0')
           .useDatabase('test')
           .in('collectionOne')
           .update()
@@ -247,14 +239,13 @@ describe('Terminators', function(done) {
       const expectedQuerystring =
         '?' + querystring.stringify(query).replace('%3A', ':')
       const host = options.uri + ':' + options.port
-      const urlPath = '/1.0/test/collectionOne' + expectedQuerystring
+      const urlPath = '/test/collectionOne' + expectedQuerystring
 
       const findScope = nock(host)
         .get(urlPath)
         .reply(200, fakeResponse)
 
       return wrapper
-        .useVersion('1.0')
         .useDatabase('test')
         .in('collectionOne')
         .whereFieldIsEqualTo('name', 'John')
@@ -269,14 +260,13 @@ describe('Terminators', function(done) {
       const expectedQuerystring =
         '?' + querystring.stringify(query).replace('%3A', ':')
       const host = options.uri + ':' + options.port
-      const urlPath = '/1.0/test/collectionOne' + expectedQuerystring
+      const urlPath = '/test/collectionOne' + expectedQuerystring
 
       const findScope = nock(host)
         .get(urlPath)
         .reply(200, fakeResponse)
 
       return wrapper
-        .useVersion('1.0')
         .useDatabase('test')
         .in('collectionOne')
         .whereFieldIsEqualTo('name', 'John')
@@ -291,14 +281,13 @@ describe('Terminators', function(done) {
       const expectedQuerystring =
         '?' + querystring.stringify(query).replace('%3A', ':')
       const host = options.uri + ':' + options.port
-      const urlPath = '/1.0/test/collectionOne' + expectedQuerystring
+      const urlPath = '/test/collectionOne' + expectedQuerystring
 
       const findScope = nock(host)
         .get(urlPath)
         .reply(200, fakeResponse)
 
       return wrapper
-        .useVersion('1.0')
         .useDatabase('test')
         .in('collectionOne')
         .whereFieldIsEqualTo('name', 'John')
@@ -313,14 +302,13 @@ describe('Terminators', function(done) {
       const expectedQuerystring =
         '?' + querystring.stringify(query).replace('%3A', ':')
       const host = options.uri + ':' + options.port
-      const urlPath = '/1.0/test/collectionOne/count' + expectedQuerystring
+      const urlPath = '/test/collectionOne/count' + expectedQuerystring
 
       const findScope = nock(host)
         .get(urlPath)
         .reply(200, fakeResponse.metadata)
 
       return wrapper
-        .useVersion('1.0')
         .useDatabase('test')
         .in('collectionOne')
         .whereFieldIsEqualTo('name', 'John')
@@ -338,7 +326,7 @@ describe('Terminators', function(done) {
 
     it('should call buildUrl with {config:true}', function() {
       const host = options.uri + ':' + options.port
-      const urlPath = '/1.0/test/collectionOne/config'
+      const urlPath = '/test/collectionOne/config'
       const scope = nock(host)
         .get(urlPath)
         .reply(200)
@@ -353,8 +341,6 @@ describe('Terminators', function(done) {
           ':' +
           this.options.port +
           '/' +
-          this.customVersion +
-          '/' +
           this.customDatabase +
           '/' +
           this.collection +
@@ -363,7 +349,6 @@ describe('Terminators', function(done) {
       })
 
       return wrapper
-        .useVersion('1.0')
         .useDatabase('test')
         .in('collectionOne')
         .getConfig()
@@ -381,7 +366,7 @@ describe('Terminators', function(done) {
 
     it('should call buildUrl with {stats:true}', function() {
       const host = options.uri + ':' + options.port
-      const urlPath = '/1.0/test/collectionOne/stats'
+      const urlPath = '/test/collectionOne/stats'
       const scope = nock(host)
         .get(urlPath)
         .reply(200)
@@ -396,8 +381,6 @@ describe('Terminators', function(done) {
           ':' +
           this.options.port +
           '/' +
-          this.customVersion +
-          '/' +
           this.customDatabase +
           '/' +
           this.collection +
@@ -406,7 +389,6 @@ describe('Terminators', function(done) {
       })
 
       return wrapper
-        .useVersion('1.0')
         .useDatabase('test')
         .in('collectionOne')
         .getStats()
