@@ -40,10 +40,10 @@ It can be used as a standalone module to generate request objects containing inf
    ```js
    // Example: getting all documents where `name` contains "john" and age is greater than 18
    const requestObject = api
-    .in('users')
-    .whereFieldContains('name', 'john')
-    .whereFieldIsGreaterThan('age', 18)
-    .find()
+     .in('users')
+     .whereFieldContains('name', 'john')
+     .whereFieldIsGreaterThan('age', 18)
+     .find()
    ```
 
 ## Methods
@@ -64,7 +64,7 @@ const api = new APIWrapper({
   port: 80,
   version: 'vjoin',
   database: 'testdb',
-  callback: function (requestObject) {
+  callback: function(requestObject) {
     // This callback will return a JSON-stringified version
     // of the request object.
     return JSON.stringify(requestObject)

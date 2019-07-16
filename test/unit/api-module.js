@@ -5,27 +5,27 @@ const should = require('should')
 const sinon = require('sinon')
 const url = require('url')
 
-const MockModel = function (name) {}
+const MockModel = function(name) {}
 
 MockModel.prototype._mockData = [
   {_id: 1, name: 'Jane', age: 20},
   {_id: 2, name: 'John', age: 23}
 ]
 
-MockModel.prototype.create = function (parameters) {
+MockModel.prototype.create = function(parameters) {
   return Promise.resolve({
     results: parameters.documents
   })
 }
 
-MockModel.prototype.delete = function () {
+MockModel.prototype.delete = function() {
   return Promise.resolve({
     deletedCount: 1,
     totalCount: 1
   })
 }
 
-MockModel.prototype.get = function () {
+MockModel.prototype.get = function() {
   return Promise.resolve({
     results: this._mockData,
     metadata: {
@@ -34,8 +34,8 @@ MockModel.prototype.get = function () {
   })
 }
 
-MockModel.prototype.update = function (parameters) {
-  let results = this._mockData.map(document => {
+MockModel.prototype.update = function(parameters) {
+  const results = this._mockData.map(document => {
     return Object.assign({}, document, parameters.update)
   })
 
@@ -45,12 +45,12 @@ MockModel.prototype.update = function (parameters) {
 }
 
 const namespace = {
-  MockModel: MockModel
+  MockModel
 }
 
-let factory = modelName => new namespace.MockModel(modelName)
+const factory = modelName => new namespace.MockModel(modelName)
 let instance
-let spies = {
+const spies = {
   constructor: sinon.spy(namespace, 'MockModel'),
   create: sinon.spy(MockModel.prototype, 'create'),
   delete: sinon.spy(MockModel.prototype, 'delete'),
@@ -71,7 +71,7 @@ describe('API module integration', () => {
 
   describe('create()', () => {
     it('should call the `create` method in API model with the correct parameters when creating a single document', () => {
-      let mockData = {
+      const mockData = {
         name: 'Eduardo',
         age: 150
       }
@@ -88,7 +88,7 @@ describe('API module integration', () => {
     })
 
     it('should call the `create` method in API model with the correct parameters when creating multiple documents', () => {
-      let mockData = [
+      const mockData = [
         {
           name: 'Eduardo',
           age: 150
@@ -127,7 +127,7 @@ describe('API module integration', () => {
           })
         })
     })
-  })  
+  })
 
   describe('find()', () => {
     it('should call the `get` method in API model with the correct parameters', () => {
@@ -205,5 +205,5 @@ describe('API module integration', () => {
           })
         })
     })
-  })  
+  })
 })
