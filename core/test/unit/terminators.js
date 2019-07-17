@@ -76,7 +76,7 @@ describe('Terminators', function(done) {
       const query = {filter: JSON.stringify({name: 'John'}), page: 33}
 
       wrapper
-        .useDatabase('test')
+        .inProperty('test')
         .in('collectionOne')
         .whereFieldIsEqualTo('name', 'John')
         .goToPage(33)
@@ -90,7 +90,7 @@ describe('Terminators', function(done) {
       ]
 
       const requestObject = wrapper
-        .useDatabase('test')
+        .inProperty('test')
         .in('collectionOne')
         .create(documents)
 
@@ -125,7 +125,7 @@ describe('Terminators', function(done) {
     it('should throw an error if no query is specified', function() {
       should.throws(function() {
         return wrapper
-          .useDatabase('test')
+          .inProperty('test')
           .in('collectionOne')
           .delete()
       })
@@ -136,7 +136,7 @@ describe('Terminators', function(done) {
       const expectedQuerystring = '?' + querystring.stringify(query)
 
       const requestObject = wrapper
-        .useDatabase('test')
+        .inProperty('test')
         .in('collectionOne')
         .whereFieldIsEqualTo(field, value)
         .delete()
@@ -177,7 +177,7 @@ describe('Terminators', function(done) {
     it('should throw an error if no query is specified', function() {
       should.throws(function() {
         return wrapper
-          .useDatabase('test')
+          .inProperty('test')
           .in('collectionOne')
           .update()
       })
@@ -187,7 +187,7 @@ describe('Terminators', function(done) {
       const query = {query: {name: 'John Doe'}}
 
       const requestObject = wrapper
-        .useDatabase('test')
+        .inProperty('test')
         .in('collectionOne')
         .whereFieldIsEqualTo(field, value)
         .update({name: 'Jane Doe'})
@@ -257,7 +257,7 @@ describe('Terminators', function(done) {
   describe('find', function() {
     it('should create the request object for finding documents affected by the query', function(done) {
       const requestObject = wrapper
-        .useDatabase('test')
+        .inProperty('test')
         .in('collectionOne')
         .whereFieldIsEqualTo('name', 'John')
         .find({extractResults: true})
@@ -319,7 +319,7 @@ describe('Terminators', function(done) {
   describe('getConfig', function(done) {
     it('should create the request object for getting a collection config', function(done) {
       const requestObject = wrapper
-        .useDatabase('test')
+        .inProperty('test')
         .in('collectionOne')
         .getConfig()
 
@@ -351,7 +351,7 @@ describe('Terminators', function(done) {
       const query = {filter: JSON.stringify({name: 'John'})}
 
       const requestObject = wrapper
-        .useDatabase('test')
+        .inProperty('test')
         .in('collectionOne')
         .getStats()
 
@@ -429,13 +429,13 @@ describe('Terminators', function(done) {
       const query = {filter: JSON.stringify({name: 'John'})}
 
       const requestObject = wrapper
-        .useDatabase('test')
+        .inProperty('test')
         .in('collectionOne')
         .whereFieldIsEqualTo('name', 'John')
         .find({extractResults: true})
 
       const requestObjectWithCallback = wrapperWithCallback
-        .useDatabase('test')
+        .inProperty('test')
         .in('collectionOne')
         .whereFieldIsEqualTo('name', 'John')
         .find({extractResults: true})

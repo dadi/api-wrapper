@@ -41,8 +41,8 @@ describe('Helpers', function(done) {
       done()
     })
 
-    it('should use customDatabase if specified', function(done) {
-      wrapper.useDatabase('test').in('collectionOne')
+    it('should use property if specified', function(done) {
+      wrapper.inProperty('test').in('collectionOne')
       const wrapperUrl = wrapper._buildURL()
 
       wrapperUrl.should.eql('http://0.0.0.0:8000/test/collectionOne')
@@ -50,7 +50,7 @@ describe('Helpers', function(done) {
     })
 
     it('should use database if specified', function(done) {
-      wrapper.useDatabase('test').in('collectionOne')
+      wrapper.inProperty('test').in('collectionOne')
       const wrapperUrl = wrapper._buildURL()
 
       wrapperUrl.should.eql('http://0.0.0.0:8000/test/collectionOne')
@@ -58,7 +58,7 @@ describe('Helpers', function(done) {
     })
 
     it('should build /api url if no collection or endpoint specified', function(done) {
-      wrapper.useDatabase('test')
+      wrapper.inProperty('test')
       const wrapperUrl = wrapper._buildURL()
 
       wrapperUrl.should.eql('http://0.0.0.0:8000/api')
@@ -79,7 +79,7 @@ describe('Helpers', function(done) {
     it('should use version and endpoint if specified', function(done) {
       wrapper
         .useVersion('2.0')
-        .useDatabase('test')
+        .inProperty('test')
         .fromEndpoint('endpointOne')
       const wrapperUrl = wrapper._buildURL()
 
@@ -88,7 +88,7 @@ describe('Helpers', function(done) {
     })
 
     it('should build /config url if option specified', function(done) {
-      wrapper.useDatabase('test').in('collectionOne')
+      wrapper.inProperty('test').in('collectionOne')
       const wrapperUrl = wrapper._buildURL({config: true})
 
       wrapperUrl.should.eql('http://0.0.0.0:8000/test/collectionOne/config')
@@ -96,7 +96,7 @@ describe('Helpers', function(done) {
     })
 
     it('should build /stats url if option specified', function(done) {
-      wrapper.useDatabase('test').in('collectionOne')
+      wrapper.inProperty('test').in('collectionOne')
       const wrapperUrl = wrapper._buildURL({stats: true})
 
       wrapperUrl.should.eql('http://0.0.0.0:8000/test/collectionOne/stats')
@@ -104,7 +104,7 @@ describe('Helpers', function(done) {
     })
 
     it('should build id url if option specified', function(done) {
-      wrapper.useDatabase('test').in('collectionOne')
+      wrapper.inProperty('test').in('collectionOne')
       const wrapperUrl = wrapper._buildURL({id: 123456})
 
       wrapperUrl.should.eql('http://0.0.0.0:8000/test/collectionOne/123456')
@@ -117,7 +117,7 @@ describe('Helpers', function(done) {
         '?' + decodeURIComponent(querystring.stringify(query))
 
       wrapper
-        .useDatabase('test')
+        .inProperty('test')
         .in('collectionOne')
         .whereFieldIsEqualTo('name', 'John')
 
@@ -135,7 +135,7 @@ describe('Helpers', function(done) {
         '?' + decodeURIComponent(querystring.stringify(query))
 
       wrapper
-        .useDatabase('test')
+        .inProperty('test')
         .in('collectionOne')
         .whereFieldIsEqualTo('name', 'John')
         .goToPage(33)
@@ -154,7 +154,7 @@ describe('Helpers', function(done) {
         '?' + decodeURIComponent(querystring.stringify(query))
 
       wrapper
-        .useDatabase('test')
+        .inProperty('test')
         .in('collectionOne')
         .whereFieldIsEqualTo('name', 'John')
         .limitTo(10)
@@ -173,7 +173,7 @@ describe('Helpers', function(done) {
         '?' + decodeURIComponent(querystring.stringify(query))
 
       wrapper
-        .useDatabase('test')
+        .inProperty('test')
         .in('collectionOne')
         .whereFieldIsEqualTo('name', 'John')
         .limitTo('name')
@@ -195,7 +195,7 @@ describe('Helpers', function(done) {
         '?' + decodeURIComponent(querystring.stringify(query))
 
       wrapper
-        .useDatabase('test')
+        .inProperty('test')
         .in('collectionOne')
         .whereFieldIsEqualTo('name', 'John')
         .sortBy('name', 'asc')
@@ -217,7 +217,7 @@ describe('Helpers', function(done) {
         '?' + decodeURIComponent(querystring.stringify(query))
 
       wrapper
-        .useDatabase('test')
+        .inProperty('test')
         .in('collectionOne')
         .whereFieldIsEqualTo('name', 'John')
         .useFields(['name'])
@@ -236,7 +236,7 @@ describe('Helpers', function(done) {
         '?' + decodeURIComponent(querystring.stringify(query))
 
       wrapper
-        .useDatabase('test')
+        .inProperty('test')
         .in('collectionOne')
         .whereFieldIsEqualTo('name', 'John')
         .withComposition(true)
@@ -255,7 +255,7 @@ describe('Helpers', function(done) {
         '?' + decodeURIComponent(querystring.stringify(query))
 
       wrapper
-        .useDatabase('test')
+        .inProperty('test')
         .in('collectionOne')
         .whereFieldIsEqualTo('name', 'John')
         .withComposition(false)
@@ -277,7 +277,7 @@ describe('Helpers', function(done) {
         '?' + decodeURIComponent(querystring.stringify(query))
 
       wrapper
-        .useDatabase('test')
+        .inProperty('test')
         .in('collectionOne')
         .whereFieldIsEqualTo('name', 'John')
         .includeHistory(true)
@@ -315,7 +315,7 @@ describe('Helpers', function(done) {
         .reply(200, {hello: 'world'})
 
       return wrapper
-        .useDatabase('test')
+        .inProperty('test')
         .in('collectionOne')
         .find()
         .then(function(data) {

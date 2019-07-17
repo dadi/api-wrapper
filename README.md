@@ -491,11 +491,11 @@ Selects a media bucket to be used.
 api.inMedia('images')
 ```
 
-#### `.useDatabase(database)`
+#### `.inProperty(database)`
 
-Selects the database to use. Overrides any database defined in the initialisation options, and is reset when called without arguments.
+Selects the property to use. Overrides any property defined in the initialisation options, and is reset when called without arguments.
 
 ```js
 // Example
-api.useDatabase('testdb')
+api.inProperty('testdb')
 ```

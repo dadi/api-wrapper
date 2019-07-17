@@ -58,9 +58,15 @@ describe('Filters', function(done) {
     done()
   })
 
-  it('should pass argument given in `useDatabase` to the wrapper', function(done) {
+  it('should pass argument given in `inProperty` to the wrapper', function(done) {
+    wrapper.inProperty('test')
+    wrapper.property.should.eql('test')
+    done()
+  })
+
+  it('should pass argument given in `useDatabase` to the wrapper (legacy)', function(done) {
     wrapper.useDatabase('test')
-    wrapper.customDatabase.should.eql('test')
+    wrapper.property.should.eql('test')
     done()
   })
 

@@ -82,6 +82,19 @@ module.exports = function(APIWrapper) {
   }
 
   /**
+   * Select the property to be used
+   *
+   * @param {String} property
+   * @return API
+   * @api public
+   */
+  APIWrapper.prototype.inProperty = function(property) {
+    this.property = property
+
+    return this
+  }
+
+  /**
    * Select a document limit
    *
    * @param {Number} limit
@@ -110,14 +123,14 @@ module.exports = function(APIWrapper) {
   }
 
   /**
-   * Select the database to be used
+   * (DEPRECATED) Select the database to be used
    *
    * @param {String} database
    * @return API
    * @api public
    */
   APIWrapper.prototype.useDatabase = function(database) {
-    this.customDatabase = database
+    this.property = database
 
     return this
   }

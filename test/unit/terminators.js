@@ -75,7 +75,7 @@ describe('Terminators', function(done) {
     it('should throw an error if no collection is specified', function() {
       should.throws(function() {
         return wrapper
-          .useDatabase('test')
+          .inProperty('test')
           .whereFieldIsEqualTo(field, value)
           .apply(function() {})
       })
@@ -84,7 +84,7 @@ describe('Terminators', function(done) {
     it('should throw an error if no query is specified', function() {
       should.throws(function() {
         return wrapper
-          .useDatabase('test')
+          .inProperty('test')
           .in('collectionOne')
           .apply(function() {})
       })
@@ -93,7 +93,7 @@ describe('Terminators', function(done) {
     it('should throw an error if no callback is passed', function() {
       should.throws(function() {
         return wrapper
-          .useDatabase('test')
+          .inProperty('test')
           .in('collectionOne')
           .whereFieldIsEqualTo(field, value)
           .apply()
@@ -148,7 +148,7 @@ describe('Terminators', function(done) {
       delete fakePut.results[1]._id
 
       return wrapper
-        .useDatabase('test')
+        .inProperty('test')
         .in('collectionOne')
         .whereFieldIsEqualTo(field, value)
         .apply(function(document) {
@@ -176,7 +176,7 @@ describe('Terminators', function(done) {
         .reply(200, {results: [fakeResponse.results]})
 
       return wrapper
-        .useDatabase('test')
+        .inProperty('test')
         .in('collectionOne')
         .create(documents)
         .then(function(data) {
@@ -189,7 +189,7 @@ describe('Terminators', function(done) {
     it('should throw an error if no query is specified', function() {
       should.throws(function() {
         return wrapper
-          .useDatabase('test')
+          .inProperty('test')
           .in('collectionOne')
           .delete()
       })
@@ -210,7 +210,7 @@ describe('Terminators', function(done) {
         .reply(204)
 
       return wrapper
-        .useDatabase('test')
+        .inProperty('test')
         .in('collectionOne')
         .whereFieldIsEqualTo(field, value)
         .delete()
@@ -224,7 +224,7 @@ describe('Terminators', function(done) {
     it('should throw an error if no query is specified', function() {
       should.throws(function() {
         return wrapper
-          .useDatabase('test')
+          .inProperty('test')
           .in('collectionOne')
           .update()
       })
@@ -246,7 +246,7 @@ describe('Terminators', function(done) {
         .reply(200, fakeResponse)
 
       return wrapper
-        .useDatabase('test')
+        .inProperty('test')
         .in('collectionOne')
         .whereFieldIsEqualTo('name', 'John')
         .find({extractResults: true})
@@ -267,7 +267,7 @@ describe('Terminators', function(done) {
         .reply(200, fakeResponse)
 
       return wrapper
-        .useDatabase('test')
+        .inProperty('test')
         .in('collectionOne')
         .whereFieldIsEqualTo('name', 'John')
         .find()
@@ -288,7 +288,7 @@ describe('Terminators', function(done) {
         .reply(200, fakeResponse)
 
       return wrapper
-        .useDatabase('test')
+        .inProperty('test')
         .in('collectionOne')
         .whereFieldIsEqualTo('name', 'John')
         .find({extractResults: false})
@@ -309,7 +309,7 @@ describe('Terminators', function(done) {
         .reply(200, fakeResponse.metadata)
 
       return wrapper
-        .useDatabase('test')
+        .inProperty('test')
         .in('collectionOne')
         .whereFieldIsEqualTo('name', 'John')
         .find({extractMetadata: true})
@@ -341,7 +341,7 @@ describe('Terminators', function(done) {
           ':' +
           this.options.port +
           '/' +
-          this.customDatabase +
+          this.property +
           '/' +
           this.collection +
           '/config'
@@ -349,7 +349,7 @@ describe('Terminators', function(done) {
       })
 
       return wrapper
-        .useDatabase('test')
+        .inProperty('test')
         .in('collectionOne')
         .getConfig()
         .then()
@@ -381,7 +381,7 @@ describe('Terminators', function(done) {
           ':' +
           this.options.port +
           '/' +
-          this.customDatabase +
+          this.property +
           '/' +
           this.collection +
           '/stats'
@@ -389,7 +389,7 @@ describe('Terminators', function(done) {
       })
 
       return wrapper
-        .useDatabase('test')
+        .inProperty('test')
         .in('collectionOne')
         .getStats()
         .then()

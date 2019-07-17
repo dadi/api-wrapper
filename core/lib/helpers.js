@@ -63,9 +63,9 @@ module.exports = function(APIWrapper) {
     } else if (this.collection) {
       url +=
         '/' +
-        (this.customDatabase !== undefined
-          ? this.customDatabase
-          : this.options.database)
+        (this.property !== undefined
+          ? this.property
+          : this.options.property || this.options.database)
       url += '/' + this.collection
     } else {
       url +=
@@ -259,7 +259,7 @@ module.exports = function(APIWrapper) {
   APIWrapper.prototype._reset = function() {
     this.params = {}
     this.customVersion = undefined
-    this.customDatabase = undefined
+    this.property = undefined
   }
 
   /**

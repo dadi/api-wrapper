@@ -63,7 +63,7 @@ describe('Filters', function(done) {
         .reply(200, fakeResponse)
 
       return wrapper
-        .useDatabase('test')
+        .inProperty('test')
         .in('collectionOne')
         .requireFeature('feature1')
         .requireFeature('feature2')
@@ -93,7 +93,7 @@ describe('Filters', function(done) {
         })
 
       return wrapper
-        .useDatabase('test')
+        .inProperty('test')
         .in('collectionOne')
         .requireFeature('feature1')
         .requireFeature('feature2')
@@ -121,7 +121,7 @@ describe('Filters', function(done) {
         })
 
       return wrapper
-        .useDatabase('test')
+        .inProperty('test')
         .in('collectionOne')
         .requireFeature('feature1')
         .requireFeature('feature2')

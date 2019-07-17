@@ -97,6 +97,11 @@ describe('Initialisation', function(done) {
       done()
     })
 
+    it('should attach `inProperty` to the wrapper', function(done) {
+      wrapper.inProperty.should.be.Function
+      done()
+    })
+
     it('should attach `limitTo` to the wrapper', function(done) {
       wrapper.limitTo.should.be.Function
       done()
@@ -107,7 +112,7 @@ describe('Initialisation', function(done) {
       done()
     })
 
-    it('should attach `useDatabase` to the wrapper', function(done) {
+    it('should attach `useDatabase` to the wrapper (legacy)', function(done) {
       wrapper.useDatabase.should.be.Function
       done()
     })
