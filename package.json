@@ -1,6 +1,6 @@
 {
   "name": "@dadi/api-wrapper",
-  "version": "3.2.2",
+  "version": "4.0.0-rc1",
   "description": "A high-level library for interacting with DADI API",
   "main": "index.js",
   "scripts": {
