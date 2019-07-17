@@ -1,6 +1,6 @@
 'use strict'
 
-module.exports = function (APIWrapper) {
+module.exports = function(APIWrapper) {
   /**
    * Select a custom endpoint
    *
@@ -8,7 +8,7 @@ module.exports = function (APIWrapper) {
    * @return API
    * @api public
    */
-  APIWrapper.prototype.fromEndpoint = function (endpoint) {
+  APIWrapper.prototype.fromEndpoint = function(endpoint) {
     this.endpoint = endpoint
 
     return this
@@ -21,7 +21,7 @@ module.exports = function (APIWrapper) {
    * @return API
    * @api public
    */
-  APIWrapper.prototype.goToPage = function (page) {
+  APIWrapper.prototype.goToPage = function(page) {
     this.page = page
 
     return this
@@ -34,7 +34,7 @@ module.exports = function (APIWrapper) {
    * @return API
    * @api public
    */
-  APIWrapper.prototype.in = function (collection) {
+  APIWrapper.prototype.in = function(collection) {
     this.collection = collection
 
     return this
@@ -46,7 +46,7 @@ module.exports = function (APIWrapper) {
    * @return API
    * @api public
    */
-  APIWrapper.prototype.inClients = function () {
+  APIWrapper.prototype.inClients = function() {
     this.isClient = {
       enabled: true
     }
@@ -60,7 +60,7 @@ module.exports = function (APIWrapper) {
    * @return API
    * @api public
    */
-  APIWrapper.prototype.inHooks = function () {
+  APIWrapper.prototype.inHooks = function() {
     this.isHook = true
 
     return this
@@ -73,10 +73,23 @@ module.exports = function (APIWrapper) {
    * @return API
    * @api public
    */
-  APIWrapper.prototype.inMedia = function (bucket) {
+  APIWrapper.prototype.inMedia = function(bucket) {
     bucket = bucket || true
 
     this.mediaBucket = bucket
+
+    return this
+  }
+
+  /**
+   * Select the property to be used
+   *
+   * @param {String} property
+   * @return API
+   * @api public
+   */
+  APIWrapper.prototype.inProperty = function(property) {
+    this.property = property
 
     return this
   }
@@ -88,7 +101,7 @@ module.exports = function (APIWrapper) {
    * @return API
    * @api public
    */
-  APIWrapper.prototype.limitTo = function (limit) {
+  APIWrapper.prototype.limitTo = function(limit) {
     this.limit = limit
 
     return this
@@ -102,22 +115,22 @@ module.exports = function (APIWrapper) {
    * @return API
    * @api public
    */
-  APIWrapper.prototype.sortBy = function (sortField, sortOrder) {
+  APIWrapper.prototype.sortBy = function(sortField, sortOrder) {
     this.sort = this.sort || {}
-    this.sort[sortField] = (sortOrder === 'desc') ? -1 : 1
+    this.sort[sortField] = sortOrder === 'desc' ? -1 : 1
 
     return this
   }
 
   /**
-   * Select the database to be used
+   * (DEPRECATED) Select the database to be used
    *
    * @param {String} database
    * @return API
    * @api public
    */
-  APIWrapper.prototype.useDatabase = function (database) {
-    this.customDatabase = database
+  APIWrapper.prototype.useDatabase = function(database) {
+    this.property = database
 
     return this
   }
@@ -129,11 +142,11 @@ module.exports = function (APIWrapper) {
    * @return API
    * @api public
    */
-  APIWrapper.prototype.useFields = function (fields) {
+  APIWrapper.prototype.useFields = function(fields) {
     if (fields !== undefined) {
-      var fieldsObj = {}
+      const fieldsObj = {}
 
-      fields.forEach(function (field) {
+      fields.forEach(function(field) {
         fieldsObj[field] = 1
       })
 
@@ -150,7 +163,7 @@ module.exports = function (APIWrapper) {
    * @return API
    * @api public
    */
-  APIWrapper.prototype.useVersion = function (version) {
+  APIWrapper.prototype.useVersion = function(version) {
     this.customVersion = version
 
     return this
@@ -163,7 +176,7 @@ module.exports = function (APIWrapper) {
    * @return API
    * @api public
    */
-  APIWrapper.prototype.where = function (query) {
+  APIWrapper.prototype.where = function(query) {
     this.query = query
 
     return this
@@ -176,7 +189,7 @@ module.exports = function (APIWrapper) {
    * @return API
    * @api public
    */
-  APIWrapper.prototype.whereClientIs = function (value) {
+  APIWrapper.prototype.whereClientIs = function(value) {
     if (!this.isClient || !this.isClient.enabled) {
       throw new Error('Not in clients mode. Have you used `.inClients()`?')
     }
@@ -193,7 +206,7 @@ module.exports = function (APIWrapper) {
    * @return API
    * @api public
    */
-  APIWrapper.prototype.whereClientIsSelf = function () {
+  APIWrapper.prototype.whereClientIsSelf = function() {
     if (!this.isClient || !this.isClient.enabled) {
       throw new Error('Not in clients mode. Have you used `.inClients()`?')
     }
@@ -211,7 +224,7 @@ module.exports = function (APIWrapper) {
    * @return API
    * @api public
    */
-  APIWrapper.prototype.whereFieldBeginsWith = function (field, value) {
+  APIWrapper.prototype.whereFieldBeginsWith = function(field, value) {
     this._addToQuery(field, '$regex', '^' + value)
 
     return this
@@ -225,7 +238,7 @@ module.exports = function (APIWrapper) {
    * @return API
    * @api public
    */
-  APIWrapper.prototype.whereFieldContains = function (field, value) {
+  APIWrapper.prototype.whereFieldContains = function(field, value) {
     this._addToQuery(field, '$regex', value)
 
     return this
@@ -239,7 +252,7 @@ module.exports = function (APIWrapper) {
    * @return API
    * @api public
    */
-  APIWrapper.prototype.whereFieldDoesNotContain = function (field, value) {
+  APIWrapper.prototype.whereFieldDoesNotContain = function(field, value) {
     this._addToQuery(field, '$not', '/' + value + '/i')
 
     return this
@@ -252,7 +265,7 @@ module.exports = function (APIWrapper) {
    * @return API
    * @api public
    */
-  APIWrapper.prototype.whereFieldDoesNotExist = function (field) {
+  APIWrapper.prototype.whereFieldDoesNotExist = function(field) {
     this._addToQuery(field, '$eq', null)
 
     return this
@@ -266,7 +279,7 @@ module.exports = function (APIWrapper) {
    * @return API
    * @api public
    */
-  APIWrapper.prototype.whereFieldEndsWith = function (field, value) {
+  APIWrapper.prototype.whereFieldEndsWith = function(field, value) {
     this._addToQuery(field, '$regex', value + '$')
 
     return this
@@ -279,7 +292,7 @@ module.exports = function (APIWrapper) {
    * @return API
    * @api public
    */
-  APIWrapper.prototype.whereFieldExists = function (field) {
+  APIWrapper.prototype.whereFieldExists = function(field) {
     this._addToQuery(field, '$ne', null)
 
     return this
@@ -293,7 +306,7 @@ module.exports = function (APIWrapper) {
    * @return API
    * @api public
    */
-  APIWrapper.prototype.whereFieldIsEqualTo = function (field, value) {
+  APIWrapper.prototype.whereFieldIsEqualTo = function(field, value) {
     this._addToQuery(field, value)
 
     return this
@@ -307,7 +320,7 @@ module.exports = function (APIWrapper) {
    * @return API
    * @api public
    */
-  APIWrapper.prototype.whereFieldIsGreaterThan = function (field, value) {
+  APIWrapper.prototype.whereFieldIsGreaterThan = function(field, value) {
     this._addToQuery(field, '$gt', value)
 
     return this
@@ -321,7 +334,10 @@ module.exports = function (APIWrapper) {
    * @return API
    * @api public
    */
-  APIWrapper.prototype.whereFieldIsGreaterThanOrEqualTo = function (field, value) {
+  APIWrapper.prototype.whereFieldIsGreaterThanOrEqualTo = function(
+    field,
+    value
+  ) {
     this._addToQuery(field, '$gte', value)
 
     return this
@@ -335,7 +351,7 @@ module.exports = function (APIWrapper) {
    * @return API
    * @api public
    */
-  APIWrapper.prototype.whereFieldIsLessThan = function (field, value) {
+  APIWrapper.prototype.whereFieldIsLessThan = function(field, value) {
     this._addToQuery(field, '$lt', value)
 
     return this
@@ -349,7 +365,7 @@ module.exports = function (APIWrapper) {
    * @return API
    * @api public
    */
-  APIWrapper.prototype.whereFieldIsLessThanOrEqualTo = function (field, value) {
+  APIWrapper.prototype.whereFieldIsLessThanOrEqualTo = function(field, value) {
     this._addToQuery(field, '$lte', value)
 
     return this
@@ -363,7 +379,7 @@ module.exports = function (APIWrapper) {
    * @return API
    * @api public
    */
-  APIWrapper.prototype.whereFieldIsNotEqualTo = function (field, value) {
+  APIWrapper.prototype.whereFieldIsNotEqualTo = function(field, value) {
     if (isNaN(value)) {
       this._addToQuery(field, '$not', '/^' + value + '$/i')
     } else {
@@ -381,7 +397,7 @@ module.exports = function (APIWrapper) {
    * @return API
    * @api public
    */
-  APIWrapper.prototype.whereFieldIsNotOneOf = function (field, matches) {
+  APIWrapper.prototype.whereFieldIsNotOneOf = function(field, matches) {
     this._addToQuery(field, '$nin', matches)
 
     return this
@@ -395,7 +411,7 @@ module.exports = function (APIWrapper) {
    * @return API
    * @api public
    */
-  APIWrapper.prototype.whereFieldIsOneOf = function (field, matches) {
+  APIWrapper.prototype.whereFieldIsOneOf = function(field, matches) {
     this._addToQuery(field, '$in', matches)
 
     return this
@@ -408,7 +424,7 @@ module.exports = function (APIWrapper) {
    * @return API
    * @api public
    */
-  APIWrapper.prototype.whereHookNameIs = function (name) {
+  APIWrapper.prototype.whereHookNameIs = function(name) {
     if (!this.isHook) {
       throw new Error('Not in hooks mode. Have you used `.inHooks()`?')
     }
@@ -425,7 +441,7 @@ module.exports = function (APIWrapper) {
    * @return API
    * @api public
    */
-  APIWrapper.prototype.withComposition = function (value) {
+  APIWrapper.prototype.withComposition = function(value) {
     this.compose = value !== false
 
     return this
@@ -438,7 +454,7 @@ module.exports = function (APIWrapper) {
    * @return API
    * @api public
    */
-  APIWrapper.prototype.includeHistory = function (value) {
+  APIWrapper.prototype.includeHistory = function(value) {
     this.history = value !== false
 
     return this

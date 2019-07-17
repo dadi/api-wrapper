@@ -1,6 +1,6 @@
 'use strict'
 
-module.exports = function (APIWrapper) {
+module.exports = function(APIWrapper) {
   /**
    * Create one/multiple documents or hooks
    *
@@ -8,10 +8,10 @@ module.exports = function (APIWrapper) {
    * @return Promise
    * @api public
    */
-  APIWrapper.prototype.create = function (data) {
+  APIWrapper.prototype.create = function(data) {
     this.terminator = 'create'
 
-    let requestPayload = {
+    const requestPayload = {
       method: 'POST',
       uri: this._buildURL()
     }
@@ -21,9 +21,10 @@ module.exports = function (APIWrapper) {
 
       this._setHeader('content-type', 'text/plain')
     } else {
-      requestPayload.body = data instanceof Array
-        ? data.map(this._stripReservedProperties.bind(this))
-        : this._stripReservedProperties(data)
+      requestPayload.body =
+        data instanceof Array
+          ? data.map(this._stripReservedProperties.bind(this))
+          : this._stripReservedProperties(data)
     }
 
     return this._createRequestObject(requestPayload)
@@ -35,10 +36,10 @@ module.exports = function (APIWrapper) {
    * @return Promise
    * @api public
    */
-  APIWrapper.prototype.delete = function () {
+  APIWrapper.prototype.delete = function() {
     this.terminator = 'delete'
 
-    let requestPayload = {
+    const requestPayload = {
       method: 'DELETE',
       uri: this._buildURL()
     }
@@ -70,7 +71,7 @@ module.exports = function (APIWrapper) {
    * @return Promise
    * @api public
    */
-  APIWrapper.prototype.find = function (options) {
+  APIWrapper.prototype.find = function(options) {
     this.terminator = 'find'
 
     if (options && options.extractMetadata) {
@@ -91,7 +92,7 @@ module.exports = function (APIWrapper) {
    * @return Promise
    * @api public
    */
-  APIWrapper.prototype.getCollections = function () {
+  APIWrapper.prototype.getCollections = function() {
     this.terminator = 'getCollections'
 
     return this._createRequestObject({
@@ -106,7 +107,7 @@ module.exports = function (APIWrapper) {
    * @return Promise
    * @api public
    */
-  APIWrapper.prototype.getConfig = function () {
+  APIWrapper.prototype.getConfig = function() {
     this.terminator = 'getConfig'
 
     return this._createRequestObject({
@@ -121,7 +122,7 @@ module.exports = function (APIWrapper) {
    * @return Promise
    * @api public
    */
-  APIWrapper.prototype.getLanguages = function () {
+  APIWrapper.prototype.getLanguages = function() {
     this.terminator = 'getLanguages'
 
     return this._createRequestObject({
@@ -136,7 +137,7 @@ module.exports = function (APIWrapper) {
    * @return Promise
    * @api public
    */
-  APIWrapper.prototype.getSignedUrl = function (parameters) {
+  APIWrapper.prototype.getSignedUrl = function(parameters) {
     this.terminator = 'getSignedUrl'
 
     return this._createRequestObject({
@@ -152,7 +153,7 @@ module.exports = function (APIWrapper) {
    * @return Promise
    * @api public
    */
-  APIWrapper.prototype.getStats = function () {
+  APIWrapper.prototype.getStats = function() {
     this.terminator = 'getStats'
 
     return this._createRequestObject({
@@ -167,7 +168,7 @@ module.exports = function (APIWrapper) {
    * @return Promise
    * @api public
    */
-  APIWrapper.prototype.getStatus = function () {
+  APIWrapper.prototype.getStatus = function() {
     this.terminator = 'getStatus'
 
     return this._createRequestObject({
@@ -183,10 +184,10 @@ module.exports = function (APIWrapper) {
    * @return Promise
    * @api public
    */
-  APIWrapper.prototype.update = function (update) {
+  APIWrapper.prototype.update = function(update) {
     this.terminator = 'update'
 
-    let requestPayload = {
+    const requestPayload = {
       method: 'PUT',
       uri: this._buildURL()
     }

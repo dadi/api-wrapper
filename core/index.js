@@ -1,6 +1,6 @@
 'use strict'
 
-const APIWrapper = function (options) {
+const APIWrapper = function(options) {
   this.options = options
 
   this.reservedProperties = [
@@ -13,7 +13,7 @@ const APIWrapper = function (options) {
     'v',
     'history',
     'composed'
-  ]  
+  ]
 }
 
 // -----------------------------------------
