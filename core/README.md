@@ -25,14 +25,13 @@ It can be used as a standalone module to generate request objects containing inf
 2. Add the library and configure the API settings:
 
    ```js
-   const APIWrapper = require('@dadi/api-wrapper-core')
+   const APIWrapper = require("@dadi/api-wrapper-core");
 
    const api = new APIWrapper({
-     uri: 'http://api.example.com',
+     uri: "http://api.example.com",
      port: 80,
-     version: 'vjoin',
-     database: 'testdb'
-   })
+     property: "test"
+   });
    ```
 
 3. Make a query:
@@ -40,10 +39,10 @@ It can be used as a standalone module to generate request objects containing inf
    ```js
    // Example: getting all documents where `name` contains "john" and age is greater than 18
    const requestObject = api
-     .in('users')
-     .whereFieldContains('name', 'john')
-     .whereFieldIsGreaterThan('age', 18)
-     .find()
+     .in("users")
+     .whereFieldContains("name", "john")
+     .whereFieldIsGreaterThan("age", 18)
+     .find();
    ```
 
 ## Methods
@@ -57,17 +56,16 @@ By default, calling a terminator will return a request object, which is a plain 
 A callback is defined by setting a `callback` property on the options object used to initialise API wrapper.
 
 ```js
-const APIWrapper = require('@dadi/api-wrapper-core')
+const APIWrapper = require("@dadi/api-wrapper-core");
 
 const api = new APIWrapper({
-  uri: 'http://api.example.com',
+  uri: "http://api.example.com",
   port: 80,
-  version: 'vjoin',
-  database: 'testdb',
+  property: "test",
   callback: function(requestObject) {
     // This callback will return a JSON-stringified version
     // of the request object.
-    return JSON.stringify(requestObject)
+    return JSON.stringify(requestObject);
   }
-})
+});
 ```
