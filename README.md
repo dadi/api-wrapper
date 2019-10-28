@@ -24,17 +24,16 @@ This library provides a high-level abstraction of the REST architecture style, e
 2. Add the library and configure the API settings:
 
    ```js
-   const DadiAPI = require('@dadi/api-wrapper')
+   const DadiAPI = require("@dadi/api-wrapper");
    const api = new DadiAPI({
-     uri: 'http://api.example.com',
+     uri: "http://api.example.com",
      port: 80,
      credentials: {
-       clientId: 'johndoe',
-       secret: 'f00b4r'
+       clientId: "johndoe",
+       secret: "f00b4r"
      },
-     version: 'vjoin',
-     database: 'testdb'
-   })
+     property: "test"
+   });
    ```
 
 3. Make a query:
@@ -42,13 +41,13 @@ This library provides a high-level abstraction of the REST architecture style, e
    ```js
    // Example: getting all documents where `name` contains "john" and age is greater than 18
    api
-     .in('users')
-     .whereFieldContains('name', 'john')
-     .whereFieldIsGreaterThan('age', 18)
+     .in("users")
+     .whereFieldContains("name", "john")
+     .whereFieldIsGreaterThan("age", 18)
      .find()
      .then(response => {
        // Use documents here
-     })
+     });
    ```
 
 ## Methods
@@ -63,16 +62,16 @@ Updates a list of documents with the result of individually applying `callback` 
 
 ```js
 api
-  .in('users')
-  .whereFieldExists('gender')
+  .in("users")
+  .whereFieldExists("gender")
   .apply(document => {
     document.name =
-      document.gender === 'male'
+      document.gender === "male"
         ? `Mr ${document.name}`
-        : `Mrs ${document.name}`
+        : `Mrs ${document.name}`;
 
-    return document
-  })
+    return document;
+  });
 ```
 
 #### `.create()`
@@ -82,18 +81,18 @@ Creates a document.
 ```js
 // Example
 api
-  .in('users')
+  .in("users")
   .create({
-    name: 'John Doe',
+    name: "John Doe",
     age: 45,
-    address: '123 Fake St'
+    address: "123 Fake St"
   })
   .then(function(doc) {
-    console.log('New document:', doc)
+    console.log("New document:", doc);
   })
   .catch(function(err) {
-    console.log('! Error:', err)
-  })
+    console.log("! Error:", err);
+  });
 ```
 
 #### `.delete()`
@@ -102,9 +101,9 @@ Deletes one or more documents.
 
 ```js
 api
-  .in('users')
-  .whereFieldDoesNotExist('name')
-  .delete()
+  .in("users")
+  .whereFieldDoesNotExist("name")
+  .delete();
 ```
 
 #### `.find(options)`
@@ -113,10 +112,10 @@ Returns a list of documents.
 
 ```js
 api
-  .in('users')
-  .whereFieldIsGreaterThan('age', 21)
-  .useFields(['name', 'age'])
-  .find(options)
+  .in("users")
+  .whereFieldIsGreaterThan("age", 21)
+  .useFields(["name", "age"])
+  .find(options);
 ```
 
 `options` is one of the following:
@@ -129,7 +128,7 @@ api
 Gets the list of collections for the API.
 
 ```js
-api.getCollections()
+api.getCollections();
 ```
 
 #### `.getConfig()`
@@ -138,12 +137,12 @@ Gets the config for a collection or for the API.
 
 ```js
 // Gets the collection config
-api.in('users').getConfig()
+api.in("users").getConfig();
 ```
 
 ```js
 // Gets the API config
-api.getConfig()
+api.getConfig();
 ```
 
 #### `.getLanguages()`
@@ -151,7 +150,7 @@ api.getConfig()
 Gets the list of languages supported by the API.
 
 ```js
-api.getLanguages().then(({metadata, results}) => {
+api.getLanguages().then(({ metadata, results }) => {
   /*
     {
       "defaultLanguage": {
@@ -162,7 +161,7 @@ api.getLanguages().then(({metadata, results}) => {
       "totalCount": 2
     }  
   */
-  console.log(metadata)
+  console.log(metadata);
 
   /*
     [
@@ -179,8 +178,8 @@ api.getLanguages().then(({metadata, results}) => {
       }
     ]
   */
-  console.log(results)
-})
+  console.log(results);
+});
 ```
 
 #### `.getSignedUrl()`
@@ -188,9 +187,9 @@ api.getLanguages().then(({metadata, results}) => {
 Gets a signed URL from a media collection.
 
 ```js
-api.in('images').getSignedUrl({
-  fileName: 'foobar.jpg'
-})
+api.in("images").getSignedUrl({
+  fileName: "foobar.jpg"
+});
 ```
 
 #### `.getStats()`
@@ -198,7 +197,7 @@ api.in('images').getSignedUrl({
 Gets collection stats.
 
 ```js
-api.in('users').getStats()
+api.in("users").getStats();
 ```
 
 #### `.getStatus()`
@@ -206,7 +205,7 @@ api.in('users').getStats()
 Gets the the API status.
 
 ```js
-api.getStatus()
+api.getStatus();
 ```
 
 #### `.update(update)`
@@ -215,11 +214,11 @@ Updates a list of documents.
 
 ```js
 api
-  .in('users')
-  .whereFieldIsLessThan('age', 18)
+  .in("users")
+  .whereFieldIsLessThan("age", 18)
   .update({
     adult: false
-  })
+  });
 ```
 
 ### Filters
@@ -232,7 +231,7 @@ Defines the page of documents to be used.
 
 ```js
 // Example
-api.goToPage(3)
+api.goToPage(3);
 ```
 
 #### `.limitTo(limit)`
@@ -241,7 +240,7 @@ Defines a maximum number of documents to be retrieved.
 
 ```js
 // Example
-api.limitTo(10)
+api.limitTo(10);
 ```
 
 #### `.requireFeature(featureCode)`
@@ -250,7 +249,7 @@ Queries the API for support of a given feature and throws a `MISSING_FEATURES` e
 
 ```js
 // Example
-api.requestFeature('aclv1')
+api.requestFeature("aclv1");
 ```
 
 #### `.sortBy(field, order)`
@@ -259,7 +258,7 @@ Selects a field to sort on and the sort direction. Order defaults to ascending (
 
 ```js
 // Example
-api.sortBy('age', 'desc')
+api.sortBy("age", "desc");
 ```
 
 #### `.useFields(fields)`
@@ -268,7 +267,7 @@ Selects the fields to be returned in the response. Accepts array format.
 
 ```js
 // Example
-api.useFields(['name', 'age'])
+api.useFields(["name", "age"]);
 ```
 
 #### `.where(query)`
@@ -277,7 +276,7 @@ Filters documents using a MongoDB query object or a Aggregation Pipeline array. 
 
 ```js
 // Example
-api.where({name: 'John Doe'})
+api.where({ name: "John Doe" });
 ```
 
 #### `.whereClientIs(value)`
@@ -286,7 +285,7 @@ Applicable when in "client mode". Selects the client with ID equal to `value`.
 
 ```js
 // Example
-api.inClients().whereClientIs('testClient')
+api.inClients().whereClientIs("testClient");
 ```
 
 #### `.whereClientIsSelf()`
@@ -295,7 +294,7 @@ Applicable when in "client mode". Selects the client associated with the bearer 
 
 ```js
 // Example
-api.inClients().whereClientIsSelf()
+api.inClients().whereClientIsSelf();
 ```
 
 #### `.whereFieldBeginsWith(field, text)`
@@ -304,7 +303,7 @@ Filters documents where `field` begins with `text`.
 
 ```js
 // Example
-api.whereFieldBeginsWith('name', 'john')
+api.whereFieldBeginsWith("name", "john");
 ```
 
 #### `.whereFieldContains(field, text)`
@@ -313,7 +312,7 @@ Filters documents where `field` contains `text`.
 
 ```js
 // Example
-api.whereFieldContains('name', 'john')
+api.whereFieldContains("name", "john");
 ```
 
 #### `.whereFieldDoesNotContain(field, text)`
@@ -322,7 +321,7 @@ Filters documents `field` does not contain `text`.
 
 ```js
 // Example
-api.whereFieldDoesNotContain('name', 'john')
+api.whereFieldDoesNotContain("name", "john");
 ```
 
 #### `.whereFieldEndsWith(field, text)`
@@ -331,7 +330,7 @@ Filters documents where field starts with `text`.
 
 ```js
 // Example
-api.whereFieldEndsWith('name', 'john')
+api.whereFieldEndsWith("name", "john");
 ```
 
 #### `.whereFieldExists(field)`
@@ -340,7 +339,7 @@ Filters documents that contain a field.
 
 ```js
 // Example
-api.whereFieldExists('name')
+api.whereFieldExists("name");
 ```
 
 #### `.whereFieldDoesNotExist(field)`
@@ -349,7 +348,7 @@ Filters documents that do not contain a field.
 
 ```js
 // Example
-api.whereFieldDoesNotExist('address')
+api.whereFieldDoesNotExist("address");
 ```
 
 #### `.whereFieldIsEqualTo(field, value)`
@@ -358,7 +357,7 @@ Filters documents where `field` is equal to `value`.
 
 ```js
 // Example
-api.whereFieldIsEqualTo('age', 53)
+api.whereFieldIsEqualTo("age", 53);
 ```
 
 #### `.whereFieldIsGreaterThan(field, value)`
@@ -367,7 +366,7 @@ Filters documents where `field` is greater than `value`.
 
 ```js
 // Example
-api.whereFieldIsGreaterThan('age', 18)
+api.whereFieldIsGreaterThan("age", 18);
 ```
 
 #### `.whereFieldIsGreaterThanOrEqualTo(field, value)`
@@ -376,7 +375,7 @@ Filters documents where `field` is greater than or equal to `value`.
 
 ```js
 // Example
-api.whereFieldIsGreaterThanOrEqualTo('age', 19)
+api.whereFieldIsGreaterThanOrEqualTo("age", 19);
 ```
 
 #### `.whereFieldIsLessThan(field, value)`
@@ -385,7 +384,7 @@ Filters documents where `field` is less than `value`.
 
 ```js
 // Example
-api.whereFieldIsLessThan('age', 65)
+api.whereFieldIsLessThan("age", 65);
 ```
 
 #### `.whereFieldIsLessThanOrEqualTo(field, value)`
@@ -394,7 +393,7 @@ Filters documents where `field` is less than or equal to `value`.
 
 ```js
 // Example
-api.whereFieldIsLessThanOrEqualTo('age', 64)
+api.whereFieldIsLessThanOrEqualTo("age", 64);
 ```
 
 #### `.whereFieldIsOneOf(field, matches)`
@@ -403,7 +402,7 @@ Filters documents where the value of `field` is one of the elements of `matches`
 
 ```js
 // Example
-api.whereFieldIsOneOf('name', ['John', 'Jack', 'Peter'])
+api.whereFieldIsOneOf("name", ["John", "Jack", "Peter"]);
 ```
 
 #### `.whereFieldIsNotEqualTo(field, value)`
@@ -412,7 +411,7 @@ Filters documents where `field` is not equal to `value`.
 
 ```js
 // Example
-api.whereFieldIsEqualTo('age', 53)
+api.whereFieldIsEqualTo("age", 53);
 ```
 
 #### `.whereFieldIsNotOneOf(field, matches)`
@@ -421,7 +420,7 @@ Filters documents where the value of `field` is not one of the elements of `matc
 
 ```js
 // Example
-api.whereFieldIsNotOneOf('name', ['Mark', 'Nathan', 'David'])
+api.whereFieldIsNotOneOf("name", ["Mark", "Nathan", "David"]);
 ```
 
 #### `.whereHookNameIs(name)`
@@ -430,7 +429,7 @@ Selects the hook with a given name.
 
 ```js
 // Example
-api.whereFieldIsNotOneOf('name', ['Mark', 'Nathan', 'David'])
+api.whereFieldIsNotOneOf("name", ["Mark", "Nathan", "David"]);
 ```
 
 #### `.withComposition(value)`
@@ -439,9 +438,9 @@ Defines whether nested documents should be resolved using composition. The defau
 
 ```js
 // Example
-api.withComposition()
-api.withComposition(true) // same as above
-api.withComposition(false)
+api.withComposition();
+api.withComposition(true); // same as above
+api.withComposition(false);
 ```
 
 ### Other methods
@@ -452,7 +451,7 @@ Selects a custom endpoint to use. Please note that unlike collections, custom en
 
 ```js
 // Example
-api.fromEndpoint('custom-endpoint')
+api.fromEndpoint("custom-endpoint");
 ```
 
 #### `.in(collection)`
@@ -461,7 +460,7 @@ Selects the collection to use.
 
 ```js
 // Example
-api.in('users')
+api.in("users");
 ```
 
 #### `.inClients()`
@@ -470,7 +469,7 @@ Selects "client mode", meaning filters and terminators will operate on clients a
 
 ```js
 // Example
-api.inClients()
+api.inClients();
 ```
 
 #### `.inHooks()`
@@ -479,7 +478,7 @@ Selects "hook mode", meaning filters and terminators will operate on hooks and n
 
 ```js
 // Example
-api.inMedia('images')
+api.inMedia("images");
 ```
 
 #### `.inMedia(bucket)`
@@ -488,14 +487,14 @@ Selects a media bucket to be used.
 
 ```js
 // Example
-api.inMedia('images')
+api.inMedia("images");
 ```
 
-#### `.inProperty(database)`
+#### `.inProperty(property)`
 
 Selects the property to use. Overrides any property defined in the initialisation options, and is reset when called without arguments.
 
 ```js
 // Example
-api.inProperty('testdb')
+api.inProperty("test");
 ```
