@@ -28,7 +28,10 @@ let tokenScope
 let findScope
 let fakeResponse
 
-const documents = [{_id: 1, name: 'John'}, {_id: 2, name: 'Jane'}]
+const documents = [
+  {_id: 1, name: 'John'},
+  {_id: 2, name: 'Jane'}
+]
 
 describe('Terminators', function(done) {
   before(function(done) {
@@ -56,7 +59,10 @@ describe('Terminators', function(done) {
     wrapper = new apiWrapper(options)
 
     fakeResponse = {
-      results: [{_id: 1, name: 'John'}, {_id: 2, name: 'Jane'}],
+      results: [
+        {_id: 1, name: 'John'},
+        {_id: 2, name: 'Jane'}
+      ],
       metadata: {
         totalCount: 2
       }

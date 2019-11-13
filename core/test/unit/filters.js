@@ -184,6 +184,12 @@ describe('Filters', function(done) {
     done()
   })
 
+  it('should pass argument given in `useLanguage` to the wrapper', function(done) {
+    wrapper.useLanguage('fr')
+    wrapper.language.should.eql('fr')
+    done()
+  })
+
   it('should pass argument given in `withComposition` to the wrapper', function(done) {
     wrapper.withComposition(true)
     wrapper.compose.should.eql(true)

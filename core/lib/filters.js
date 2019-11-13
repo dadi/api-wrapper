@@ -157,6 +157,19 @@ module.exports = function(APIWrapper) {
   }
 
   /**
+   * Set the language to be used when querying
+   *
+   * @param {String} language - ISO 639 language code
+   * @return API
+   * @api public
+   */
+  APIWrapper.prototype.useLanguage = function(language) {
+    this.language = language
+
+    return this
+  }
+
+  /**
    * Select the version to be used
    *
    * @param {String} version

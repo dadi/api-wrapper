@@ -130,6 +130,10 @@ module.exports = function(APIWrapper) {
         params.fields = this.fields
       }
 
+      if (this.language) {
+        params.lang = this.language
+      }
+
       if (!isNaN(parseInt(this.limit))) {
         params.count = this.limit
       }

@@ -176,6 +176,26 @@ describe('Helpers', function(done) {
       done()
     })
 
+    it('should append lang to the querystring if specified', function(done) {
+      const query = {count: 10, filter: JSON.stringify({name: 'John'})}
+      const expectedQuerystring =
+        '?' + decodeURIComponent(querystring.stringify(query)) + '&lang=fr'
+
+      wrapper
+        .inProperty('test')
+        .useLanguage('fr')
+        .in('collectionOne')
+        .whereFieldIsEqualTo('name', 'John')
+        .limitTo(10)
+
+      const wrapperUrl = wrapper._buildURL({useParams: true})
+
+      wrapperUrl.should.eql(
+        'http://0.0.0.0:8000/test/collectionOne' + expectedQuerystring
+      )
+      done()
+    })
+
     it('should append page to the querystring if specified', function(done) {
       const query = {filter: JSON.stringify({name: 'John'}), page: 33}
       const expectedQuerystring =
