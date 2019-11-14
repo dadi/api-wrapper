@@ -32,8 +32,7 @@ This library provides a high-level abstraction of the REST architecture style, e
        clientId: 'johndoe',
        secret: 'f00b4r'
      },
-     version: 'vjoin',
-     database: 'testdb'
+     property: 'test'
    })
    ```
 
@@ -41,13 +40,14 @@ This library provides a high-level abstraction of the REST architecture style, e
 
    ```js
    // Example: getting all documents where `name` contains "john" and age is greater than 18
-   api.in('users')
-    .whereFieldContains('name', 'john')
-    .whereFieldIsGreaterThan('age', 18)
-    .find()
-    .then(response => {
-      // Use documents here
-    })
+   api
+     .in('users')
+     .whereFieldContains('name', 'john')
+     .whereFieldIsGreaterThan('age', 18)
+     .find()
+     .then(response => {
+       // Use documents here
+     })
    ```
 
 ## Methods
@@ -61,10 +61,14 @@ Each query consists of a series of chained methods to form the request, always c
 Updates a list of documents with the result of individually applying `callback` to them.
 
 ```js
-api.in('users')
+api
+  .in('users')
   .whereFieldExists('gender')
   .apply(document => {
-    document.name = (document.gender === 'male') ? (`Mr ${document.name}`) : (`Mrs ${document.name}`)
+    document.name =
+      document.gender === 'male'
+        ? `Mr ${document.name}`
+        : `Mrs ${document.name}`
 
     return document
   })
@@ -76,18 +80,19 @@ Creates a document.
 
 ```js
 // Example
-api.in('users')
-   .create({
-      name: 'John Doe',
-      age: 45,
-      address: '123 Fake St'
-   })
-   .then(function (doc) {
-      console.log('New document:', doc)
-   })
-   .catch(function (err) {
-      console.log('! Error:', err)
-   })
+api
+  .in('users')
+  .create({
+    name: 'John Doe',
+    age: 45,
+    address: '123 Fake St'
+  })
+  .then(function(doc) {
+    console.log('New document:', doc)
+  })
+  .catch(function(err) {
+    console.log('! Error:', err)
+  })
 ```
 
 #### `.delete()`
@@ -95,9 +100,10 @@ api.in('users')
 Deletes one or more documents.
 
 ```js
-api.in('users')
-   .whereFieldDoesNotExist('name')
-   .delete()
+api
+  .in('users')
+  .whereFieldDoesNotExist('name')
+  .delete()
 ```
 
 #### `.find(options)`
@@ -105,10 +111,11 @@ api.in('users')
 Returns a list of documents.
 
 ```js
-api.in('users')
-   .whereFieldIsGreaterThan('age', 21)
-   .useFields(['name', 'age'])
-   .find(options)
+api
+  .in('users')
+  .whereFieldIsGreaterThan('age', 21)
+  .useFields(['name', 'age'])
+  .find(options)
 ```
 
 `options` is one of the following:
@@ -130,8 +137,7 @@ Gets the config for a collection or for the API.
 
 ```js
 // Gets the collection config
-api.in('users')
-   .getConfig()
+api.in('users').getConfig()
 ```
 
 ```js
@@ -181,10 +187,9 @@ api.getLanguages().then(({metadata, results}) => {
 Gets a signed URL from a media collection.
 
 ```js
-api.in('images')
-   .getSignedUrl({
-    fileName: "foobar.jpg"
-   })
+api.in('images').getSignedUrl({
+  fileName: 'foobar.jpg'
+})
 ```
 
 #### `.getStats()`
@@ -192,8 +197,7 @@ api.in('images')
 Gets collection stats.
 
 ```js
-api.in('users')
-   .getStats()
+api.in('users').getStats()
 ```
 
 #### `.getStatus()`
@@ -209,11 +213,12 @@ api.getStatus()
 Updates a list of documents.
 
 ```js
-api.in('users')
-   .whereFieldIsLessThan('age', 18)
-   .update({
-      adult: false
-   })
+api
+  .in('users')
+  .whereFieldIsLessThan('age', 18)
+  .update({
+    adult: false
+  })
 ```
 
 ### Filters
@@ -263,6 +268,15 @@ Selects the fields to be returned in the response. Accepts array format.
 ```js
 // Example
 api.useFields(['name', 'age'])
+```
+
+#### `.useLanguage(language)`
+
+Sets the language to be used when querying. Accepts an ISO 639 language code in string format.
+
+```js
+// Example
+api.useLanguage('en')
 ```
 
 #### `.where(query)`
@@ -485,20 +499,11 @@ Selects a media bucket to be used.
 api.inMedia('images')
 ```
 
-#### `.useDatabase(database)`
+#### `.inProperty(property)`
 
-Selects the database to use. Overrides any database defined in the initialisation options, and is reset when called without arguments.
-
-```js
-// Example
-api.useDatabase('testdb')
-```
-
-#### `.useVersion(version)`
-
-Selects the version to use. Overrides any version defined in the initialisation options, and is reset when called without arguments.
+Selects the property to use. Overrides any property defined in the initialisation options, and is reset when called without arguments.
 
 ```js
 // Example
-api.useVersion('1.0')
+api.inProperty('test')
 ```

@@ -3,7 +3,7 @@
 const querystring = require('query-string')
 const parseUrl = require('url-parse')
 
-module.exports = function (APIWrapper) {
+module.exports = function(APIWrapper) {
   /**
    * Add a Mongo query expression to the save query
    *
@@ -13,7 +13,7 @@ module.exports = function (APIWrapper) {
    * @return undefined
    * @api private
    */
-  APIWrapper.prototype._addToQuery = function (field, operator, value) {
+  APIWrapper.prototype._addToQuery = function(field, operator, value) {
     if (this.query === undefined) {
       this.query = {}
     }
@@ -36,7 +36,7 @@ module.exports = function (APIWrapper) {
    * @return String
    * @api private
    */
-  APIWrapper.prototype._buildURL = function (options) {
+  APIWrapper.prototype._buildURL = function(options) {
     options = options || {}
 
     let url = ''
@@ -45,7 +45,9 @@ module.exports = function (APIWrapper) {
     url += ':' + this.options.port
 
     if (this.mediaBucket) {
-      url += '/media' + (typeof this.mediaBucket === 'string' ? '/' + this.mediaBucket : '')
+      url +=
+        '/media' +
+        (typeof this.mediaBucket === 'string' ? '/' + this.mediaBucket : '')
     } else if (this.isClient) {
       if (this.isClient.self) {
         url += '/api/client'
@@ -58,15 +60,21 @@ module.exports = function (APIWrapper) {
       }
     } else if (!this.collection && !this.endpoint) {
       url += '/api'
+    } else if (this.collection) {
+      url +=
+        '/' +
+        (this.property !== undefined
+          ? this.property
+          : this.options.property || this.options.database)
+      url += '/' + this.collection
     } else {
-      url += '/' + ((this.customVersion !== undefined) ? this.customVersion : this.options.version)
-
-      if (this.collection) {
-        url += '/' + ((this.customDatabase !== undefined) ? this.customDatabase : this.options.database)
-        url += '/' + this.collection
-      } else {
-        url += '/' + this.endpoint
-      }
+      url +=
+        '/' +
+        (this.customVersion !== undefined
+          ? this.customVersion
+          : this.options.version) +
+        '/' +
+        this.endpoint
     }
 
     if (options.signUrl) {
@@ -112,7 +120,7 @@ module.exports = function (APIWrapper) {
     }
 
     if (options.useParams) {
-      let params = {}
+      const params = {}
 
       if (this.query) {
         params.filter = JSON.stringify(this._encodeObjectKeys(this.query))
@@ -120,6 +128,10 @@ module.exports = function (APIWrapper) {
 
       if (this.fields) {
         params.fields = this.fields
+      }
+
+      if (this.language) {
+        params.lang = this.language
       }
 
       if (!isNaN(parseInt(this.limit))) {
@@ -130,7 +142,7 @@ module.exports = function (APIWrapper) {
         params.page = this.page
       }
 
-      if (this.hasOwnProperty('compose')) {
+      if (this.compose !== undefined) {
         params.compose = this.compose
       }
 
@@ -161,7 +173,7 @@ module.exports = function (APIWrapper) {
    * @return Object
    * @api private
    */
-  APIWrapper.prototype._createRequestObject = function (options) {
+  APIWrapper.prototype._createRequestObject = function(options) {
     const parsedUri = parseUrl(options.uri)
     const requestObject = Object.assign({}, options, {
       uri: {
@@ -189,7 +201,7 @@ module.exports = function (APIWrapper) {
    * @param  {Object} object The object to encode
    * @return {Object}        The encoded object
    */
-  APIWrapper.prototype._encodeObjectKeys = function (object) {
+  APIWrapper.prototype._encodeObjectKeys = function(object) {
     return Object.keys(object).reduce((result, key) => {
       if (
         object[key] &&
@@ -198,7 +210,10 @@ module.exports = function (APIWrapper) {
       ) {
         result[key] = this._encodeObjectKeys(object[key])
       } else {
-        result[key] = typeof object[key] === 'string' ? encodeURIComponent(object[key]) : object[key]
+        result[key] =
+          typeof object[key] === 'string'
+            ? encodeURIComponent(object[key])
+            : object[key]
       }
 
       return result
@@ -212,10 +227,12 @@ module.exports = function (APIWrapper) {
    * @return undefined
    * @api private
    */
-  APIWrapper.prototype._isValidHook = function () {
+  APIWrapper.prototype._isValidHook = function() {
     if (this.isHook) {
       if (!this.hookName) {
-        throw new Error('Couldn\'t find hook name. Are you using `.whereHookNameIs()?`')
+        throw new Error(
+          "Couldn't find hook name. Are you using `.whereHookNameIs()?`"
+        )
       }
 
       return true
@@ -231,7 +248,7 @@ module.exports = function (APIWrapper) {
    * @return undefined
    * @api private
    */
-  APIWrapper.prototype._log = function (message) {
+  APIWrapper.prototype._log = function(message) {
     if (console && console.log) {
       console.log(`[DADI API Wrapper] ${message}`)
     }
@@ -243,10 +260,10 @@ module.exports = function (APIWrapper) {
    * @return undefined
    * @api private
    */
-  APIWrapper.prototype._reset = function () {
+  APIWrapper.prototype._reset = function() {
     this.params = {}
     this.customVersion = undefined
-    this.customDatabase = undefined
+    this.property = undefined
   }
 
   /**
@@ -257,7 +274,7 @@ module.exports = function (APIWrapper) {
    * @return undefined
    * @api private
    */
-  APIWrapper.prototype._setHeader = function (name, value) {
+  APIWrapper.prototype._setHeader = function(name, value) {
     this.headers = this.headers || {}
 
     this.headers[name] = value
@@ -270,8 +287,8 @@ module.exports = function (APIWrapper) {
    * @return Object
    * @api private
    */
-  APIWrapper.prototype._stripReservedProperties = function (document) {
-    let sanitisedDocument = {}
+  APIWrapper.prototype._stripReservedProperties = function(document) {
+    const sanitisedDocument = {}
 
     Object.keys(document).forEach(property => {
       if (this.reservedProperties.indexOf(property) === -1) {

@@ -1,7 +1,7 @@
 'use strict'
 
 const APIWrapperCore = require('./core')
-const APIWrapper = function (options) {
+const APIWrapper = function(options) {
   if (typeof options === 'function') {
     this.options = {
       apiInstance: options
@@ -13,9 +13,14 @@ const APIWrapper = function (options) {
     this.options.port = this.options.port || 80
     this.options.tokenUrl = this.options.tokenUrl || '/token'
 
-    let walletPath = __dirname + '/.wallet/token.' +
-      this._slugify(options.uri + options.port) + '.' +
-      (options.credentials ? this._slugify(options.credentials.clientId) : '-' ) +
+    const walletPath =
+      __dirname +
+      '/.wallet/token.' +
+      this._slugify(options.uri + options.port) +
+      '.' +
+      (options.credentials
+        ? this._slugify(options.credentials.clientId)
+        : '-') +
       '.json'
 
     this.passportOptions = {
