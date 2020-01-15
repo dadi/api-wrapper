@@ -108,6 +108,19 @@ module.exports = function(APIWrapper) {
   }
 
   /**
+   * Set the search query
+   *
+   * @param {String} query
+   * @return API
+   * @api public
+   */
+  APIWrapper.prototype.setSearchQuery = function(query) {
+    this._setSearchQuery(query)
+
+    return this
+  }
+
+  /**
    * Select a field to sort on and the sort direction
    *
    * @param {String} sortField

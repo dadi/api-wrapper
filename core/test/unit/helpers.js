@@ -253,6 +253,23 @@ describe('Helpers', function(done) {
       done()
     })
 
+    it('should set the search query', function(done) {
+      const query = 'John'
+      const expectedQuerystring = '?q=' + query
+
+      wrapper
+        .inProperty('test')
+        .in('collectionOne')
+        .setSearchQuery('John')
+
+      const wrapperUrl = wrapper._buildURL({useParams: true})
+
+      wrapperUrl.should.eql(
+        'http://0.0.0.0:8000/test/collectionOne/search' + expectedQuerystring
+      )
+      done()
+    })
+
     it('should append sort to the querystring if specified', function(done) {
       const query = {
         filter: JSON.stringify({name: 'John'}),

@@ -115,6 +115,10 @@ module.exports = function(APIWrapper) {
       return url
     }
 
+    if (this.searchQuery) {
+      url += '/search'
+    }
+
     if (options.id) {
       url += '/' + options.id
     }
@@ -148,6 +152,10 @@ module.exports = function(APIWrapper) {
 
       if (typeof this.history !== 'undefined') {
         params.includeHistory = this.history
+      }
+
+      if (this.searchQuery) {
+        params.q = this.searchQuery
       }
 
       if (this.sort) {
@@ -278,6 +286,17 @@ module.exports = function(APIWrapper) {
     this.headers = this.headers || {}
 
     this.headers[name] = value
+  }
+
+  /**
+   * Set the search query
+   *
+   * @param {String} query
+   * @return undefined
+   * @api private
+   */
+  APIWrapper.prototype._setSearchQuery = function(query) {
+    this.searchQuery = query
   }
 
   /**
