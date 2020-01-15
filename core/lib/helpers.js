@@ -289,17 +289,6 @@ module.exports = function(APIWrapper) {
   }
 
   /**
-   * Set the search query
-   *
-   * @param {String} query
-   * @return undefined
-   * @api private
-   */
-  APIWrapper.prototype._setSearchQuery = function(query) {
-    this.searchQuery = query
-  }
-
-  /**
    * Strip reserved properties from document object
    *
    * @param {Object} document

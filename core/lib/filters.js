@@ -115,7 +115,7 @@ module.exports = function(APIWrapper) {
    * @api public
    */
   APIWrapper.prototype.setSearchQuery = function(query) {
-    this._setSearchQuery(query)
+    this.searchQuery = query
 
     return this
   }
