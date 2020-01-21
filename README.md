@@ -252,6 +252,18 @@ Queries the API for support of a given feature and throws a `MISSING_FEATURES` e
 api.requestFeature('aclv1')
 ```
 
+#### `.setSearchQuery(query)`
+
+Sets the query to use for a collection search.
+
+```js
+// Example
+api
+  .in('users')
+  .setSearchQuery('John')
+  .find()
+```
+
 #### `.sortBy(field, order)`
 
 Selects a field to sort on and the sort direction. Order defaults to ascending (`asc`).
