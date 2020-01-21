@@ -115,6 +115,10 @@ module.exports = function(APIWrapper) {
       return url
     }
 
+    if (this.searchQuery) {
+      url += '/search'
+    }
+
     if (options.id) {
       url += '/' + options.id
     }
@@ -148,6 +152,10 @@ module.exports = function(APIWrapper) {
 
       if (typeof this.history !== 'undefined') {
         params.includeHistory = this.history
+      }
+
+      if (this.searchQuery) {
+        params.q = this.searchQuery
       }
 
       if (this.sort) {

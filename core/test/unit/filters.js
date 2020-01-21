@@ -52,6 +52,13 @@ describe('Filters', function(done) {
     done()
   })
 
+  it('should pass the search query to the wrapper', function(done) {
+    wrapper.in('collectionOne').setSearchQuery('John')
+    wrapper.searchQuery.should.eql('John')
+
+    done()
+  })
+
   it('should pass arguments given in `sortBy` to the wrapper', function(done) {
     wrapper.sortBy('name', 'desc')
     wrapper.sort.should.eql({name: -1})

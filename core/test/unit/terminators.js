@@ -385,6 +385,26 @@ describe('Terminators', function(done) {
     })
   })
 
+  describe('search', function(done) {
+    it('should create the request object for a collection search', function(done) {
+      const requestObject = wrapper
+        .inProperty('test')
+        .in('collectionOne')
+        .setSearchQuery('John')
+        .find()
+
+      const expectedUrl = wrapper._buildURL({
+        useParams: true
+      })
+
+      requestObject.method.should.eql('GET')
+      should.not.exist(requestObject.body)
+      requestObject.uri.href.should.eql(expectedUrl)
+
+      done()
+    })
+  })
+
   describe('getCollections', function(done) {
     it('should create the request object for getting the collections endpoint', function(done) {
       const requestObject = wrapper.getCollections()
