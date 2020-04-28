@@ -7,7 +7,7 @@
   "license": "GPL",
   "dependencies": {
     "query-string": "5.0.1",
-    "url-parse": "1.2.0"
+    "url-parse": "1.4.3"
   },
   "repository": {
     "type": "git",
