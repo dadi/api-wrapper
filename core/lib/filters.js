@@ -461,14 +461,20 @@ module.exports = function(APIWrapper) {
   }
 
   /**
-   * Toggles composition for nested documents
+   * Set composition for nested documents.
+   * The value can be true, false, a number, "all", or undefined (to unset the previous value).
    *
-   * @param {Boolean} value
+   * @param {Boolean|number|string} value
    * @return API
    * @api public
    */
   APIWrapper.prototype.withComposition = function(value) {
-    this.compose = value !== false
+    if (typeof value === 'number' || typeof value === 'boolean' || value === 'all' || value === undefined) {
+      this.compose = value
+    }
+    else {
+      this.compose = false
+    }
 
     return this
   }
