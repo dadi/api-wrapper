@@ -463,6 +463,7 @@ module.exports = function(APIWrapper) {
   /**
    * Set composition for nested documents.
    * The value can be true, false, a number, "all", or undefined (to unset the previous value).
+   * If a string value is passed, this function attempts to parse it to a Boolean or number.
    *
    * See https://github.com/dadi/docs/blob/master/docs/api/5.0.md#enabling-composition
    *
@@ -471,6 +472,18 @@ module.exports = function(APIWrapper) {
    * @api public
    */
   APIWrapper.prototype.withComposition = function(value) {
+    if (typeof value === 'string') {
+      if (value === 'true' || value === 'false') {
+        value = Boolean(value)
+      }
+
+      if (/\d+/.test(value)) {
+        const newValue = parseInt(value)
+
+        if (!isNaN(value)) value = newValue
+      }
+    }
+
     if (
       typeof value === 'number' ||
       typeof value === 'boolean' ||
