@@ -6,7 +6,7 @@
   "author": "Eduardo Boucas <mail@eduardoboucas.com>",
   "license": "GPL",
   "dependencies": {
-    "query-string": "5.0.1",
+    "query-string": "9.5.0",
     "url-parse": "1.4.3"
   },
   "repository": {
